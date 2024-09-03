@@ -1,0 +1,9 @@
+class Calculator is
+    method add(a : Integer, b : Integer) : Integer is
+        return a.Plus(b)
+    end
+end
+
+var calc : Calculator
+var result : Integer
+result := calc.add(5, 3)

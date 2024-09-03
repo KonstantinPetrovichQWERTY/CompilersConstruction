@@ -1,0 +1,8 @@
+class Point is
+    var x : Integer
+    var y : Integer
+end
+
+var p : Point
+p.x := 10
+p.y := 20

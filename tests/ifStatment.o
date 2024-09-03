@@ -1,0 +1,37 @@
+var trueCondition : Boolean(true)
+if trueCondition then
+    print("test if true right")
+else
+    print("test if true wrong")
+end
+
+var falseCondition : Boolean(false)
+if falseCondition then
+    print("test if false wrong")
+else
+    print("test if false right")
+end
+
+if Not falseCondition then
+    print("test if not false right")
+else
+    print("test if not false wrong")
+end
+
+if falseCondition Or trueCondition then
+    print("test if fls or tru right")
+else
+    print("test if fls or tru wrong")
+end
+
+if falseCondition And trueCondition then
+    print("test if fls and tru wrong")
+else
+    print("test if fls and tru right")
+end
+
+if falseCondition Xor trueCondition then
+    print("test if fls xor tru right")
+else
+    print("test if fls xor tru wrong")
+end
