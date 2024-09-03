@@ -1,0 +1,9 @@
+class MathUtils is
+    method square(x : Integer) : Integer is
+        return x.Mult(x)
+    end
+end
+
+var utils : MathUtils
+var squared : Integer
+squared := utils.square(5)

@@ -1,0 +1,4 @@
+var a : Boolean(true)
+var b : Boolean(false)
+var result : Boolean
+result := a.And(b)

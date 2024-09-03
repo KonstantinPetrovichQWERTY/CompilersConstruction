@@ -1,0 +1,5 @@
+var numbers : List[Integer]
+numbers.add(10)
+numbers.add(20)
+var first : Integer
+first := numbers.get(0)

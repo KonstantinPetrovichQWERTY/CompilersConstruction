@@ -1,0 +1,8 @@
+class Circle is
+    var radius : Real
+    this(r : Real) is
+        radius := r
+    end
+end
+
+var c : Circle(5.0)
