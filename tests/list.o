@@ -1,0 +1,5 @@
+var list : List[]
+list.append(Integer(0))
+var x : Integer(2)
+list.append(x)
+print(list.head.toString())

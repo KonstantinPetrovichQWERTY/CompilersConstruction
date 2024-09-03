@@ -2,3 +2,4 @@ var arr : Array[Integer](5)
 arr.set(0) := 10
 var x : Integer
 x := arr.get(0)
+print(x.toString())

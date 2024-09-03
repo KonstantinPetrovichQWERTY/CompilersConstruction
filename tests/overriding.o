@@ -1,0 +1,22 @@
+class Animal is
+    method makeSound() is
+        print(String("Animal makes a sound"))
+    end
+end
+
+class Dog extends Animal is
+    method makeSound() is
+        print(String("Dog barks"))
+    end
+end
+
+class Cat extends Animal is
+    method makeSound() is
+        print(String("Cat meows"))
+    end
+end
+
+var animals : List[Animal]
+animals.add(new Animal())
+animals.add(new Dog())
+animals.add(new Cat())

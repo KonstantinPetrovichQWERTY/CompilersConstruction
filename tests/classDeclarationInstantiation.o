@@ -6,3 +6,5 @@ end
 var p : Point
 p.x := 10
 p.y := 20
+print(p.x.toString())
+print(p.y.toString())

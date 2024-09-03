@@ -7,3 +7,4 @@ end
 var utils : MathUtils
 var squared : Integer
 squared := utils.square(5)
+print(squared.toString())

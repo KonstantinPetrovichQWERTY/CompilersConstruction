@@ -1,37 +1,37 @@
 var trueCondition : Boolean(true)
 if trueCondition then
-    print("test if true right")
+    print(String("test if true right"))
 else
-    print("test if true wrong")
+    print(String("test if true wrong"))
 end
 
 var falseCondition : Boolean(false)
 if falseCondition then
-    print("test if false wrong")
+    print(String("test if false wrong"))
 else
-    print("test if false right")
+    print(String("test if false right"))
 end
 
-if Not falseCondition then
-    print("test if not false right")
+if falseCondition.Not() then
+    print(String("test if not false right"))
 else
-    print("test if not false wrong")
+    print(String("test if not false wrong"))
 end
 
-if falseCondition Or trueCondition then
-    print("test if fls or tru right")
+if falseCondition.Or(trueCondition) then
+    print(String("test if fls or tru right"))
 else
-    print("test if fls or tru wrong")
+    print(String("test if fls or tru wrong"))
 end
 
-if falseCondition And trueCondition then
-    print("test if fls and tru wrong")
+if falseCondition.And(trueCondition) then
+    print(String("test if fls and tru wrong"))
 else
-    print("test if fls and tru right")
+    print(String("test if fls and tru right"))
 end
 
-if falseCondition Xor trueCondition then
-    print("test if fls xor tru right")
+if falseCondition.Xor(trueCondition) then
+    print(String("test if fls xor tru right"))
 else
-    print("test if fls xor tru wrong")
+    print(String("test if fls xor tru wrong"))
 end

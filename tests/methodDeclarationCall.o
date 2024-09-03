@@ -7,3 +7,4 @@ end
 var calc : Calculator
 var result : Integer
 result := calc.add(5, 3)
+print(result.toString())

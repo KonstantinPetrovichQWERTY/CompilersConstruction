@@ -2,3 +2,4 @@ var a : Integer(5)
 var b : Integer(3)
 var c : Integer
 c := a.Plus(b).Mult(2).Minus(1)
+print(c.toString)
