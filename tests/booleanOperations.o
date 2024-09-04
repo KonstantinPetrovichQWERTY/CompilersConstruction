@@ -1,5 +1,22 @@
-var a : Boolean(true)
-var b : Boolean(false)
-var result : Boolean
-result := a.And(b)
-print(result.toString())
+class Main is
+    this() is
+        var a : Boolean(true)
+        var b : Boolean(false)
+
+        var resultAnd : Boolean(true)
+        resultAnd := a.And(b)
+        resultAnd.print()
+
+        var resultOr : Boolean(true)
+        resultOr := a.Or(b)
+        resultOr.print()
+
+        var resultXor : Boolean(true)
+        resultXor := a.Xor(b)
+        resultXor.print()
+
+        var resultNot : Boolean(true)
+        resultNot := a.Not()
+        resultNot.print()
+    end
+end

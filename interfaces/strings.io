@@ -1,5 +1,5 @@
 class Character extends AnyRef is
-    method chr: Integer is end
+    method chr(): Integer is end
     this(input: Integer) is end
     this(input: Character) is end
 end

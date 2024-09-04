@@ -1,10 +1,32 @@
 class Point is
-    var x : Integer
-    var y : Integer
+    var x : Integer(0)
+    var y : Integer(1)
+
+    this() is end
+
+    method getX() : Integer is
+        return x
+    end
+
+    method getY() : Integer is
+        return y
+    end
+
+    method setX(newValue : Integer) is
+        x := newValue
+    end
+
+    method setY(newValue : Integer) is
+        y := newValue
+    end
 end
 
-var p : Point
-p.x := 10
-p.y := 20
-print(p.x.toString())
-print(p.y.toString())
+class Main is
+    this() is
+        var p : Point()
+        p.setX(Integer(2))
+        p.setY(Integer(4))
+        p.getX.print()
+        p.getY.print()
+    end
+end

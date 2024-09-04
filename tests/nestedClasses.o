@@ -1,9 +1,0 @@
-class Outer is
-    class Inner is
-        var value : Integer
-    end
-end
-
-var outer : Outer
-var inner : Outer.Inner
-inner.value := 100

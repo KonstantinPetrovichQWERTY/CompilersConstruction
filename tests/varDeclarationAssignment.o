@@ -1,2 +1,7 @@
-var a : Integer(10)
-a := 20
+class Main is
+    this() is
+        var a : Integer(10)
+        a := 20
+        a.print()
+    end
+end

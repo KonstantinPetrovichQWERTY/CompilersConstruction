@@ -1,5 +1,9 @@
-var a : Integer(5)
-var b : Integer(3)
-var c : Integer
-c := a.Plus(b).Mult(2).Minus(1)
-print(c.toString)
+class Main is
+    this() is
+        var a : Integer(5)
+        var b : Integer(3)
+        var c : Integer(0)
+        c := a.Plus(b).Mult(2).Minus(1)
+        c.print()
+    end
+end

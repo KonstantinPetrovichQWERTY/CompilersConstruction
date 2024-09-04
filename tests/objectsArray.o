@@ -1,7 +1,0 @@
-class Person is
-    var age : Integer
-end
-
-var people : Array[Person](2)
-people.set(0).age := 12
-people.set(1).age := 7
