@@ -8,7 +8,7 @@ public class LexicalAnalyzer {
 
     private static List<String> separateFileToArrayList(String filePath){
         List<String> parts = new ArrayList<>();
-        List<Character> separators = List.of(',', '.', '!', '?', ' ', '(', ')', '\n', '{', '}', '[', ']', '\t');
+        List<Character> separators = List.of(',', '.', '"', ' ', '(', ')', '\n', '[', ']', '\t');
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             StringBuilder currentPart = new StringBuilder();
@@ -33,43 +33,25 @@ public class LexicalAnalyzer {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("IOException");
         }
 
         return parts;
     }
 
-    private static List<Tokens> partsToTokens(List<String> parts){
-        List<Tokens> result = new ArrayList<>();
-
-        for (String part : parts){
-            switch (part) {
-                case "var": 
-                    result.add(Tokens.ABSTRACT);
-                    break;
-                case ":":
-                    System.out.println("It's a banana.");
-                    break;
-                default:
-                    result.add(Tokens.AND);
-                    break;
-            }
-        }
-
-        return result;
-    }
-    
     public static void main(String[] args) {
-        List<String> fileParts = separateFileToArrayList("testCases/booleanOperations.o");
+        List<String> fileParts = separateFileToArrayList("D:/Innopolis/ucheba/compilers/CompilersConstruction/lexicalAnalyzer/src/testCases/complexExpression.o");
         
-        for (String part : fileParts) {
-            System.out.println(part);
-        }
+        // for (String part : fileParts) {
+        //     System.out.println(part);
+        // }
 
-        List<Tokens> tokens = partsToTokens(fileParts);
+        List<Object[]> stringsWithTokens = Tokenizer.partsToTokens(fileParts);
 
-        for (Tokens token : tokens) {
-            System.out.println(token);
-        }
+        // for (Object[] sublist : stringsWithTokens) {
+        //     String str = (String) sublist[0];
+        //     Tokens enumValue = (Tokens) sublist[1];
+        //     System.out.println("String: " + str + ", Enum: " + enumValue);
+        // }
     }
 }

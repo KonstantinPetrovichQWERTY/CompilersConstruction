@@ -7,7 +7,7 @@ class Main is
         min.getMin().print()
         var max : Real(0)
         max.getMax().print()
-        vat epsilon : Real(0)
+        var epsilon : Real(0)
         max.getEpsilon().print()
 
         var resultReal : Real(0.0)
