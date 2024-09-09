@@ -11,11 +11,43 @@ public class Tokenizer {
         }
         result.add(new Object[]{"", Tokens.EOF});
 
-        // что-то для комбинированных токенов
+        result = combineComplexTokens(result);
 
         return result;
     }
     
+    private static List<Object[]> combineComplexTokens(List<Object[]> partsAndTokens){
+        List<Object[]> result = new ArrayList<>();
+
+        for(int i=0; i < partsAndTokens.size(); i++){
+            
+            // tabulation and ":=" handling
+            if(
+                (i+3 < partsAndTokens.size()) &&
+                (partsAndTokens.get(i)[1] == partsAndTokens.get(i+1)[1]) &&
+                (partsAndTokens.get(i+1)[1] == partsAndTokens.get(i+2)[1]) &&
+                (partsAndTokens.get(i+2)[1] == partsAndTokens.get(i+3)[1]) &&
+                (partsAndTokens.get(i+3)[1] == Tokens.PUNCTUATION_SPACE))
+            {
+                result.add(new Object[]{"\t", Tokens.PUNCTUATION_TABULATION});
+                i += 3;
+            }
+            else if(
+                (i+1 < partsAndTokens.size()) &&
+                (partsAndTokens.get(i)[1] == Tokens.PUNCTUATION_SEMICOLON) &&
+                (partsAndTokens.get(i+1)[1] == Tokens.PUNCTUATION_EQUAL))
+            {
+                result.add(new Object[]{":=", Tokens.PUNCTUATION_SEMICOLON_EQUAL});
+                i += 1;
+            }
+            else {
+                result.add(partsAndTokens.get(i));
+            }
+        }
+
+        return result;
+    }
+
     private static Tokens getToken(String part) {
         return switch (part) {
             case "class" -> Tokens.KEYWORD_CLASS;
@@ -46,6 +78,7 @@ public class Tokenizer {
             case ":=" -> Tokens.PUNCTUATION_SEMICOLON_EQUAL;
             case ":" -> Tokens.PUNCTUATION_SEMICOLON;
             case "," -> Tokens.PUNCTUATION_COMMA;
+            case "=" -> Tokens.PUNCTUATION_EQUAL;
             case "(" -> Tokens.PUNCTUATION_LEFT_PARENTHESIS;
             case ")" -> Tokens.PUNCTUATION_RIGHT_PARENTHESIS;
             case "[" -> Tokens.PUNCTUATION_LEFT_BRACKET;

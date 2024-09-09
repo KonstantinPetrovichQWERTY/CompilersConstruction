@@ -31,6 +31,7 @@ public enum Tokens {
     PUNCTUATION_DOUBLE_QUOTE,
     PUNCTUATION_SEMICOLON,
     PUNCTUATION_COMMA,
+    PUNCTUATION_EQUAL,
     PUNCTUATION_LEFT_PARENTHESIS, // (
     PUNCTUATION_RIGHT_PARENTHESIS, // )
     PUNCTUATION_LEFT_BRACKET, // [
@@ -48,5 +49,5 @@ public enum Tokens {
 
     // Special tokens
     EOF, // End of file
-    // ERROR // Error token (e.g., unrecognized character)
+    ERROR // Error token (e.g., unrecognized character)
 }

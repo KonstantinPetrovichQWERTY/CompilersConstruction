@@ -8,24 +8,30 @@ public class LexicalAnalyzer {
 
     private static List<String> separateFileToArrayList(String filePath){
         List<String> parts = new ArrayList<>();
-        List<Character> separators = List.of(',', '.', '"', ' ', '(', ')', '\n', '[', ']', '\t');
+        List<Character> separators = List.of(',', '.', '"', ' ', '(', ')', '\0', '\n', '[', ']', '\t', ';', ':');
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             StringBuilder currentPart = new StringBuilder();
-            int currentChar;
+            String currentString;
 
-            while ((currentChar = reader.read()) != -1) {
-                char ch = (char) currentChar;
-
-                if (separators.contains(ch)) {
-                    if (currentPart.length() > 0) {
-                        parts.add(currentPart.toString());
-                        currentPart.setLength(0);
+            while ((currentString = reader.readLine()) != null) {
+                char[] charList = currentString.toCharArray();
+                for (char ch: charList){
+                    if (separators.contains(ch)) {
+                        if (currentPart.length() > 0) {
+                            parts.add(currentPart.toString());
+                            currentPart.setLength(0);
+                        }
+                        parts.add(String.valueOf(ch));
+                    } else {
+                        currentPart.append(ch);
                     }
-                    parts.add(String.valueOf(ch));
-                } else {
-                    currentPart.append(ch);
                 }
+                if (currentPart.length() > 0) {
+                    parts.add(currentPart.toString());
+                    currentPart.setLength(0);
+                }
+                parts.add("\n");
             }
             
             if (currentPart.length() > 0) {
@@ -40,7 +46,7 @@ public class LexicalAnalyzer {
     }
 
     public static void main(String[] args) {
-        List<String> fileParts = separateFileToArrayList("D:/Innopolis/ucheba/compilers/CompilersConstruction/lexicalAnalyzer/src/testCases/complexExpression.o");
+        List<String> fileParts = separateFileToArrayList("/testCases/inheritance.o");
         
         // for (String part : fileParts) {
         //     System.out.println(part);
@@ -48,10 +54,10 @@ public class LexicalAnalyzer {
 
         List<Object[]> stringsWithTokens = Tokenizer.partsToTokens(fileParts);
 
-        // for (Object[] sublist : stringsWithTokens) {
-        //     String str = (String) sublist[0];
-        //     Tokens enumValue = (Tokens) sublist[1];
-        //     System.out.println("String: " + str + ", Enum: " + enumValue);
-        // }
+        for (Object[] sublist : stringsWithTokens) {
+            String str = (String) sublist[0];
+            Tokens enumValue = (Tokens) sublist[1];
+            System.out.println("String: '" + str + "', Enum: " + enumValue);
+        }
     }
 }
