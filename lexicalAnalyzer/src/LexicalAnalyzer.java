@@ -15,6 +15,10 @@ public class LexicalAnalyzer {
             String currentString;
 
             while ((currentString = reader.readLine()) != null) {
+                if (currentString.startsWith("//")){
+                    continue;
+                }
+
                 char[] charList = currentString.toCharArray();
                 for (char ch: charList){
                     if (separators.contains(ch)) {
@@ -34,10 +38,6 @@ public class LexicalAnalyzer {
                 parts.add("\n");
             }
             
-            if (currentPart.length() > 0) {
-                parts.add(currentPart.toString());
-            }
-
         } catch (IOException e) {
             System.out.println("IOException");
         }
@@ -46,11 +46,7 @@ public class LexicalAnalyzer {
     }
 
     public static void main(String[] args) {
-        List<String> fileParts = separateFileToArrayList("/testCases/inheritance.o");
-        
-        // for (String part : fileParts) {
-        //     System.out.println(part);
-        // }
+        List<String> fileParts = separateFileToArrayList("testCases/test.o");
 
         List<Object[]> stringsWithTokens = Tokenizer.partsToTokens(fileParts);
 
