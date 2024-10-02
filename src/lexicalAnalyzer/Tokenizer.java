@@ -22,36 +22,73 @@ public class Tokenizer {
 
         for(int i=0; i < partsAndTokens.size(); i++){
             
-            // TODO: change existing handlers
+            String value = (String) partsAndTokens.get(i)[0];
+            Token tokenClass = (Token) partsAndTokens.get(i)[1];
+            
+            // tabulation case handling
+            if((i+3 < partsAndTokens.size()) && (tokenClass.getToken() == TokenType.PUNCTUATION_SPACE))
+            {
+                Token tokenClass1 = (Token) partsAndTokens.get(i+1)[1];
+                Token tokenClass2 = (Token) partsAndTokens.get(i+2)[1];
+                Token tokenClass3 = (Token) partsAndTokens.get(i+3)[1];
+
+                if ((tokenClass.getToken() == tokenClass1.getToken()) &&
+                (tokenClass1.getToken() == tokenClass2.getToken()) &&
+                (tokenClass2.getToken() == tokenClass3.getToken()) &&
+                (tokenClass3.getToken() == TokenType.PUNCTUATION_SPACE))
+                {
+                    result.add(new Object[]{"\t", new Token(TokenType.PUNCTUATION_TABULATION)});
+                    i += 3;
+                    continue;
+                }
+            }
+
+            // ":=" case handling
+            if((i+1 < partsAndTokens.size()) && (tokenClass.getToken() == TokenType.PUNCTUATION_SEMICOLON))
+            {
+                Token tokenClass1 = (Token) partsAndTokens.get(i+1)[1];
+
+                if(tokenClass1.getToken() == TokenType.PUNCTUATION_EQUAL)
+                {
+                    result.add(new Object[]{":=", new Token(TokenType.PUNCTUATION_SEMICOLON_EQUAL)});
+                    i += 1;
+                    continue;
+                }
+            }
+            
             // TODO: add literal converters
-            // tabulation and ":=" handling
-            if(
-                (i+3 < partsAndTokens.size()) &&
-                (partsAndTokens.get(i)[1] == partsAndTokens.get(i+1)[1]) &&
-                (partsAndTokens.get(i+1)[1] == partsAndTokens.get(i+2)[1]) &&
-                (partsAndTokens.get(i+2)[1] == partsAndTokens.get(i+3)[1]) &&
-                (partsAndTokens.get(i+3)[1] == TokenType.PUNCTUATION_SPACE))
+            // Real numbers handling
+            if((i+2 < partsAndTokens.size()) && (tokenClass.getToken() == TokenType.LITERAL_INTEGER))
             {
-                result.add(new Object[]{"\t", TokenType.PUNCTUATION_TABULATION});
-                i += 3;
+                String value1 = (String) partsAndTokens.get(i+1)[0];
+                Token tokenClass1 = (Token) partsAndTokens.get(i+1)[1];
+                
+                String value2 = (String) partsAndTokens.get(i+2)[0];
+                Token tokenClass2 = (Token) partsAndTokens.get(i+2)[1];
+
+                if ((tokenClass1.getToken() == TokenType.PUNCTUATION_DOT) &&
+                (tokenClass2.getToken() == TokenType.LITERAL_INTEGER))
+                {
+                    String concatenatedString = value + value1 + value2;
+                    result.add(new Object[]{concatenatedString, new RealLiteralToken(Float.parseFloat(concatenatedString))});
+                    i += 2;
+                    continue;
+                }
             }
-            else if(
-                (i+1 < partsAndTokens.size()) &&
-                (partsAndTokens.get(i)[1] == TokenType.PUNCTUATION_SEMICOLON) &&
-                (partsAndTokens.get(i+1)[1] == TokenType.PUNCTUATION_EQUAL))
-            {
-                result.add(new Object[]{":=", TokenType.PUNCTUATION_SEMICOLON_EQUAL});
-                i += 1;
-            }
-            else {
-                result.add(partsAndTokens.get(i));
-            }
+            
+            result.add(partsAndTokens.get(i));
         }
 
         return result;
     }
 
     private static Token getTokenByString(String part) {
+        if (part.matches("\\d+"))
+        {
+            System.err.println(part);
+            return new IntegerLiteralToken(Integer.parseInt(part));
+        }
+
         return switch (part) {
             case "class" -> new Token(TokenType.KEYWORD_CLASS);
             case "extends" -> new Token(TokenType.KEYWORD_EXTENDS);
