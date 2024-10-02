@@ -1,4 +1,6 @@
-public enum Tokens {
+package lexicalAnalyzer;
+
+public enum TokenType {
 
     // Keywords
     KEYWORD_CLASS,
@@ -40,9 +42,9 @@ public enum Tokens {
     PUNCTUATION_SEMICOLON_EQUAL,
 
     // Literals
-    // LITERAL_INTEGER,
-    // LITERAL_REAL,
-    // LITERAL_STRING,
+    LITERAL_INTEGER,
+    LITERAL_REAL,
+    LITERAL_STRING,
 
     // Identifiers
     IDENTIFIER,

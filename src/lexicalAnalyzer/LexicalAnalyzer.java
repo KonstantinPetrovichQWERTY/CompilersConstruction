@@ -1,3 +1,4 @@
+package lexicalAnalyzer;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -6,9 +7,9 @@ import java.util.List;
 
 public class LexicalAnalyzer {
 
-    private static List<String> separateFileToArrayList(String filePath){
+    private static List<String> scanFile(String filePath){
         List<String> parts = new ArrayList<>();
-        List<Character> separators = List.of(',', '.', '"', ' ', '(', ')', '\0', '\n', '[', ']', '\t', ';', ':');
+        List<Character> separators = List.of(',', '=', '.', '"', ' ', '(', ')', '\0', '\n', '[', ']', '\t', ';', ':');
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             StringBuilder currentPart = new StringBuilder();
@@ -46,14 +47,14 @@ public class LexicalAnalyzer {
     }
 
     public static void main(String[] args) {
-        List<String> fileParts = separateFileToArrayList("testCases/test.o");
+        List<String> fileParts = scanFile("/src/testCases/test.o");
 
         List<Object[]> stringsWithTokens = Tokenizer.partsToTokens(fileParts);
 
         for (Object[] sublist : stringsWithTokens) {
             String str = (String) sublist[0];
-            Tokens enumValue = (Tokens) sublist[1];
-            System.out.println("String: '" + str + "', Enum: " + enumValue);
+            Token enumValue = (Token) sublist[1];
+            System.out.println("String: '" + str + "', Token type: " + enumValue.getToken());
         }
     }
 }
