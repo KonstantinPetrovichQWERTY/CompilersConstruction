@@ -47,7 +47,7 @@ public class LexicalAnalyzer {
     }
 
     public static void main(String[] args) {
-        List<String> fileParts = scanFile("D:/Innopolis/ucheba/compilers/CompilersConstruction/src/test/testOLang/methodsOverriding.o");
+        List<String> fileParts = scanFile("/src/test/testOLang/test.o");
 
         List<Object[]> stringsWithTokens = Tokenizer.partsToTokens(fileParts);
 

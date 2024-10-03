@@ -21,14 +21,14 @@ end
 class Main is
     this() is
         var d : Dog()
-        d.name := "Buddy"
-        d.breed := "Golden Retriever"
+        d.name := String("Buddy")
+        d.breed := String("Golden Retriever")
 
         var res1 : String()
         var res2 : String()
 
-        res1 := getName()
-        res2 := getBreed()
+        res1 := d.getName()
+        res2 := d.getBreed()
 
         res1.print()
         res2.print()

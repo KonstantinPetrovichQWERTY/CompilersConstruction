@@ -3,9 +3,9 @@ class Main is
         var trueCondition : Boolean(true)
 
         if trueCondition then
-            print(String("test if true right"))
+            String("test if true right").print()
         else
-            print(String("test if true wrong"))
+            String("test if true wrong").print()
         end
 
     end

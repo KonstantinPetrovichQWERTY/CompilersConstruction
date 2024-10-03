@@ -1,4 +1,5 @@
 package lexicalAnalyzer;
+
 public class StringLiteralToken extends Token{
 
     private final String value;
