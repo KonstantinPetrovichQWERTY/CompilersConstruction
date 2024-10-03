@@ -8,11 +8,12 @@ public class RealLiteralToken extends Token{
         this.value = value;
     }
 
-    public double getValue() {
-        return value;
+    @Override
+    public String getValue() {
+        return Double.toString(value);
     }
 
-    public void setValue(double value) {
-        this.value = value;
+    public double getTypedValue() {
+        return this.value;
     }
 }

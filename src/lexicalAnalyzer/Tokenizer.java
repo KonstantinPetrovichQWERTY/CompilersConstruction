@@ -70,7 +70,7 @@ public class Tokenizer {
                 (tokenClass2.getToken() == TokenType.LITERAL_INTEGER))
                 {
                     String concatenatedString = value + value1 + value2;
-                    result.add(new Object[]{concatenatedString, new RealLiteralToken(Float.parseFloat(concatenatedString))});
+                    result.add(new Object[]{concatenatedString, new RealLiteralToken(Double.parseDouble(concatenatedString))});
                     i += 2;
                     continue;
                 }
@@ -85,7 +85,6 @@ public class Tokenizer {
     private static Token getTokenByString(String part) {
         if (part.matches("\\d+"))
         {
-            System.err.println(part);
             return new IntegerLiteralToken(Integer.parseInt(part));
         }
 
@@ -125,7 +124,7 @@ public class Tokenizer {
             case "]" -> new Token(TokenType.PUNCTUATION_RIGHT_BRACKET);
             case "." -> new Token(TokenType.PUNCTUATION_DOT);
             case "null" -> new Token(TokenType.KEYWORD_NULL);
-            default -> new Token(TokenType.IDENTIFIER);
+            default -> new IdentifierToken(part);
         };
     }
 }

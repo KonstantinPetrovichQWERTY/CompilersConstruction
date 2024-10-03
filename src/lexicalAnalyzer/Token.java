@@ -10,4 +10,8 @@ public class Token {
     public TokenType getToken(){
         return token;
     }
+
+    public String getValue() {
+        return this.token.getValue();
+    } 
 }

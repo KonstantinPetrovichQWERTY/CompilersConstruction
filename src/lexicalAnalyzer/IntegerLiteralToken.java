@@ -1,18 +1,19 @@
 package lexicalAnalyzer;
 public class IntegerLiteralToken extends Token{
 
-    private int value;
+    private final int value;
     
     public IntegerLiteralToken(int value) {
         super(TokenType.LITERAL_INTEGER);
         this.value = value;
     }
 
-    public int getValue() {
-        return value;
+    @Override
+    public String getValue() {
+        return String.valueOf(value);
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public int getTypedValue() {
+        return value;
     }
 }

@@ -47,14 +47,13 @@ public class LexicalAnalyzer {
     }
 
     public static void main(String[] args) {
-        List<String> fileParts = scanFile("/src/testCases/test.o");
+        List<String> fileParts = scanFile("D:/Innopolis/ucheba/compilers/CompilersConstruction/src/test/testOLang/methodsOverriding.o");
 
         List<Object[]> stringsWithTokens = Tokenizer.partsToTokens(fileParts);
 
         for (Object[] sublist : stringsWithTokens) {
-            String str = (String) sublist[0];
             Token enumValue = (Token) sublist[1];
-            System.out.println("String: '" + str + "', Token type: " + enumValue.getToken());
+            System.out.println("String: '" + enumValue.getValue() + "', Token type: " + enumValue.getToken());
         }
     }
 }
