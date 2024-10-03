@@ -1,4 +1,5 @@
 package lexicalAnalyzer;
+
 public class IntegerLiteralToken extends Token{
 
     private int value;

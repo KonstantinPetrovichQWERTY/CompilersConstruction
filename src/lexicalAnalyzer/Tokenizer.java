@@ -56,8 +56,7 @@ public class Tokenizer {
                 }
             }
             
-            // TODO: add literal converters
-            // Real numbers handling
+            // Real number literals handling
             if((i+2 < partsAndTokens.size()) && (tokenClass.getToken() == TokenType.LITERAL_INTEGER))
             {
                 String value1 = (String) partsAndTokens.get(i+1)[0];
@@ -75,6 +74,35 @@ public class Tokenizer {
                     continue;
                 }
             }
+
+            // String literals handling
+            if(tokenClass.getToken() == TokenType.PUNCTUATION_DOUBLE_QUOTE)
+            {
+                int j = i+1;
+
+                String resValue = "";
+
+                while (j < partsAndTokens.size())
+                {
+                    String tempValue = (String) partsAndTokens.get(j)[0];
+                    Token tempTokenClass = (Token) partsAndTokens.get(j)[1];
+                    j += 1;
+
+                    if (tempTokenClass.getToken() == TokenType.EOF)
+                    {
+                        result.add(new Object[]{resValue, new ErrorToken("String does not end")});
+                        return result;
+                    }
+                    else if(tempTokenClass.getToken() == TokenType.PUNCTUATION_DOUBLE_QUOTE){
+                        break;
+                    }
+                    else {
+                        resValue += tempValue;
+                    }
+                }
+                result.add(new Object[]{resValue, new StringLiteralToken(resValue)});
+                i = j;
+            }
             
             result.add(partsAndTokens.get(i));
         }
@@ -83,6 +111,7 @@ public class Tokenizer {
     }
 
     private static Token getTokenByString(String part) {
+        // Integer literal handler
         if (part.matches("\\d+"))
         {
             System.err.println(part);

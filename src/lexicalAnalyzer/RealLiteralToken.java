@@ -1,4 +1,5 @@
 package lexicalAnalyzer;
+
 public class RealLiteralToken extends Token{
 
     private double value;
