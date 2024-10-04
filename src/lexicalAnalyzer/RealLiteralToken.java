@@ -2,7 +2,7 @@ package lexicalAnalyzer;
 
 public class RealLiteralToken extends Token{
 
-    private double value;
+    private final double value;
     
     public RealLiteralToken(double value) {
         super(TokenType.LITERAL_REAL);

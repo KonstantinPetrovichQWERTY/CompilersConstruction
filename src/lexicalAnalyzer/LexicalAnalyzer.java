@@ -47,13 +47,22 @@ public class LexicalAnalyzer {
     }
 
     public static void main(String[] args) {
-        List<String> fileParts = scanFile("/src/test/testOLang/test.o");
+        List<String> fileParts = scanFile("/src/test/testOLang/methodsOverriding.o");
 
-        List<Object[]> stringsWithTokens = Tokenizer.partsToTokens(fileParts);
+        List<Token> tokens = Tokenizer.partsToTokens(fileParts);
 
-        for (Object[] sublist : stringsWithTokens) {
-            Token enumValue = (Token) sublist[1];
-            System.out.println("String: '" + enumValue.getValue() + "', Token type: " + enumValue.getToken());
+        for (Token token : tokens) {
+            if(token.getToken() == TokenType.PUNCTUATION_TABULATION)
+            {
+                System.out.println("String: '" + "\\t" + "', Token type: " + token.getToken());
+            }
+            else if (token.getToken() == TokenType.PUNCTUATION_LINE_BREAK)
+            {
+                System.out.println("String: '" + "\\n" + "', Token type: " + token.getToken());
+            }
+            else {
+                System.out.println("String: '" + token.getValue() + "', Token type: " + token.getToken());
+            }
         }
     }
 }

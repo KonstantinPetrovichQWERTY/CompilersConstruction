@@ -3,104 +3,106 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tokenizer {
-    public static List<Object[]> partsToTokens(List<String> parts){
-        List<Object[]> result = new ArrayList<>();
+    public static List<Token> partsToTokens(List<String> parts){
+        List<Token> result = new ArrayList<>();
 
         for (String part : parts){
             Token correlatedToken = getTokenByString(part);
-            result.add(new Object[]{part, correlatedToken});
+            result.add(correlatedToken);
         }
-        result.add(new Object[]{"", new Token(TokenType.EOF)});
+        result.add(new Token(TokenType.EOF));
 
         result = combineComplexTokens(result);
 
         return result;
     }
     
-    private static List<Object[]> combineComplexTokens(List<Object[]> partsAndTokens){
-        List<Object[]> result = new ArrayList<>();
+    private static List<Token> combineComplexTokens(List<Token> partsAndTokens){
+        List<Token> result = new ArrayList<>();
 
         for(int i=0; i < partsAndTokens.size(); i++){
             
-            String value = (String) partsAndTokens.get(i)[0];
-            Token tokenClass = (Token) partsAndTokens.get(i)[1];
-            
             // tabulation case handling
-            if((i+3 < partsAndTokens.size()) && (tokenClass.getToken() == TokenType.PUNCTUATION_SPACE))
+            if((i+3 < partsAndTokens.size()) && (partsAndTokens.get(i).getValue() == " "))
             {
-                Token tokenClass1 = (Token) partsAndTokens.get(i+1)[1];
-                Token tokenClass2 = (Token) partsAndTokens.get(i+2)[1];
-                Token tokenClass3 = (Token) partsAndTokens.get(i+3)[1];
+                Token tokenClass = partsAndTokens.get(i);
+                Token tokenClass1 = partsAndTokens.get(i+1);
+                Token tokenClass2 = partsAndTokens.get(i+2);
+                Token tokenClass3 = partsAndTokens.get(i+3);
 
-                if ((tokenClass.getToken() == tokenClass1.getToken()) &&
-                (tokenClass1.getToken() == tokenClass2.getToken()) &&
-                (tokenClass2.getToken() == tokenClass3.getToken()) &&
-                (tokenClass3.getToken() == TokenType.PUNCTUATION_SPACE))
+                if ((tokenClass.getValue() == tokenClass1.getValue()) &&
+                (tokenClass1.getValue() == tokenClass2.getValue()) &&
+                (tokenClass2.getValue() == tokenClass3.getValue()))
                 {
-                    result.add(new Object[]{"\t", new Token(TokenType.PUNCTUATION_TABULATION)});
+                    result.add(new Token(TokenType.PUNCTUATION_TABULATION));
                     i += 3;
                     continue;
                 }
             }
 
             // ":=" case handling
-            if((i+1 < partsAndTokens.size()) && (tokenClass.getToken() == TokenType.PUNCTUATION_SEMICOLON))
+            if((i+1 < partsAndTokens.size()) && (partsAndTokens.get(i).getValue() == ":"))
             {
-                Token tokenClass1 = (Token) partsAndTokens.get(i+1)[1];
+                Token tokenClass1 = partsAndTokens.get(i+1);
 
-                if(tokenClass1.getToken() == TokenType.PUNCTUATION_EQUAL)
+                if(tokenClass1.getValue() == "=")
                 {
-                    result.add(new Object[]{":=", new Token(TokenType.PUNCTUATION_SEMICOLON_EQUAL)});
+                    result.add(new Token(TokenType.PUNCTUATION_SEMICOLON_EQUAL));
                     i += 1;
                     continue;
                 }
             }
             
             // Real number literals handling
-            if((i+2 < partsAndTokens.size()) && (tokenClass.getToken() == TokenType.LITERAL_INTEGER))
+            if((i+2 < partsAndTokens.size()) && (partsAndTokens.get(i).getToken() == TokenType.LITERAL_INTEGER))
             {
-                String value1 = (String) partsAndTokens.get(i+1)[0];
-                Token tokenClass1 = (Token) partsAndTokens.get(i+1)[1];
                 
-                String value2 = (String) partsAndTokens.get(i+2)[0];
-                Token tokenClass2 = (Token) partsAndTokens.get(i+2)[1];
+                Token tokenClass = partsAndTokens.get(i);
+                String value = tokenClass.getValue();
+
+                Token tokenClass1 = partsAndTokens.get(i+1);
+                String value1 = tokenClass1.getValue();
+                
+                Token tokenClass2 = partsAndTokens.get(i+2);
+                String value2 = tokenClass2.getValue();
 
                 if ((tokenClass1.getToken() == TokenType.PUNCTUATION_DOT) &&
                 (tokenClass2.getToken() == TokenType.LITERAL_INTEGER))
                 {
                     String concatenatedString = value + value1 + value2;
-                    result.add(new Object[]{concatenatedString, new RealLiteralToken(Double.parseDouble(concatenatedString))});
+                    result.add(new RealLiteralToken(Double.parseDouble(concatenatedString)));
                     i += 2;
                     continue;
                 }
             }
 
             // String literals handling
-            if(tokenClass.getToken() == TokenType.PUNCTUATION_DOUBLE_QUOTE)
+            if(partsAndTokens.get(i).getValue() == "\"")
             {
-                int j = i+1;
+                int j = i + 1;
 
                 String resValue = "";
 
                 while (j < partsAndTokens.size())
                 {
-                    String tempValue = (String) partsAndTokens.get(j)[0];
-                    Token tempTokenClass = (Token) partsAndTokens.get(j)[1];
+                    Token tempTokenClass = partsAndTokens.get(j);
+                    String tempValue = tempTokenClass.getValue();
+
                     j += 1;
 
                     if (tempTokenClass.getToken() == TokenType.EOF)
                     {
-                        result.add(new Object[]{resValue, new ErrorToken("String does not end")});
+                        result.add(new ErrorToken("String does not end"));
                         return result;
                     }
-                    else if(tempTokenClass.getToken() == TokenType.PUNCTUATION_DOUBLE_QUOTE){
+                    else if(tempTokenClass.getValue() == "\""){
                         break;
                     }
                     else {
                         resValue += tempValue;
                     }
                 }
-                result.add(new Object[]{resValue, new StringLiteralToken(resValue)});
+                result.add(new StringLiteralToken(resValue));
                 i = j;
             }
             
