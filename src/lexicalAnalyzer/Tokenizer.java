@@ -23,16 +23,15 @@ public class Tokenizer {
         for(int i=0; i < partsAndTokens.size(); i++){
             
             // tabulation case handling
-            if((i+3 < partsAndTokens.size()) && (partsAndTokens.get(i).getValue() == " "))
+            if((i+3 < partsAndTokens.size()) && (partsAndTokens.get(i).getToken() == TokenType.PUNCTUATION_SPACE))
             {
-                Token tokenClass = partsAndTokens.get(i);
                 Token tokenClass1 = partsAndTokens.get(i+1);
                 Token tokenClass2 = partsAndTokens.get(i+2);
                 Token tokenClass3 = partsAndTokens.get(i+3);
 
-                if ((tokenClass.getValue() == tokenClass1.getValue()) &&
-                (tokenClass1.getValue() == tokenClass2.getValue()) &&
-                (tokenClass2.getValue() == tokenClass3.getValue()))
+                if((tokenClass1.getToken() == TokenType.PUNCTUATION_SPACE) &&
+                (tokenClass2.getToken() == TokenType.PUNCTUATION_SPACE) &&
+                (tokenClass3.getToken() == TokenType.PUNCTUATION_SPACE))
                 {
                     result.add(new Token(TokenType.PUNCTUATION_TABULATION));
                     i += 3;
@@ -41,11 +40,11 @@ public class Tokenizer {
             }
 
             // ":=" case handling
-            if((i+1 < partsAndTokens.size()) && (partsAndTokens.get(i).getValue() == ":"))
+            if((i+1 < partsAndTokens.size()) && (partsAndTokens.get(i).getToken() == TokenType.PUNCTUATION_SEMICOLON))
             {
                 Token tokenClass1 = partsAndTokens.get(i+1);
 
-                if(tokenClass1.getValue() == "=")
+                if(tokenClass1.getToken() == TokenType.PUNCTUATION_EQUAL)
                 {
                     result.add(new Token(TokenType.PUNCTUATION_SEMICOLON_EQUAL));
                     i += 1;
@@ -58,12 +57,11 @@ public class Tokenizer {
             {
                 
                 Token tokenClass = partsAndTokens.get(i);
-                String value = tokenClass.getValue();
-
                 Token tokenClass1 = partsAndTokens.get(i+1);
-                String value1 = tokenClass1.getValue();
-                
                 Token tokenClass2 = partsAndTokens.get(i+2);
+                
+                String value = tokenClass.getValue();
+                String value1 = tokenClass1.getValue();
                 String value2 = tokenClass2.getValue();
 
                 if ((tokenClass1.getToken() == TokenType.PUNCTUATION_DOT) &&
@@ -77,7 +75,7 @@ public class Tokenizer {
             }
 
             // String literals handling
-            if(partsAndTokens.get(i).getValue() == "\"")
+            if(partsAndTokens.get(i).getToken() == TokenType.PUNCTUATION_DOUBLE_QUOTE)
             {
                 int j = i + 1;
 
@@ -95,7 +93,7 @@ public class Tokenizer {
                         result.add(new ErrorToken("String does not end"));
                         return result;
                     }
-                    else if(tempTokenClass.getValue() == "\""){
+                    else if(tempTokenClass.getToken() == TokenType.PUNCTUATION_DOUBLE_QUOTE){
                         break;
                     }
                     else {
