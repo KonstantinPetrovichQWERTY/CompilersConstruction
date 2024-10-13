@@ -1,5 +1,4 @@
-package syntaxAnalyzer.Declarations.Objects;
-
+package syntaxAnalyzer.Objects;
 
 public class VariableDeclatation extends Object {
 

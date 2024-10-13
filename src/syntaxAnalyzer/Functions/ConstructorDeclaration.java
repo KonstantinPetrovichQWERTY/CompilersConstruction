@@ -1,4 +1,4 @@
-package syntaxAnalyzer.Declarations.Functions;
+package syntaxAnalyzer.Functions;
 
 public class ConstructorDeclaration extends Function {
 

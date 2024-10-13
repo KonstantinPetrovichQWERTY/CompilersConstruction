@@ -2,7 +2,6 @@ package syntaxAnalyzer;
 
 import java.util.ArrayList;
 import java.util.List;
-import syntaxAnalyzer.Declarations.ClassDeclaration;
 
 public class AST extends Node {
 
@@ -10,13 +9,6 @@ public class AST extends Node {
     
     // TODO: RootNode constructor
     public AST() {
-    }
-
-    void addClassDeclaration(ClassDeclaration classDeclarationNode) {
-        classDeclarationNode.validate();
-        classDeclarationNode.generate();
-
-        classDeclarations.add(classDeclarationNode);
     }
 
     @Override

@@ -3,7 +3,6 @@ package syntaxAnalyzer;
 import java.util.List;
 import lexicalAnalyzer.LexicalAnalyzer;
 import lexicalAnalyzer.Token;
-import syntaxAnalyzer.Declarations.ClassDeclaration;
 
 public class SynataxAnalyzer {
     // private String fileName;
@@ -18,11 +17,10 @@ public class SynataxAnalyzer {
         List<Token> tokensList = LexicalAnalyzer.getTokens("D:/Innopolis/ucheba/compilers/CompilersConstruction/src/test/testOLang/methodsOverriding.o");
         
         AST rootNode = new AST();
-        while (true) {
-            ClassDeclaration classDeclarationNode = new ClassDeclaration();
-            rootNode.addClassDeclaration(classDeclarationNode);
+        if (rootNode.validate()){
+            rootNode.generate();
         }
-    }
+    }   
 
     public static void errorMessage(String err) {
         System.out.println(err);

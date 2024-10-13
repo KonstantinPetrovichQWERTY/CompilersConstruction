@@ -1,11 +1,10 @@
-package syntaxAnalyzer.Declarations;
+package syntaxAnalyzer;
 
 import java.util.ArrayList;
 import java.util.List;
-import syntaxAnalyzer.Declarations.Functions.ConstructorDeclaration;
-import syntaxAnalyzer.Declarations.Functions.MethodDeclaration;
-import syntaxAnalyzer.Declarations.Objects.VariableDeclatation;
-import syntaxAnalyzer.Node;
+import syntaxAnalyzer.Functions.ConstructorDeclaration;
+import syntaxAnalyzer.Functions.MethodDeclaration;
+import syntaxAnalyzer.Objects.VariableDeclatation;
 
 public class ClassDeclaration extends Node {
     List<VariableDeclatation> attributes = new ArrayList<>();
