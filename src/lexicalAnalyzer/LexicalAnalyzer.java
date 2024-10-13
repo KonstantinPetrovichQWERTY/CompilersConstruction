@@ -7,6 +7,11 @@ import java.util.List;
 
 public class LexicalAnalyzer {
 
+    // private String fileName;
+    // public LexicalAnalyzer(String fileName) {
+    //     this.fileName = fileName;
+    // }
+    
     private static List<String> scanFile(String filePath){
         List<String> parts = new ArrayList<>();
         List<Character> separators = List.of(',', '=', '.', '"', ' ', '(', ')', '\0', '\n', '[', ']', '\t', ';', ':');
@@ -46,9 +51,18 @@ public class LexicalAnalyzer {
         return parts;
     }
 
+
+    public static List<Token> getTokens(String filePath) {
+        List<String> fileParts = scanFile(filePath);
+        
+        List<Token> tokens = Tokenizer.partsToTokens(fileParts);
+
+        return tokens;
+    }
+
     public static void main(String[] args) {
         List<String> fileParts = scanFile("/src/test/testOLang/methodsOverriding.o");
-
+        
         List<Token> tokens = Tokenizer.partsToTokens(fileParts);
 
         for (Token token : tokens) {

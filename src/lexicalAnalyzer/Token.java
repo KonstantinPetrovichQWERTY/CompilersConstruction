@@ -1,7 +1,7 @@
 package lexicalAnalyzer;
 
 public class Token {
-    private TokenType token;
+    private final TokenType token;
 
     public Token(TokenType token){
         this.token = token;
