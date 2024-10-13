@@ -14,7 +14,7 @@ public class SynataxAnalyzer {
     // }
 
     public static void main(String[] args) {
-        List<Token> tokensList = LexicalAnalyzer.getTokens("D:/Innopolis/ucheba/compilers/CompilersConstruction/src/test/testOLang/methodsOverriding.o");
+        List<Token> tokensList = LexicalAnalyzer.getTokens("/src/test/testOLang/methodsOverriding.o");
         
         AST rootNode = new AST();
         if (rootNode.validate()){
