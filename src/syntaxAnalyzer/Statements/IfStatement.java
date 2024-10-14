@@ -14,6 +14,12 @@ public class IfStatement extends Statement {
     Block baseBlock;
     Block elseBlock;
  
+
+    // if (trueCondition) then
+    //     String("test if true right").print()
+    // else
+    //     String("test if true wrong").print()
+    // end
     
     public IfStatement () {
 

@@ -3,7 +3,6 @@ package syntaxAnalyzer.Objects;
 import java.util.List;
 import lexicalAnalyzer.Token;
 import lexicalAnalyzer.TokenType;
-import syntaxAnalyzer.Objects.Object;
 
 public class VariableDeclatation extends Object {
 
@@ -17,5 +16,4 @@ public class VariableDeclatation extends Object {
             index++;
         }
     }
-
 }
