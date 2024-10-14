@@ -14,7 +14,8 @@ public class AST extends Node {
 
     @Override
     public Integer validate(List<Token> tokens, Integer index) {
-        while(index < tokens.size()){
+        while(index + 1 < tokens.size()){
+            System.out.println(index + " / " + tokens.size());
             Node tempClassDeclaration = new ClassDeclaration();
             index = tempClassDeclaration.validate(tokens, index);
             // System.out.println(index + " / " + tokens.size());

@@ -61,7 +61,7 @@ public class LexicalAnalyzer {
     }
 
     public static void main(String[] args) {
-        List<String> fileParts = scanFile("/src/test/testOLang/methodsOverriding.o");
+        List<String> fileParts = scanFile("src/test/testOLang/methodsOverriding.o");
         
         List<Token> tokens = Tokenizer.partsToTokens(fileParts);
 

@@ -10,6 +10,7 @@ import syntaxAnalyzer.Objects.VariableDeclatation;
 
 public class ClassDeclaration extends Node {
     String name;
+    String superClass;
     List<VariableDeclatation> attributes = new ArrayList<>();
     List<ConstructorDeclaration> constructors = new ArrayList<>();
     List<MethodDeclaration> methods = new ArrayList<>();
@@ -32,8 +33,19 @@ public class ClassDeclaration extends Node {
         for (TokenType elem : syntax) {
             System.out.println(tokens.get(index).getValue() + " " + elem);
 
-            if (tokens.get(index).getToken() == TokenType.IDENTIFIER) {
+            if (tokens.get(index).getToken() == TokenType.IDENTIFIER && elem == TokenType.IDENTIFIER) {
                 name = tokens.get(index).getValue();
+                index++;
+                if (tokens.get(index).getToken() == TokenType.KEYWORD_EXTENDS) {        
+                    System.out.println(tokens.get(index).getValue() + " ");
+                    index++;
+                    if (tokens.get(index).getToken() == TokenType.IDENTIFIER && elem == TokenType.IDENTIFIER) {
+                        System.out.println(tokens.get(index).getValue() + " ");
+                        superClass = tokens.get(index).getValue();
+                        index++;
+                    }
+                }
+                continue;
             }
 
             if(tokens.get(index).getToken() != elem){
