@@ -2,11 +2,14 @@ package syntaxAnalyzer;
 
 import java.util.ArrayList;
 import java.util.List;
+import lexicalAnalyzer.Token;
+import lexicalAnalyzer.TokenType;
 import syntaxAnalyzer.Functions.ConstructorDeclaration;
 import syntaxAnalyzer.Functions.MethodDeclaration;
 import syntaxAnalyzer.Objects.VariableDeclatation;
 
 public class ClassDeclaration extends Node {
+    String name;
     List<VariableDeclatation> attributes = new ArrayList<>();
     List<ConstructorDeclaration> constructors = new ArrayList<>();
     List<MethodDeclaration> methods = new ArrayList<>();
@@ -20,54 +23,62 @@ public class ClassDeclaration extends Node {
     }
 
     @Override
-    public Boolean validate() {
+    public Integer validate(List<Token> tokens, Integer index) {
+        List<TokenType> syntax = new ArrayList<>();
+        syntax.add(TokenType.KEYWORD_CLASS);
+        syntax.add(TokenType.IDENTIFIER);
+        syntax.add(TokenType.KEYWORD_IS); // TODO add extends
+        
+        for (TokenType elem : syntax) {
+            System.out.println(tokens.get(index).getValue() + " " + elem);
 
-        for(VariableDeclatation elem : attributes)
-        {
-            if (!elem.validate() && (!attributes.isEmpty())) { return false;}
+            if (tokens.get(index).getToken() == TokenType.IDENTIFIER) {
+                name = tokens.get(index).getValue();
+            }
+
+            if(tokens.get(index).getToken() != elem){
+                SyntaxAnalyzer.errorMessage("jopa");
+            }
+            index++;
+        }
+        
+        ConstructorDeclaration constructorDeclaration = new ConstructorDeclaration();
+        MethodDeclaration methodDeclaration = new MethodDeclaration();
+        VariableDeclatation variableDeclatation = new VariableDeclatation();
+
+        while (true) {
+            if (tokens.get(index).getToken() == TokenType.KEYWORD_END || tokens.get(index).getToken() == TokenType.EOF) {
+                index++;
+                break;
+            }
+
+            if (tokens.get(index).getToken() == TokenType.KEYWORD_THIS) {
+                index = constructorDeclaration.validate(tokens, index);
+                index++;
+                continue;
+            }
+
+            if (tokens.get(index).getToken() == TokenType.KEYWORD_VAR) {
+                index = variableDeclatation.validate(tokens, index);
+                index++;
+                continue;
+            }
+
+            if (tokens.get(index).getToken() == TokenType.KEYWORD_METHOD) {
+                index = methodDeclaration.validate(tokens, index);
+                index++;
+                continue;
+            }
         }
 
-        for(ConstructorDeclaration elem : constructors)
-        {
-            if(!elem.validate() && (!constructors.isEmpty())) { return false;}
-        }
-
-        for(MethodDeclaration elem : methods)
-        {
-            if(!elem.validate() && (!methods.isEmpty())) { return false;}
-        }
-
-        System.out.println("Class Declaration validation");
-        return true;
+        return index++;
     }
     
     // TODO: generate()
     @Override
-    public void generate() {
+    public Integer generate(List<Token> tokens, Integer index) {
         System.out.println("Class Declaration generation");
+        return 0;
     }
     
-    public List<VariableDeclatation> getAttributes() {
-        return attributes;
-    }
-    
-    public List<ConstructorDeclaration> getConstructors() {
-        return constructors;
-    }
-    
-    public List<MethodDeclaration> getMethods() {
-        return methods;
-    }   
-    
-    public void addAttribute(VariableDeclatation attribute) {
-        attributes.add(attribute);
-    }
-    
-    public void addConstructor(ConstructorDeclaration constructor) {
-        constructors.add(constructor);
-    }
-    
-    public void addMethod(MethodDeclaration method) {
-        methods.add(method);
-    }
 }
