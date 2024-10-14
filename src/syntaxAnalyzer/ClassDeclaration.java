@@ -31,16 +31,16 @@ public class ClassDeclaration extends Node {
         syntax.add(TokenType.KEYWORD_IS); // TODO add extends
         
         for (TokenType elem : syntax) {
-            System.out.println(tokens.get(index).getValue() + " " + elem);
+            System.out.println(tokens.get(index).getValue() + " classDecl " + elem);
 
             if (tokens.get(index).getToken() == TokenType.IDENTIFIER && elem == TokenType.IDENTIFIER) {
                 name = tokens.get(index).getValue();
                 index++;
                 if (tokens.get(index).getToken() == TokenType.KEYWORD_EXTENDS) {        
-                    System.out.println(tokens.get(index).getValue() + " ");
+                    System.out.println(tokens.get(index).getValue() + " classDecl ");
                     index++;
                     if (tokens.get(index).getToken() == TokenType.IDENTIFIER && elem == TokenType.IDENTIFIER) {
-                        System.out.println(tokens.get(index).getValue() + " ");
+                        System.out.println(tokens.get(index).getValue() + " classDecl ");
                         baseClass = tokens.get(index).getValue();
                         index++;
                     }
@@ -49,7 +49,7 @@ public class ClassDeclaration extends Node {
             }
 
             if(tokens.get(index).getToken() != elem){
-                SyntaxAnalyzer.errorMessage("jopa");
+                SyntaxAnalyzer.errorMessage("class is incorrectly declared");
             }
             index++;
         }

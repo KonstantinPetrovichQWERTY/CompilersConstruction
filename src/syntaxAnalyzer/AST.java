@@ -14,11 +14,11 @@ public class AST extends Node {
 
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
-        while(index + 1 < tokens.size()){
+        while(index + 2 < tokens.size()){
             System.out.println(index + " / " + tokens.size());
             Node tempClassDeclaration = new ClassDeclaration();
             index = tempClassDeclaration.parse(tokens, index);
-            classDeclarations.addLast(tempClassDeclaration);
+            classDeclarations.add(tempClassDeclaration);
             // System.out.println(index + " / " + tokens.size());
         }
         return index;

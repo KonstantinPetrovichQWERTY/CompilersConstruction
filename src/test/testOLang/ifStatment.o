@@ -2,7 +2,7 @@ class Main is
     this() is
         var trueCondition : Boolean(true)
 
-        if trueCondition then
+        if (trueCondition) then
             String("test if true right").print()
         else
             String("test if true wrong").print()

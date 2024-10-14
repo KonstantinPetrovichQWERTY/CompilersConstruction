@@ -32,7 +32,6 @@ replay_pid*
 /dataSources/
 /dataSources.local.xml
 
-pydev
 testCases
 .idea
 *.xml

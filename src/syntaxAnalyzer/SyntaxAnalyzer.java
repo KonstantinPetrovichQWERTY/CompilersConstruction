@@ -16,7 +16,7 @@ public class SyntaxAnalyzer {
     // }
 
     public static void main(String[] args) {
-        List<Token> tokens = LexicalAnalyzer.getTokens("src/test/testOLang/methodsOverriding.o");
+        List<Token> tokens = LexicalAnalyzer.getTokens("src/test/testOLang/ifStatment.o");
         
         List<Token> tokens2 = new ArrayList<>();
 
