@@ -13,20 +13,16 @@ public class AST extends Node {
     }
 
     @Override
-    public Integer validate(List<Token> tokens, Integer index) {
+    public Integer parse(List<Token> tokens, Integer index) {
         while(index + 1 < tokens.size()){
             System.out.println(index + " / " + tokens.size());
             Node tempClassDeclaration = new ClassDeclaration();
-            index = tempClassDeclaration.validate(tokens, index);
+            index = tempClassDeclaration.parse(tokens, index);
+            classDeclarations.addLast(tempClassDeclaration);
             // System.out.println(index + " / " + tokens.size());
         }
         return index;
     }
 
-    @Override
-    public Integer generate(List<Token> tokens, Integer index) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'generate'");
-    }
 
 }

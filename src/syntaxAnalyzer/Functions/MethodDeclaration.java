@@ -7,7 +7,7 @@ import lexicalAnalyzer.TokenType;
 public class MethodDeclaration extends Function {
 
     @Override
-    public Integer validate(List<Token> tokens, Integer index) {
+    public Integer parse(List<Token> tokens, Integer index) {
         while (true) { 
             System.out.println(tokens.get(index).getValue());
             if (tokens.get(index).getToken() == TokenType.KEYWORD_END || tokens.get(index).getToken() == TokenType.EOF) {
@@ -17,10 +17,5 @@ public class MethodDeclaration extends Function {
         }
     }
     
-    @Override
-    public Integer generate(List<Token> tokens, Integer index) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'generate'");
-    }
     
 }

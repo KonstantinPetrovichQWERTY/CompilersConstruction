@@ -35,10 +35,9 @@ public class SyntaxAnalyzer {
             }
         }
 
-
         AST rootNode = new AST();
-        rootNode.validate(tokens2, 0);
-        rootNode.generate(tokens2, 0);
+        rootNode.parse(tokens2, 0);
+
     }   
 
     public static void errorMessage(String err) {
