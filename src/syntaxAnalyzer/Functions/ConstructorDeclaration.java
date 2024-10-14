@@ -4,6 +4,7 @@ import java.util.List;
 import lexicalAnalyzer.Token;
 import lexicalAnalyzer.TokenType;
 import syntaxAnalyzer.Statements.IfStatement;
+import syntaxAnalyzer.Statements.WhileStatement;
 
 public class ConstructorDeclaration extends Function {
 
@@ -14,8 +15,14 @@ public class ConstructorDeclaration extends Function {
             if (tokens.get(index).getToken() == TokenType.KEYWORD_END || tokens.get(index).getToken() == TokenType.EOF) {
                 return index++;
             }
+            
             if (tokens.get(index).getToken() == TokenType.KEYWORD_IF) {
                 IfStatement stmt = new IfStatement();
+                index = stmt.parse(tokens, index);
+            }
+
+            if (tokens.get(index).getToken() == TokenType.KEYWORD_WHILE) {
+                WhileStatement stmt = new WhileStatement();
                 index = stmt.parse(tokens, index);
             }
             index++;

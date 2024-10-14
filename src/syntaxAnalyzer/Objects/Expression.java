@@ -13,7 +13,7 @@ public class Expression extends Node{
         while (true) { 
             System.out.println(tokens.get(index).getValue() + " expression");
             if ((tokens.get(index).getToken() == TokenType.KEYWORD_END) || (tokens.get(index).getToken() == TokenType.EOF) ||
-            (tokens.get(index).getToken() == TokenType.KEYWORD_THEN)) {
+            (tokens.get(index).getToken() == TokenType.KEYWORD_THEN) || (tokens.get(index).getToken() == TokenType.KEYWORD_LOOP)) {
                 return index++;
             } 
             index++;
