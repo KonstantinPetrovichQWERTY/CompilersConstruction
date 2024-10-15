@@ -50,15 +50,22 @@ public class IfStatement extends Statement {
         index = tmpBaseBlock.parse(tokens, index);
         baseBlock = tmpBaseBlock;
         
-        if (tokens.get(index).getToken() == TokenType.KEYWORD_ELSE) {
-            Block tmpElseBlock = new Block();
-            index++;
-            index = tmpElseBlock.parse(tokens, index);
-            baseBlock = tmpElseBlock;
-        } else if (tokens.get(index).getToken() == TokenType.KEYWORD_END) {
-            return index++;
-        } else {
+        if (null == tokens.get(index).getToken()) {
             SyntaxAnalyzer.errorMessage("if stmt 'else'");
+            return -1;
+        } 
+        
+        switch (tokens.get(index).getToken()) {
+            case KEYWORD_ELSE -> {
+                Block tmpElseBlock = new Block();
+                index++;
+                index = tmpElseBlock.parse(tokens, index);
+                baseBlock = tmpElseBlock;
+            }
+            case KEYWORD_END -> {
+                return index++;
+            }
+            default -> SyntaxAnalyzer.errorMessage("if stmt 'else'");
         }
 
         return index++;

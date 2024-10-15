@@ -1,10 +1,8 @@
 package syntaxAnalyzer;
 
-import java.util.ArrayList;
 import java.util.List;
 import lexicalAnalyzer.LexicalAnalyzer;
 import lexicalAnalyzer.Token;
-import lexicalAnalyzer.TokenType;
 
 public class SyntaxAnalyzer {
     // private String fileName;
@@ -17,26 +15,27 @@ public class SyntaxAnalyzer {
 
     public static void main(String[] args) {
         List<Token> tokens = LexicalAnalyzer.getTokens("src/test/testOLang/whileLoop.o");
-        
-        List<Token> tokens2 = new ArrayList<>();
-
-        for (Token tk : tokens) {
-            switch (tk.getToken()) {
-                case TokenType.PUNCTUATION_SPACE -> { 
-                    continue;
-                }
-                case TokenType.PUNCTUATION_TABULATION -> {
-                    continue;
-                }
-                case TokenType.PUNCTUATION_LINE_BREAK -> {
-                    continue;
-                }
-                default -> tokens2.add(tk);
-            }
-        }
 
         AST rootNode = new AST();
-        rootNode.parse(tokens2, 0);
+        rootNode.parse(tokens, 0);
+
+
+        // for (Token tk : tokens) {
+        //     switch (tk.getToken()) {
+        //         case TokenType.PUNCTUATION_SPACE -> { 
+        //             continue;
+        //         }
+        //         case TokenType.PUNCTUATION_TABULATION -> {
+        //             continue;
+        //         }
+        //         case TokenType.PUNCTUATION_LINE_BREAK -> {
+        //             continue;
+        //         }
+        //         default -> tokens2.add(tk);
+        //     }
+        // }
+
+        
 
     }   
 
