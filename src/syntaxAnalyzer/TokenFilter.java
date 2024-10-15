@@ -1,3 +1,5 @@
+package syntaxanalyzer;
+
 import java.util.ArrayList;
 import java.util.List;
 

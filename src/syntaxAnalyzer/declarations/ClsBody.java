@@ -12,7 +12,8 @@ public class ClsBody extends Declaration {
 
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return index;
+//        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }
