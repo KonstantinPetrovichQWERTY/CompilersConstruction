@@ -1,4 +1,4 @@
-package lexicalAnalyzer;
+package lexicalanalyzer;
 
 public class RealLiteralToken extends Token{
 

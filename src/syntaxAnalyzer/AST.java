@@ -1,28 +1,15 @@
-package syntaxAnalyzer;
+package syntaxanalyzer;
 
 import java.util.ArrayList;
 import java.util.List;
-import lexicalAnalyzer.Token;
+import lexicalanalyzer.Token;
+import syntaxanalyzer.declarations.Cls;
 
-public class AST extends Node {
 
-    List<Node> classDeclarations = new ArrayList<>();
+public class AST {
+    List<Cls> classes = new ArrayList<>();
 
-    // TODO: RootNode constructor
-    public AST() {
+    public void parse(List<Token> tokens) {
+        
     }
-
-    @Override
-    public Integer parse(List<Token> tokens, Integer index) {
-        while(index + 2 < tokens.size()){
-            System.out.println(index + " / " + tokens.size());
-            Node tempClassDeclaration = new ClassDeclaration();
-            index = tempClassDeclaration.parse(tokens, index);
-            classDeclarations.add(tempClassDeclaration);
-            // System.out.println(index + " / " + tokens.size());
-        }
-        return index;
-    }
-
-
 }

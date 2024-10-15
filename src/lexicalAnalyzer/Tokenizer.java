@@ -1,4 +1,4 @@
-package lexicalAnalyzer;
+package lexicalanalyzer;
 import java.util.ArrayList;
 import java.util.List;
 
