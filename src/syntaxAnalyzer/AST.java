@@ -22,7 +22,7 @@ public class AST {
                 Cls cls = new Cls();
                 i = cls.parse(filteredTokens, i);
                 classes.add(cls);
-            } else if (currentToken.getToken() == TokenType.EOF {
+            } else if (currentToken.getToken() == TokenType.EOF) {
                 break;
             }
             i = i + 1;

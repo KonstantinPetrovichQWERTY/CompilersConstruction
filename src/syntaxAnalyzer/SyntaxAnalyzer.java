@@ -15,6 +15,8 @@ public class SyntaxAnalyzer {
 
         for (Cls cls : classes) {
             System.out.println(cls);
+            System.out.println(cls.getName());
+            System.out.println(cls.getBaseClass());
         }
 
     }   

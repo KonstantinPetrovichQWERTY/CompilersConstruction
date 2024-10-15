@@ -1,4 +1,7 @@
-class Circle is
+class Figure is
+end
+
+class Circle extends Figure is
 end
 
 class Main is

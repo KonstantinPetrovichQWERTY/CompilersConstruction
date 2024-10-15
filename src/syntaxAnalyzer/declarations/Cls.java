@@ -12,6 +12,14 @@ public class Cls extends Declaration {
 
     ClsBody body;
 
+    public String getName() {
+        return name;
+    }
+
+    public String getBaseClass() {
+        return baseClass;
+    }
+
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
         if (tokens.get(index).getToken() == TokenType.KEYWORD_CLASS) {
@@ -21,7 +29,7 @@ public class Cls extends Declaration {
         }
 
         if (tokens.get(index).getToken() == TokenType.IDENTIFIER) {
-            name = tokens.get(index).getToken().getValue();
+            name = tokens.get(index).getValue();
             index += 1;
         } else {
             throw new RuntimeException("Unexpected token: " + tokens.get(index).getToken());
@@ -31,7 +39,7 @@ public class Cls extends Declaration {
             index += 1;
 
             if (Objects.requireNonNull(tokens.get(index).getToken()) == TokenType.IDENTIFIER){
-                baseClass = tokens.get(index).getToken().getValue();
+                baseClass = tokens.get(index).getValue();
                 index += 1;
             } else {
                 throw new RuntimeException("Unexpected token: " + tokens.get(index).getToken());
@@ -41,10 +49,11 @@ public class Cls extends Declaration {
         if (Objects.requireNonNull(tokens.get(index).getToken()) == TokenType.KEYWORD_IS) {
             body = new ClsBody();
             index = body.parse(tokens, index);
+            index += 1;
         }
 
         if (Objects.requireNonNull(tokens.get(index).getToken()) == TokenType.KEYWORD_END) {
-            index += 1;
+            return index;
         }
 
         return index;
