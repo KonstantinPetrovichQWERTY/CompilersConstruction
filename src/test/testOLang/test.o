@@ -1,4 +1,5 @@
 class Figure is
+    var b : Integer(100)
 end
 
 class Circle extends Figure is

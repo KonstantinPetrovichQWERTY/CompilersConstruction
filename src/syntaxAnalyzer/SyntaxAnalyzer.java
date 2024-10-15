@@ -13,12 +13,12 @@ public class SyntaxAnalyzer {
         AST rootNode = new AST();
         List<Cls> classes = rootNode.parse(tokens);
 
+        System.out.println(classes.get(0).getBody().getVariables().getFirst().getName());
         for (Cls cls : classes) {
             System.out.println(cls);
             System.out.println(cls.getName());
             System.out.println(cls.getBaseClass());
         }
-
     }   
 
     public static void errorMessage(String err) {

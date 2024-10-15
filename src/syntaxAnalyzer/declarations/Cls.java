@@ -20,6 +20,10 @@ public class Cls extends Declaration {
         return baseClass;
     }
 
+    public ClsBody getBody() {
+        return body;
+    }
+
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
         if (tokens.get(index).getToken() == TokenType.KEYWORD_CLASS) {
@@ -48,7 +52,7 @@ public class Cls extends Declaration {
 
         if (Objects.requireNonNull(tokens.get(index).getToken()) == TokenType.KEYWORD_IS) {
             body = new ClsBody();
-            index = body.parse(tokens, index);
+            index = body.parse(tokens, index+1);
             index += 1;
         }
 
