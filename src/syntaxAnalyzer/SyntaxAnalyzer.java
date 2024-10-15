@@ -5,6 +5,8 @@ import lexicalanalyzer.LexicalAnalyzer;
 import lexicalanalyzer.Token;
 import lexicalanalyzer.TokenType;
 import syntaxanalyzer.declarations.Cls;
+import syntaxanalyzer.declarations.Method;
+import syntaxanalyzer.declarations.Variable;
 
 public class SyntaxAnalyzer {
     public static void main(String[] args) {
@@ -13,11 +15,18 @@ public class SyntaxAnalyzer {
         AST rootNode = new AST();
         List<Cls> classes = rootNode.parse(tokens);
 
-        System.out.println(classes.get(0).getBody().getVariables().getFirst().getName());
         for (Cls cls : classes) {
-            System.out.println(cls);
-            System.out.println(cls.getName());
-            System.out.println(cls.getBaseClass());
+            System.out.println("CLASS " + cls.getName());
+            System.out.println("BASECLASS " + cls.getBaseClass());
+
+
+            for (Variable var : cls.getBody().getVariables()) {
+                System.out.println("VARIABLE " + var.getName() + " " + var.getType() + " " + var.getInitialValue());
+            }
+
+            for (Method method : cls.getBody().getMethods()) {
+                System.out.println("METHOD "  + method.getName());
+            }
         }
     }   
 

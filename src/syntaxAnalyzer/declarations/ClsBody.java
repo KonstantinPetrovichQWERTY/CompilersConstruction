@@ -14,6 +14,14 @@ public class ClsBody extends Declaration {
         return variables;
     }
 
+    public List<Method> getMethods() {
+        return methods;
+    }
+
+    public List<Constructor> getConstructors() {
+        return constructors;
+    }
+
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
         while (index < tokens.size()) {
@@ -40,6 +48,8 @@ public class ClsBody extends Declaration {
             else {
                 throw new RuntimeException("Unexpected token in class body: " + currentToken.getToken());
             }
+
+            index += 1;
         }
         throw new RuntimeException("Unexpected end of tokens while parsing class body");
     }
