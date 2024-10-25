@@ -46,7 +46,7 @@ public class ClsBody extends Declaration {
                 return index;
             }
             else {
-                throw new RuntimeException("Unexpected token in class body: " + currentToken.getToken());
+                throw new RuntimeException("Unexpected token in class body: " + currentToken.getToken() + " on the " + index);
             }
 
             index += 1;

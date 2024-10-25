@@ -15,8 +15,12 @@ abstract public class Declaration {
      */
     abstract public Integer parse(List<Token> tokens, Integer index);
 
-
+    /**
+     * this method return the index of the token
+     * of the last element of the declaration
+     **/
     public Integer parse(List<Token> tokens) {
+
         return parse(tokens, 0);
     }
 }

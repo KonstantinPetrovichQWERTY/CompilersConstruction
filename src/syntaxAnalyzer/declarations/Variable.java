@@ -46,6 +46,8 @@ public class Variable extends Declaration {
         }
 
         // Parse the type (e.g., Integer, String, etc.)
+        // TODO: SHOULD BE ANY CLASS, or Expression
+        // TODO: Expression class
         if (tokens.get(index).getToken().name().startsWith("KEYWORD_")) {
             type = tokens.get(index).getValue();
             index += 1;
@@ -70,7 +72,7 @@ public class Variable extends Declaration {
 
         // Expect ')' to close the initial value
         if (tokens.get(index).getToken() == TokenType.PUNCTUATION_RIGHT_PARENTHESIS) {
-            index += 1; // Move past ')'
+//            index += 1; // Move past ')'
         } else {
             throw new RuntimeException("Expected ')', found: " + tokens.get(index).getToken());
         }

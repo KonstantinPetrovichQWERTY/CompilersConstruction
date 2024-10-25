@@ -1,16 +1,9 @@
 class Figure is
     var b : Integer(100)
     var c : Integer(100)
-
-    method square(x : Integer) : Integer is
-    end
 end
 
-class Square extends Figure is
-end
-
-class Circle extends Figure is
-end
-
-class Main is
+class Figure is
+    var b : Integer(100)
+    var c : Integer(100)
 end
