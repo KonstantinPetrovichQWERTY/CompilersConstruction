@@ -3,7 +3,6 @@ package syntaxanalyzer;
 import java.util.List;
 import lexicalanalyzer.LexicalAnalyzer;
 import lexicalanalyzer.Token;
-import lexicalanalyzer.TokenType;
 import syntaxanalyzer.declarations.Cls;
 import syntaxanalyzer.declarations.Method;
 import syntaxanalyzer.declarations.Variable;

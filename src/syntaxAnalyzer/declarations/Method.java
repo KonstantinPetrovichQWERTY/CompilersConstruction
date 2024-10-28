@@ -1,10 +1,9 @@
 package syntaxanalyzer.declarations;
 
-import lexicalanalyzer.Token;
-import lexicalanalyzer.TokenType;
-
 import java.util.ArrayList;
 import java.util.List;
+import lexicalanalyzer.Token;
+import lexicalanalyzer.TokenType;
 
 public class Method extends Declaration {
     private String name;
@@ -52,6 +51,8 @@ public class Method extends Declaration {
             throw new RuntimeException("Expected '(', found: " + tokens.get(index).getToken());
         }
 
+        
+        // TODO: во всех случаях мы обязаны писать возвращаемый тип? нужно периписать тесты или метод parse
         // Expect ':' and return type
         if (tokens.get(index).getToken() == TokenType.PUNCTUATION_SEMICOLON) {
             index += 1; // Move past ':'
