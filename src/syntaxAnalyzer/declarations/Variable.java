@@ -1,7 +1,6 @@
 package syntaxanalyzer.declarations;
 
 import java.util.List;
-
 import lexicalanalyzer.Token;
 import lexicalanalyzer.TokenType;
 
@@ -62,6 +61,7 @@ public class Variable extends Declaration {
             throw new RuntimeException("Expected '(', found: " + tokens.get(index).getToken());
         }
 
+        // TODO: it will work only for integers, not other types
         // Parse the initial value (e.g., 100)
         if (tokens.get(index).getToken() == TokenType.LITERAL_INTEGER) {
             initialValue = tokens.get(index).getValue();
