@@ -29,11 +29,6 @@ public class IfStatement extends Declaration {
     //     String("test if true wrong").print()
     // end
 
-    // method makeSound() is
-    //     String("Animal makes a sound").print()
-    // end
-
-
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
         if (tokens.get(index).getToken() == TokenType.KEYWORD_IF) {
