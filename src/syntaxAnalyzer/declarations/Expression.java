@@ -14,9 +14,12 @@ public class Expression extends Declaration {
     public Integer parse(List<Token> tokens, Integer index) {
         primary = new Primary();
         index = primary.parse(tokens, index);
+        index++;
 
         suffixes = new ArrayList<>();
-
+        if (!(index < tokens.size() && tokens.get(index).getToken() == TokenType.PUNCTUATION_DOT)) {
+            return index;
+        }
         while (index < tokens.size() && tokens.get(index).getToken() == TokenType.PUNCTUATION_DOT) {
             index++; // Move past '.'
 
@@ -68,7 +71,7 @@ public class Expression extends Declaration {
             }
         }
 
-        return index;
+        return index-1;
     }
 
     public Primary getPrimary() {

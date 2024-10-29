@@ -1,3 +1,3 @@
 class Figure is
-    var b : 100.Hello
+    var b : 100.Hello(200)
 end
