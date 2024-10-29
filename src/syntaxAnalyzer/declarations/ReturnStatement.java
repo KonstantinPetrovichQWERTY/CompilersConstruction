@@ -25,9 +25,10 @@ public class ReturnStatement extends Declaration {
         } else {
             throw new RuntimeException("Expected 'return' keyword, found: " + tokens.get(index).getToken());
         }
-
+        
+        // TODO: empy return statement?
         value = new Expression();
-        index = value.parse(tokens, index) + 1; 
+        index = value.parse(tokens, index) + 1; // TODO: Нужен ли +1?
 
         return index;
     }

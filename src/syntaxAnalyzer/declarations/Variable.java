@@ -6,11 +6,13 @@ import lexicalanalyzer.TokenType;
 
 public class Variable extends Declaration {
     private String name;
+
     private Expression expression;
 
     public String getName() {
         return name;
     }
+
 
     public Expression getExpression() {
         return expression;
@@ -21,6 +23,7 @@ public class Variable extends Declaration {
         ensureToken(tokens, index, TokenType.KEYWORD_VAR);
         index++;
 
+
         Token identifier = ensureToken(tokens, index, TokenType.IDENTIFIER);
         name = identifier.getValue();
         index++;
@@ -30,6 +33,7 @@ public class Variable extends Declaration {
 
         expression = new Expression();
         index = expression.parse(tokens, index);
+
 
         return index; // Return the updated index
     }

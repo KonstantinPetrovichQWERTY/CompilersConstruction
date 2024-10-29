@@ -43,6 +43,8 @@ public class IfStatement extends Declaration {
 
             condition = new Expression();
             index = condition.parse(tokens, index); // Parse condition
+
+            index += 1; // Move past ')'
         } else {
             throw new RuntimeException("Expected '(', found: " + tokens.get(index).getToken());
         }
@@ -56,7 +58,7 @@ public class IfStatement extends Declaration {
 
         // Parse trueBlock (redirect to Block)
         trueBlock = new Block();
-        index = trueBlock.parse(tokens, index) + 1;
+        index = trueBlock.parse(tokens, index) + 1; // TODO: Нужен ли тут +1?
 
         // Expect 'else' for else block start (OPTIONAL)
         if (tokens.get(index).getToken() == TokenType.KEYWORD_ELSE) {
@@ -66,8 +68,6 @@ public class IfStatement extends Declaration {
             falseBlock = new Block();
             index = falseBlock.parse(tokens, index);
 
-        } else {
-            // throw new RuntimeException("Expected 'else', found: " + tokens.get(index).getToken());
         }
 
         // Expect 'end' to finish if statement declaration
