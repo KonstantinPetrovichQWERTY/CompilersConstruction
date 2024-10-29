@@ -7,7 +7,8 @@ end
 
 class Main is
     this() is
-        var calc : Calculator()
+        var calc : Calculator(1).plus(1)
+        Calculator(1).plus(1)
         var result : Integer(0)
         result := calc.add(5, 3)
         result.print()        

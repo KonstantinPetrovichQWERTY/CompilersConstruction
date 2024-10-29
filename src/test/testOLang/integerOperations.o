@@ -1,6 +1,6 @@
 class Main is
     this() is
-        var a : Integer(100)
+        var a : Integer(100).addOne
         var b : Integer(2.2)
 
         var min : Integer(0)

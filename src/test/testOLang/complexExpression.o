@@ -1,8 +1,8 @@
 class Main is
     this() is
-        var a : Integer(5)
-        var b : Integer(3)
-        var c : Integer(0)
+        var a : 5.Plus(10).Plus(15)
+        var b : 3
+        var c : 0
         c := a.Plus(b).Mult(2).Minus(1)
         c.print()
     end
