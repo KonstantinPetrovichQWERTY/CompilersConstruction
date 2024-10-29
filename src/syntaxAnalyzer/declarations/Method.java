@@ -50,20 +50,16 @@ public class Method extends Declaration {
         } else {
             throw new RuntimeException("Expected '(', found: " + tokens.get(index).getToken());
         }
-
         
-        // TODO: во всех случаях мы обязаны писать возвращаемый тип? нужно периписать тесты или метод parse
-        // Expect ':' and return type
+        // Expect ':' and return type (OPTIONAL)
         if (tokens.get(index).getToken() == TokenType.PUNCTUATION_SEMICOLON) {
             index += 1; // Move past ':'
-            if (tokens.get(index).getToken().name().startsWith("KEYWORD_")) {
+            if (tokens.get(index).getToken() == TokenType.IDENTIFIER) {
                 returnType = tokens.get(index).getValue();
                 index += 1;
             } else {
                 throw new RuntimeException("Expected return type, found: " + tokens.get(index).getToken());
             }
-        } else {
-            throw new RuntimeException("Expected ':', found: " + tokens.get(index).getToken());
         }
 
         // Expect 'is' for method body start
@@ -94,7 +90,7 @@ public class Method extends Declaration {
                 if (tokens.get(index).getToken() == TokenType.PUNCTUATION_SEMICOLON) {
                     index += 1; // Move past ':'
 
-                    if (tokens.get(index).getToken().name().startsWith("KEYWORD_")) {
+                    if (tokens.get(index).getToken() == TokenType.IDENTIFIER) {
                         String paramType = tokens.get(index).getValue();
                         parameters.add(new Parameter(paramName, paramType));
                         index += 1;
@@ -113,7 +109,9 @@ public class Method extends Declaration {
                 throw new RuntimeException("Expected parameter name (identifier), found: " + tokens.get(index).getToken());
             }
         }
+
         index += 1; // Move past ')'
         return index;
+        
     }
 }

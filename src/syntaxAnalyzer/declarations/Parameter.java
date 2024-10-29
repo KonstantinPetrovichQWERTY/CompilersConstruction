@@ -1,9 +1,8 @@
 package syntaxanalyzer.declarations;
 
+import java.util.List;
 import lexicalanalyzer.Token;
 import lexicalanalyzer.TokenType;
-
-import java.util.List;
 
 public class Parameter extends Declaration {
     private String name;
@@ -41,11 +40,11 @@ public class Parameter extends Declaration {
         }
 
         // Expect type (e.g., Integer, String, etc.)
-        if (tokens.get(index).getToken().name().startsWith("KEYWORD_")) {
+        if (tokens.get(index).getToken() == TokenType.IDENTIFIER) {
             type = tokens.get(index).getValue();
             index += 1;
         } else {
-            throw new RuntimeException("Expected parameter type, found: " + tokens.get(index).getToken());
+            throw new RuntimeException("Expected parameter type (IDENTIFIER), found: " + tokens.get(index).getToken());
         }
 
         return index; // Return updated index

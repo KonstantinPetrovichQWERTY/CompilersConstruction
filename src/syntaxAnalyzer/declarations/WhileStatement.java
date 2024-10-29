@@ -35,10 +35,13 @@ public class WhileStatement extends Declaration {
 
         // Expect '(' for condition
         if (tokens.get(index).getToken() == TokenType.PUNCTUATION_LEFT_PARENTHESIS) {
+
             index += 1; // Move past '('
 
             condition = new Expression();
             index = condition.parse(tokens, index); // Parse condition
+
+            index += 1; // Move past ')'
         } else {
             throw new RuntimeException("Expected '(', found: " + tokens.get(index).getToken());
         }
@@ -52,7 +55,7 @@ public class WhileStatement extends Declaration {
 
         // Parse body (redirect to Block)
         body = new Block();
-        index = body.parse(tokens, index) + 1;
+        index = body.parse(tokens, index) + 1; // TODO: Нужен ли +1?
         
         // Expect 'end' to finish if statement declaration
         if (tokens.get(index).getToken() == TokenType.KEYWORD_END) {

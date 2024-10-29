@@ -2,7 +2,6 @@ package syntaxanalyzer.declarations;
 
 import java.util.List;
 import java.util.Objects;
-
 import lexicalanalyzer.Token;
 import lexicalanalyzer.TokenType;
 
@@ -29,14 +28,14 @@ public class Cls extends Declaration {
         if (tokens.get(index).getToken() == TokenType.KEYWORD_CLASS) {
             index += 1;
         } else {
-            throw new RuntimeException("Unexpected token: " + tokens.get(index).getToken());
+            throw new RuntimeException("Expected 'class', found: " + tokens.get(index).getToken());
         }
 
         if (tokens.get(index).getToken() == TokenType.IDENTIFIER) {
             name = tokens.get(index).getValue();
             index += 1;
         } else {
-            throw new RuntimeException("Unexpected token: " + tokens.get(index).getToken());
+            throw new RuntimeException("Expected class name (identifier), found: " + tokens.get(index).getToken());
         }
 
         if (Objects.requireNonNull(tokens.get(index).getToken()) == TokenType.KEYWORD_EXTENDS) {
@@ -46,20 +45,23 @@ public class Cls extends Declaration {
                 baseClass = tokens.get(index).getValue();
                 index += 1;
             } else {
-                throw new RuntimeException("Unexpected token: " + tokens.get(index).getToken());
+                throw new RuntimeException("Expected 'extends', found: " + tokens.get(index).getToken());
             }
         }
 
         if (Objects.requireNonNull(tokens.get(index).getToken()) == TokenType.KEYWORD_IS) {
-            body = new ClsBody();
-            index = body.parse(tokens, index+1);
             index += 1;
+        } else {
+            throw new RuntimeException("Expected 'is', found: " + tokens.get(index).getToken());
         }
+        
+        body = new ClsBody();
+        index = body.parse(tokens, index+1);
 
         if (Objects.requireNonNull(tokens.get(index).getToken()) == TokenType.KEYWORD_END) {
             return index;
+        } else {
+            throw new RuntimeException("Expected 'end', found: " + tokens.get(index).getToken());
         }
-
-        return index;
     }
 }

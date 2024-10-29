@@ -63,7 +63,7 @@ public class Constructor extends Declaration {
                 if (tokens.get(index).getToken() == TokenType.PUNCTUATION_SEMICOLON) {
                     index += 1; // Move past ':'
 
-                    if (tokens.get(index).getToken().name().startsWith("KEYWORD_")) {
+                    if (tokens.get(index).getToken() == TokenType.IDENTIFIER) {
                         String paramType = tokens.get(index).getValue();
                         parameters.add(new Parameter(paramName, paramType));
                         index += 1;
