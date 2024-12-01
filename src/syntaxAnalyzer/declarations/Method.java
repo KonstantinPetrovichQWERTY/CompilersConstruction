@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import lexicalanalyzer.Token;
 import lexicalanalyzer.TokenType;
+import syntaxanalyzer.utils.ParameterDeclaration;
 
 public class Method extends Declaration {
     private String name;
     private String returnType;
-    private List<Parameter> parameters = new ArrayList<>();
+
+    private final Parameters parameters = new Parameters();
     private Block body;
 
     public String getName() {
@@ -19,8 +21,8 @@ public class Method extends Declaration {
         return returnType;
     }
 
-    public List<Parameter> getParameters() {
-        return parameters;
+    public List<ParameterDeclaration> getParameters() {
+        return parameters.getParameters();
     }
 
     public Block getBody() {
@@ -29,89 +31,34 @@ public class Method extends Declaration {
 
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
-        if (tokens.get(index).getToken() == TokenType.KEYWORD_METHOD) {
-            index += 1; // Move past the 'method' keyword
-        } else {
-            throw new RuntimeException("Expected 'method' keyword, found: " + tokens.get(index).getToken());
-        }
+        ensureToken(tokens, index, TokenType.KEYWORD_METHOD);
+        index += 1;
 
-        // Parse method name (identifier)
-        if (tokens.get(index).getToken() == TokenType.IDENTIFIER) {
-            name = tokens.get(index).getValue();
-            index += 1;
-        } else {
-            throw new RuntimeException("Expected method name (identifier), found: " + tokens.get(index).getToken());
-        }
+        name = ensureToken(tokens, index, TokenType.IDENTIFIER).getValue();
+        index += 1;
 
-        // Expect '(' for parameters
-        if (tokens.get(index).getToken() == TokenType.PUNCTUATION_LEFT_PARENTHESIS) {
-            index += 1; // Move past '('
-            index = parseParameters(tokens, index); // Parse parameters
-        } else {
-            throw new RuntimeException("Expected '(', found: " + tokens.get(index).getToken());
-        }
-        
+        ensureToken(tokens, index, TokenType.PUNCTUATION_LEFT_PARENTHESIS);
+        index = parameters.parse(tokens, index);
+
+        ensureToken(tokens, index, TokenType.PUNCTUATION_RIGHT_PARENTHESIS);
+        index += 1;
+
         // Expect ':' and return type (OPTIONAL)
         if (tokens.get(index).getToken() == TokenType.PUNCTUATION_SEMICOLON) {
+            ensureToken(tokens, index, TokenType.PUNCTUATION_SEMICOLON);
             index += 1; // Move past ':'
-            if (tokens.get(index).getToken() == TokenType.IDENTIFIER) {
-                returnType = tokens.get(index).getValue();
-                index += 1;
-            } else {
-                throw new RuntimeException("Expected return type, found: " + tokens.get(index).getToken());
-            }
+
+            returnType = ensureToken(tokens, index, TokenType.IDENTIFIER).getValue();
+            index += 1;
         }
 
-        // Expect 'is' for method body start
-        if (tokens.get(index).getToken() == TokenType.KEYWORD_IS) {
-            index += 1; // Move past 'is'
-        } else {
-            throw new RuntimeException("Expected 'is', found: " + tokens.get(index).getToken());
-        }
+        ensureToken(tokens, index, TokenType.KEYWORD_IS);
+        index +=1;
 
-        // Parse method body (redirect to Block)
         body = new Block();
-        index = body.parse(tokens, index) + 1;
+        index = body.parse(tokens, index);
 
-        // Expect 'end' to finish method declaration
-        if (tokens.get(index).getToken() == TokenType.KEYWORD_END) {
-            return index;
-        } else {
-            throw new RuntimeException("Expected 'end', found: " + tokens.get(index).getToken());
-        }
-    }
-
-    private Integer parseParameters(List<Token> tokens, Integer index) {
-        while (tokens.get(index).getToken() != TokenType.PUNCTUATION_RIGHT_PARENTHESIS) {
-            if (tokens.get(index).getToken() == TokenType.IDENTIFIER) {
-                String paramName = tokens.get(index).getValue();
-                index += 1;
-
-                if (tokens.get(index).getToken() == TokenType.PUNCTUATION_SEMICOLON) {
-                    index += 1; // Move past ':'
-
-                    if (tokens.get(index).getToken() == TokenType.IDENTIFIER) {
-                        String paramType = tokens.get(index).getValue();
-                        parameters.add(new Parameter(paramName, paramType));
-                        index += 1;
-                    } else {
-                        throw new RuntimeException("Expected parameter type, found: " + tokens.get(index).getToken());
-                    }
-                } else {
-                    throw new RuntimeException("Expected ':', found: " + tokens.get(index).getToken());
-                }
-
-                // Check for commas separating parameters
-                if (tokens.get(index).getToken() == TokenType.PUNCTUATION_COMMA) {
-                    index += 1; // Move past ','
-                }
-            } else {
-                throw new RuntimeException("Expected parameter name (identifier), found: " + tokens.get(index).getToken());
-            }
-        }
-
-        index += 1; // Move past ')'
+        ensureToken(tokens, index, TokenType.KEYWORD_END);
         return index;
-        
     }
 }
