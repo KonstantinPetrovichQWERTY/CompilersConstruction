@@ -28,7 +28,7 @@ public class SyntaxAnalyzer {
             }
 
             for (Method method : cls.getBody().getMethods()) {
-                System.out.println("METHOD "  + method.getName());
+                System.out.println("METHOD "  + method.getName() + " " + method.getParameters());
             }
         }
     }   
