@@ -24,7 +24,7 @@ public class SyntaxAnalyzer {
             }
 
             for (Variable var : cls.getBody().getVariables()) {
-                System.out.println("VARIABLE " + var.getName() + " " + var.getName() + " " + var.getExpression().getPrimary().getPrimaryType().toString());
+                System.out.println("VARIABLE " + var.getName() + " " + var.getExpression().getPrimary().getPrimaryType().toString());
             }
 
             for (Method method : cls.getBody().getMethods()) {
