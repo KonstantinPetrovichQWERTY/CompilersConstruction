@@ -27,16 +27,16 @@ abstract public class Declaration {
 
     /** Check if the current token on the index position
      * otherwise throw exception.
-     * return NEXT index;
+     * return TOKEN;
      */
     public Token ensureToken(List<Token> tokens, Integer index, TokenType tokenType) {
         if (tokens.get(index).getToken() == tokenType) {
             index += 1;
         } else {
             throw new RuntimeException(
-                    "Expected" +
+                    "Expected " +
                     tokenType.toString() +
-                    "found: " +
+                    " but found " +
                     tokens.get(index).getToken()
             );
         }
