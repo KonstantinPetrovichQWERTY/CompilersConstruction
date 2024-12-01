@@ -34,15 +34,9 @@ public class Cls extends Declaration {
 
         if (Objects.requireNonNull(tokens.get(index).getToken()) == TokenType.KEYWORD_EXTENDS) {
             index += 1;
-
             baseClass = ensureToken(tokens, index, TokenType.IDENTIFIER).getValue();
             index += 1;
-        } else {
-            throw new RuntimeException("Expected 'is', found: " + tokens.get(index).getToken());
         }
-        
-        body = new ClsBody();
-        index = body.parse(tokens, index+1);
 
         ensureToken(tokens, index, TokenType.KEYWORD_IS);
         body = new ClsBody();
