@@ -25,31 +25,17 @@ public class Cls extends Declaration {
 
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
-        if (tokens.get(index).getToken() == TokenType.KEYWORD_CLASS) {
-            index += 1;
-        } else {
-            throw new RuntimeException("Expected 'class', found: " + tokens.get(index).getToken());
-        }
+        ensureToken(tokens, index, TokenType.KEYWORD_CLASS);
+        index += 1;
 
-        if (tokens.get(index).getToken() == TokenType.IDENTIFIER) {
-            name = tokens.get(index).getValue();
-            index += 1;
-        } else {
-            throw new RuntimeException("Expected class name (identifier), found: " + tokens.get(index).getToken());
-        }
+        name = ensureToken(tokens, index, TokenType.IDENTIFIER).getValue();
+        index += 1;
+
 
         if (Objects.requireNonNull(tokens.get(index).getToken()) == TokenType.KEYWORD_EXTENDS) {
             index += 1;
 
-            if (Objects.requireNonNull(tokens.get(index).getToken()) == TokenType.IDENTIFIER){
-                baseClass = tokens.get(index).getValue();
-                index += 1;
-            } else {
-                throw new RuntimeException("Expected 'extends', found: " + tokens.get(index).getToken());
-            }
-        }
-
-        if (Objects.requireNonNull(tokens.get(index).getToken()) == TokenType.KEYWORD_IS) {
+            baseClass = ensureToken(tokens, index, TokenType.IDENTIFIER).getValue();
             index += 1;
         } else {
             throw new RuntimeException("Expected 'is', found: " + tokens.get(index).getToken());
@@ -58,10 +44,10 @@ public class Cls extends Declaration {
         body = new ClsBody();
         index = body.parse(tokens, index+1);
 
-        if (Objects.requireNonNull(tokens.get(index).getToken()) == TokenType.KEYWORD_END) {
-            return index;
-        } else {
-            throw new RuntimeException("Expected 'end', found: " + tokens.get(index).getToken());
-        }
+        ensureToken(tokens, index, TokenType.KEYWORD_IS);
+        body = new ClsBody();
+        index = body.parse(tokens, index);
+        ensureToken(tokens, index, TokenType.KEYWORD_END);
+        return index;
     }
 }
