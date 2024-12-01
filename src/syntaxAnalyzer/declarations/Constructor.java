@@ -8,7 +8,7 @@ import syntaxanalyzer.utils.ParameterDeclaration;
 
 public class Constructor extends Declaration {
 
-    private Block body = new Block();
+    private final Block body = new Block();
     private Parameters parameters;
     public List<ParameterDeclaration> getParameters() {
         return parameters.getParameters();
