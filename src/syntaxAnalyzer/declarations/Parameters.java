@@ -19,17 +19,13 @@ public class Parameters extends Declaration
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
         ensureToken(tokens, index++, TokenType.PUNCTUATION_LEFT_PARENTHESIS);
-
         while (index < tokens.size()) {
             TokenType currentTokenType = tokens.get(index).getToken();
-
             if (currentTokenType == TokenType.IDENTIFIER) {
                 String name = ensureToken(tokens, index++, TokenType.IDENTIFIER).getValue();
                 ensureToken(tokens, index++, TokenType.PUNCTUATION_SEMICOLON);
                 String type = ensureToken(tokens, index++, TokenType.IDENTIFIER).getValue();
-
                 parameters.add(new ParameterDeclaration(name, type));
-
                 if (tokens.get(index).getToken() == TokenType.PUNCTUATION_RIGHT_PARENTHESIS) {
                     return index;
                 }
@@ -40,7 +36,6 @@ public class Parameters extends Declaration
                 throw new RuntimeException("Unexpected token: " + currentTokenType);
             }
         }
-
         throw new RuntimeException("Parameters declaration is not finished");
     }
 
