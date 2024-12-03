@@ -1,5 +1,4 @@
 class Main is
-    var a := 1
     this(a : Integer_, B: Integer_) is
     end
     
@@ -11,5 +10,6 @@ class Main is
 end
 
 class AnotherClass extends Main is
-    this(a : String_, b: String_)
+    this(a : String_, b: String_) is
+    end
 end
