@@ -1,9 +1,15 @@
-class Figure is
-    var b : 100.Mult(200)
-    var c : 100.Mult(200)
-end
 class Main is
-    var b : 100.Mult(200)
-    var c : 100.Mult(200)
-    var d : 100.Mult(300)
+    var a := 1
+    this(a : Integer_, B: Integer_) is
+    end
+    
+    method add(a : Integer_, b : Integer_) : Integer_ is
+    end
+
+    method finish() is
+    end
+end
+
+class AnotherClass extends Main is
+    this(a : String_, b: String_)
 end
