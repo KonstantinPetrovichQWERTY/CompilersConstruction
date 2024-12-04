@@ -1,15 +1,8 @@
 class Main is
-    this(a : Integer_, B: Integer_) is
-    end
-    
-    method add(a : Integer_, b : Integer_) : Integer_ is
-    end
+    var field : A.hello()
 
-    method finish() is
-    end
-end
-
-class AnotherClass extends Main is
-    this(a : String_, b: String_) is
+    this() is
+        var a : 10
+        var b : 10.toString().print("hello", 10)
     end
 end
