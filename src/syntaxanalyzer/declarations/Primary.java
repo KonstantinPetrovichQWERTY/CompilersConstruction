@@ -2,6 +2,7 @@ package syntaxanalyzer.declarations;
 
 import lexicalanalyzer.TokenType;
 import lexicalanalyzer.Token;
+import syntaxanalyzer.utils.PrimaryType;
 
 import java.util.List;
 

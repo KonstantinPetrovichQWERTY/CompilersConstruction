@@ -1,4 +1,4 @@
-package syntaxanalyzer.declarations;
+package syntaxanalyzer.utils;
 
 public enum PrimaryType {
     IntegerLiteral,
