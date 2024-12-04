@@ -63,7 +63,9 @@ public class Block extends Declaration{
                 return index;
             }
             else {
-                throw new RuntimeException("Unexpected token in class body: " + currentToken.getToken() + " on the " + index);
+                Expression expression = new Expression();
+                index = expression.parse(tokens, index);
+                parts.add(expression);
             }
 
             index += 1;
