@@ -1,13 +1,14 @@
 package syntaxanalyzer.declarations;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import lexicalanalyzer.Token;
 import lexicalanalyzer.TokenType;
 
 public class Block extends Declaration{
 
-    List<Declaration> parts;
+    List<Declaration> parts = new ArrayList<>();
     
     public List<Declaration> getParts() {
         return parts;
