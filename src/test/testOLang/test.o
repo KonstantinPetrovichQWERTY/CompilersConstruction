@@ -1,8 +1,5 @@
 class Main is
-    var field : A.hello()
-
     this() is
-        var a : 10
-        var b : 10.toString().print("hello", 10)
+        "Hello world".print()
     end
 end
