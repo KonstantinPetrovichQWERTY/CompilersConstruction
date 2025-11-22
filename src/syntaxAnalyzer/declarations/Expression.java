@@ -1,7 +1,7 @@
-package syntaxanalyzer.declarations;
+package syntaxAnalyzer.declarations;
 
 import java.util.List;
-import lexicalanalyzer.Token;
+import lexicalAnalyzer.Token;
 
 public class Expression extends Declaration {
 

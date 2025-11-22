@@ -1,12 +1,12 @@
-package syntaxanalyzer;
+package syntaxAnalyzer;
 
 import java.util.List;
-import lexicalanalyzer.LexicalAnalyzer;
-import lexicalanalyzer.Token;
-import syntaxanalyzer.declarations.Cls;
-import syntaxanalyzer.declarations.Constructor;
-import syntaxanalyzer.declarations.Method;
-import syntaxanalyzer.declarations.Variable;
+import lexicalAnalyzer.LexicalAnalyzer;
+import lexicalAnalyzer.Token;
+import syntaxAnalyzer.declarations.Cls;
+import syntaxAnalyzer.declarations.Constructor;
+import syntaxAnalyzer.declarations.Method;
+import syntaxAnalyzer.declarations.Variable;
 
 public class SyntaxAnalyzer {
     public static void main(String[] args) {

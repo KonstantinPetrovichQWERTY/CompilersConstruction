@@ -32,6 +32,9 @@ replay_pid*
 /dataSources/
 /dataSources.local.xml
 
+.gradle/
+build/
+
 testCases
 .idea
 *.xml

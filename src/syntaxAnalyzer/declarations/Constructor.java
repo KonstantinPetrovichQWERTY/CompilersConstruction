@@ -1,9 +1,9 @@
-package syntaxanalyzer.declarations;
+package syntaxAnalyzer.declarations;
 
 import java.util.ArrayList;
 import java.util.List;
-import lexicalanalyzer.Token;
-import lexicalanalyzer.TokenType;
+import lexicalAnalyzer.Token;
+import lexicalAnalyzer.TokenType;
 
 public class Constructor extends Declaration {
 

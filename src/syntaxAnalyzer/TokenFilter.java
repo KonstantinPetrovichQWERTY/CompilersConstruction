@@ -1,10 +1,10 @@
-package syntaxanalyzer;
+package syntaxAnalyzer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import lexicalanalyzer.Token;
-import lexicalanalyzer.TokenType;
+import lexicalAnalyzer.Token;
+import lexicalAnalyzer.TokenType;
 
 public class TokenFilter {
 

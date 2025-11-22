@@ -1,12 +1,12 @@
-package syntaxanalyzer;
+package syntaxAnalyzer;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import lexicalanalyzer.Token;
-import lexicalanalyzer.TokenType;
-import syntaxanalyzer.declarations.Cls;
+import lexicalAnalyzer.Token;
+import lexicalAnalyzer.TokenType;
+import syntaxAnalyzer.declarations.Cls;
 
 
 public class AST {
