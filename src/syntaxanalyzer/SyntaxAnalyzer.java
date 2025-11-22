@@ -40,7 +40,8 @@ public class SyntaxAnalyzer {
                 }
             } catch (Exception e) {
                 System.out.println("Произошла ошибка: " + e.getMessage());
-                continue;
+//                continue;
+                throw e;
             }
        
             

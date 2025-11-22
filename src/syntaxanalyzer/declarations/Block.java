@@ -61,8 +61,9 @@ public class Block extends Declaration{
             } 
             else if (currentToken.getToken() == TokenType.KEYWORD_END) {
                 return index;
-            }
-            else {
+            } else if (currentToken.getToken() == TokenType.KEYWORD_ELSE) {
+                return index;
+            } else {
                 Expression expression = new Expression();
                 index = expression.parse(tokens, index);
                 parts.add(expression);
