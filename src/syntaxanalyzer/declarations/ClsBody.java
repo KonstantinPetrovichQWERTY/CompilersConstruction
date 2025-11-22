@@ -5,6 +5,9 @@ import java.util.List;
 import lexicalanalyzer.Token;
 import lexicalanalyzer.TokenType;
 
+/** ClsBody starts with `is` and ends with `end`
+ * This should be passed as first index and index for `end` is returns
+* */
 public class ClsBody extends Declaration {
     List<Constructor> constructors = new ArrayList<>();
     List<Method> methods = new ArrayList<>();
@@ -22,8 +25,11 @@ public class ClsBody extends Declaration {
         return constructors;
     }
 
+
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
+        ensureToken(tokens, index, TokenType.KEYWORD_IS);
+        index+=1;
         while (index < tokens.size()) {
             Token currentToken = tokens.get(index);
 

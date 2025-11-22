@@ -49,6 +49,7 @@ public class IfStatement extends Declaration {
             throw new RuntimeException("Expected '(', found: " + tokens.get(index).getToken());
         }
 
+        index++;
         // Expect 'then' for true block start
         if (tokens.get(index).getToken() == TokenType.KEYWORD_THEN) {
             index += 1; // Move past 'then'

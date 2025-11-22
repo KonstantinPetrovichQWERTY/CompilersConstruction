@@ -3,6 +3,7 @@ package syntaxanalyzer.declarations;
 import java.util.List;
 
 import lexicalanalyzer.Token;
+import lexicalanalyzer.TokenType;
 
 abstract public class Declaration {
     
@@ -22,5 +23,23 @@ abstract public class Declaration {
     public Integer parse(List<Token> tokens) {
 
         return parse(tokens, 0);
+    }
+
+    /** Check if the current token on the index position
+     * otherwise throw exception.
+     * return TOKEN;
+     */
+    public Token ensureToken(List<Token> tokens, Integer index, TokenType tokenType) {
+        if (tokens.get(index).getToken() == tokenType) {
+            index += 1;
+        } else {
+            throw new RuntimeException(
+                    "Expected " +
+                    tokenType.toString() +
+                    " but found " +
+                    tokens.get(index).getToken()
+            );
+        }
+        return tokens.get(index-1);
     }
 }

@@ -13,5 +13,12 @@ public class Token {
 
     public String getValue() {
         return this.token.getValue();
-    } 
+    }
+
+    @Override
+    public String toString() {
+        return  token.name() +
+                ", " + getValue();
+    }
+
 }

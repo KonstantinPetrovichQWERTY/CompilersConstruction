@@ -1,13 +1,14 @@
 package syntaxanalyzer.declarations;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import lexicalanalyzer.Token;
 import lexicalanalyzer.TokenType;
 
 public class Block extends Declaration{
 
-    List<Declaration> parts;
+    List<Declaration> parts = new ArrayList<>();
     
     public List<Declaration> getParts() {
         return parts;
@@ -60,9 +61,12 @@ public class Block extends Declaration{
             } 
             else if (currentToken.getToken() == TokenType.KEYWORD_END) {
                 return index;
-            }
-            else {
-                throw new RuntimeException("Unexpected token in class body: " + currentToken.getToken() + " on the " + index);
+            } else if (currentToken.getToken() == TokenType.KEYWORD_ELSE) {
+                return index;
+            } else {
+                Expression expression = new Expression();
+                index = expression.parse(tokens, index);
+                parts.add(expression);
             }
 
             index += 1;

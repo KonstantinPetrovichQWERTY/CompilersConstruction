@@ -20,16 +20,11 @@ public class ReturnStatement extends Declaration {
 
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
-        if (tokens.get(index).getToken() == TokenType.KEYWORD_RETURN) {
-            index += 1; // Move past the 'return' keyword
-        } else {
-            throw new RuntimeException("Expected 'return' keyword, found: " + tokens.get(index).getToken());
+        ensureToken(tokens, index++, TokenType.KEYWORD_RETURN);
+        if (tokens.get(index).getToken() == TokenType.IDENTIFIER) {
+            value = new Expression();
+            index = value.parse(tokens, index);
         }
-        
-        // TODO: empy return statement?
-        value = new Expression();
-        index = value.parse(tokens, index) + 1; // TODO: Нужен ли +1?
-
         return index;
     }
 }
