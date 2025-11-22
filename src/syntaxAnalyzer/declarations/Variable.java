@@ -5,11 +5,18 @@ import lexicalAnalyzer.Token;
 import lexicalAnalyzer.TokenType;
 
 public class Variable extends Declaration {
+    private Cls cls;
     private String name;
-    // private String type;
-    // private String initialValue;
     private Expression expression;
 
+    public Variable(Cls cls) {
+        this.cls = cls;
+    }
+
+    public Cls getCls() {
+        return cls;
+    }
+    
     public String getName() {
         return name;
     }

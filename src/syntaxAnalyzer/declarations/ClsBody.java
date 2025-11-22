@@ -6,9 +6,19 @@ import lexicalAnalyzer.Token;
 import lexicalAnalyzer.TokenType;
 
 public class ClsBody extends Declaration {
+    private Cls cls;
+
     List<Constructor> constructors = new ArrayList<>();
     List<Method> methods = new ArrayList<>();
     List<Variable> variables = new ArrayList<>();
+
+    public ClsBody(Cls cls) {
+        this.cls = cls;
+    }
+
+    public Cls getCls() {
+        return cls;
+    }
 
     public List<Variable> getVariables() {
         return variables;
@@ -28,17 +38,17 @@ public class ClsBody extends Declaration {
             Token currentToken = tokens.get(index);
 
             if (currentToken.getToken() == TokenType.KEYWORD_VAR) {
-                Variable variable = new Variable();
+                Variable variable = new Variable(cls);
                 index = variable.parse(tokens, index);
                 variables.add(variable);
             }
             else if (currentToken.getToken() == TokenType.KEYWORD_THIS) {
-                Constructor constructor = new Constructor();
+                Constructor constructor = new Constructor(cls);
                 index = constructor.parse(tokens, index);
                 constructors.add(constructor);
             }
             else if (currentToken.getToken() == TokenType.KEYWORD_METHOD) {
-                Method method = new Method();
+                Method method = new Method(cls);
                 index = method.parse(tokens, index);
                 methods.add(method);
             }
@@ -46,7 +56,7 @@ public class ClsBody extends Declaration {
                 return index;
             }
             else {
-                throw new RuntimeException("Unexpected token in class body: " + currentToken.getToken() + " on the " + index);
+                throw new RuntimeException("Unexpected token in class body: " + currentToken.getToken() + " : " + currentToken.getValue() + " on the " + index);
             }
 
             index += 1;

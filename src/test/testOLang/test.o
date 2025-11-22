@@ -2,8 +2,3 @@ class Figure is
     var b : Integer(100)
     var c : Integer(100)
 end
-
-class Figure is
-    var b : Integer(100)
-    var c : Integer(100)
-end

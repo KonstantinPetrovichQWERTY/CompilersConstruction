@@ -55,8 +55,8 @@ public class Cls extends Declaration {
             throw new RuntimeException("Expected 'is', found: " + tokens.get(index).getToken());
         }
         
-        body = new ClsBody();
-        index = body.parse(tokens, index+1);
+        body = new ClsBody(this);
+        index = body.parse(tokens, index);
 
         if (Objects.requireNonNull(tokens.get(index).getToken()) == TokenType.KEYWORD_END) {
             return index;

@@ -5,9 +5,18 @@ import lexicalAnalyzer.Token;
 import lexicalAnalyzer.TokenType;
 
 public class ReturnStatement extends Declaration {
+    private Cls cls;
+    
     private String type;
     private Expression value;
+    
+    public ReturnStatement(Cls cls) {
+        this.cls = cls;
+    }
 
+    public Cls getCls() {
+        return cls;
+    }
     public String getType() {
         return type;
     }

@@ -6,7 +6,7 @@ import lexicalAnalyzer.Token;
 
 abstract public class Declaration {
     
-        /**
+    /**
      * Parses the given list of tokens starting from the specified index.
      *
      * @param tokens the list of tokens to parse

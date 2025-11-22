@@ -6,10 +6,19 @@ import lexicalAnalyzer.Token;
 import lexicalAnalyzer.TokenType;
 
 public class Method extends Declaration {
+    private Cls cls;
     private String name;
     private String returnType;
     private List<Parameter> parameters = new ArrayList<>();
     private Block body;
+
+    public Method(Cls cls) {
+        this.cls = cls;
+    }
+
+    public Cls getCls() {
+        return cls;
+    }
 
     public String getName() {
         return name;
@@ -70,7 +79,7 @@ public class Method extends Declaration {
         }
 
         // Parse method body (redirect to Block)
-        body = new Block();
+        body = new Block(cls);
         index = body.parse(tokens, index) + 1;
 
         // Expect 'end' to finish method declaration

@@ -5,12 +5,20 @@ import lexicalAnalyzer.Token;
 import lexicalAnalyzer.TokenType;
 
 public class Assignment extends Declaration {
+    private Cls cls;
 
     private String name;
     private Expression expression;
     
     // Assignment : Identifier ':=' Expression
+    public Assignment(Cls cls) {
+        this.cls = cls;
+    }
 
+    public Cls getCls() {
+        return cls;
+    }
+    
     public String getName() {
         return name;
     }

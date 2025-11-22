@@ -1,14 +1,21 @@
 package syntaxAnalyzer.declarations;
 
-
 import java.util.List;
 import lexicalAnalyzer.Token;
 import lexicalAnalyzer.TokenType;
 
 public class Block extends Declaration{
-
+    private Cls cls;
     List<Declaration> parts;
-    
+
+    public Block(Cls cls) {
+        this.cls = cls;
+    }
+
+    public Cls getCls() {
+        return cls;
+    }
+
     public List<Declaration> getParts() {
         return parts;
     }
@@ -20,25 +27,25 @@ public class Block extends Declaration{
 
             // Variable declaration
             if (currentToken.getToken() == TokenType.KEYWORD_VAR) {
-                Variable variable = new Variable();
+                Variable variable = new Variable(cls);
                 index = variable.parse(tokens, index);
                 parts.add(variable);
             }
             // While statement
             else if (currentToken.getToken() == TokenType.KEYWORD_WHILE) {
-                WhileStatement stmt = new WhileStatement();
+                WhileStatement stmt = new WhileStatement(cls);
                 index = stmt.parse(tokens, index);
                 parts.add(stmt);
             }
             // If statement
             else if (currentToken.getToken() == TokenType.KEYWORD_IF) {
-                IfStatement stmt = new IfStatement();
+                IfStatement stmt = new IfStatement(cls);
                 index = stmt.parse(tokens, index);
                 parts.add(stmt);
             }
             // Return statement
             else if (currentToken.getToken() == TokenType.KEYWORD_RETURN) {
-                ReturnStatement stmt = new ReturnStatement();
+                ReturnStatement stmt = new ReturnStatement(cls);
                 index = stmt.parse(tokens, index);
                 parts.add(stmt);
             }
@@ -47,7 +54,7 @@ public class Block extends Declaration{
             // MethodCall : Expression     (Primary here is only ClassName)
             else if (currentToken.getToken() == TokenType.IDENTIFIER) {
                 if (tokens.get(index + 1).getToken() == TokenType.PUNCTUATION_SEMICOLON_EQUAL) {
-                    Assignment assignment = new Assignment();
+                    Assignment assignment = new Assignment(cls);
                     index = assignment.parse(tokens, index);
                     parts.add(assignment);
                 } else if (tokens.get(index + 1).getToken() == TokenType.PUNCTUATION_DOT) {

@@ -5,10 +5,17 @@ import lexicalAnalyzer.Token;
 import lexicalAnalyzer.TokenType;
 
 public class WhileStatement extends Declaration {
-
+    private Cls cls;
     private Expression condition;
     private Block body;
-    
+
+    public WhileStatement(Cls cls) {
+        this.cls = cls;
+    }
+
+    public Cls getCls() {
+        return cls;
+    }
     
     public Expression getCondition() {
         return condition;
@@ -54,7 +61,7 @@ public class WhileStatement extends Declaration {
         }
 
         // Parse body (redirect to Block)
-        body = new Block();
+        body = new Block(cls);
         index = body.parse(tokens, index) + 1; // TODO: Нужен ли +1?
         
         // Expect 'end' to finish if statement declaration

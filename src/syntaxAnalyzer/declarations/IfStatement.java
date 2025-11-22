@@ -5,12 +5,20 @@ import lexicalAnalyzer.Token;
 import lexicalAnalyzer.TokenType;
 
 public class IfStatement extends Declaration {
-
+    private Cls cls;
+    
     private Expression condition;
     private Block trueBlock;
     private Block falseBlock;
     
-    
+    public IfStatement(Cls cls) {
+        this.cls = cls;
+    }
+
+    public Cls getCls() {
+        return cls;
+    }
+
     public Expression getCondition() {
         return condition;
     }
@@ -57,7 +65,7 @@ public class IfStatement extends Declaration {
         }
 
         // Parse trueBlock (redirect to Block)
-        trueBlock = new Block();
+        trueBlock = new Block(cls);
         index = trueBlock.parse(tokens, index) + 1; // TODO: Нужен ли тут +1?
 
         // Expect 'else' for else block start (OPTIONAL)
@@ -65,7 +73,7 @@ public class IfStatement extends Declaration {
             index += 1; // Move past 'else'
 
             // Parse falseBlock (redirect to Block)
-            falseBlock = new Block();
+            falseBlock = new Block(cls);
             index = falseBlock.parse(tokens, index);
 
         }
