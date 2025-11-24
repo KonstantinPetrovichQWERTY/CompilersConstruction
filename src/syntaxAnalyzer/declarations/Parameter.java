@@ -40,6 +40,7 @@ public class Parameter extends Declaration {
         }
 
         // Expect type (e.g., Integer, String, etc.)
+        // TODO: Not identifier, int_keyword, str_keyword ...
         if (tokens.get(index).getToken() == TokenType.IDENTIFIER) {
             type = tokens.get(index).getValue();
             index += 1;

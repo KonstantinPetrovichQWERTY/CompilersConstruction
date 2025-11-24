@@ -49,7 +49,7 @@ public class IfStatement extends Declaration {
         if (tokens.get(index).getToken() == TokenType.PUNCTUATION_LEFT_PARENTHESIS) {
             index += 1; // Move past '('
 
-            condition = new Expression();
+            condition = new Expression(cls);
             index = condition.parse(tokens, index); // Parse condition
 
             index += 1; // Move past ')'

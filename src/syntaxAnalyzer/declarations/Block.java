@@ -58,7 +58,7 @@ public class Block extends Declaration{
                     index = assignment.parse(tokens, index);
                     parts.add(assignment);
                 } else if (tokens.get(index + 1).getToken() == TokenType.PUNCTUATION_DOT) {
-                    Expression expression = new Expression();
+                    Expression expression = new Expression(cls);
                     index = expression.parse(tokens, index);
                     parts.add(expression);
                 } else {

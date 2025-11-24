@@ -44,7 +44,7 @@ public class Assignment extends Declaration {
         }
 
         // Parse expression
-        expression = new Expression();
+        expression = new Expression(cls);
         index = expression.parse(tokens, index);
 
         return index;

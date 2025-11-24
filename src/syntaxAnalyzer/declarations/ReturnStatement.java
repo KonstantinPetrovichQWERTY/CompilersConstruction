@@ -36,7 +36,7 @@ public class ReturnStatement extends Declaration {
         }
         
         // TODO: empy return statement?
-        value = new Expression();
+        value = new Expression(cls);
         index = value.parse(tokens, index) + 1; // TODO: Нужен ли +1?
 
         return index;

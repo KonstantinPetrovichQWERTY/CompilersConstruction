@@ -23,6 +23,11 @@ public class ClsBody extends Declaration {
     public List<Variable> getVariables() {
         return variables;
     }
+    
+    public List<Variable> addVariables(Variable var) {
+        variables.add(var);
+        return variables;
+    }
 
     public List<Method> getMethods() {
         return methods;
@@ -59,7 +64,7 @@ public class ClsBody extends Declaration {
                 throw new RuntimeException("Unexpected token in class body: " + currentToken.getToken() + " : " + currentToken.getValue() + " on the " + index);
             }
 
-            index += 1;
+            // index += 1;
         }
         throw new RuntimeException("Unexpected end of tokens while parsing class body");
     }

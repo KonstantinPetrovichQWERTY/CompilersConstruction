@@ -45,7 +45,7 @@ public class WhileStatement extends Declaration {
 
             index += 1; // Move past '('
 
-            condition = new Expression();
+            condition = new Expression(cls);
             index = condition.parse(tokens, index); // Parse condition
 
             index += 1; // Move past ')'

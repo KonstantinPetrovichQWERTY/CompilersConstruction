@@ -56,7 +56,7 @@ public class Variable extends Declaration {
             throw new RuntimeException("Expected ':', found: " + tokens.get(index).getToken());
         }
 
-        expression = new Expression();
+        expression = new Expression(cls);
         index = expression.parse(tokens, index);
 
 //         // Parse the type (e.g., Integer, String, etc.)
