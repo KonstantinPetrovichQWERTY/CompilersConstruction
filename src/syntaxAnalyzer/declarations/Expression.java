@@ -31,9 +31,10 @@ public class Expression extends Declaration {
         Token keywordToken;
         Token literalToken;
         
-        // Value initialization (e.g. Integer, Real, String)
+        // Value initialization (e.g. Integer, Real, String, Boolean)
         if ((currentToken.getToken() == TokenType.KEYWORD_INTEGER) || 
             (currentToken.getToken() == TokenType.KEYWORD_STRING) ||
+            (currentToken.getToken() == TokenType.KEYWORD_BOOLEAN) ||
             (currentToken.getToken() == TokenType.KEYWORD_REAL)
         ) {
             keywordToken = currentToken;
@@ -54,40 +55,6 @@ public class Expression extends Declaration {
                 this.exprToken = literalToken;
                 
                 index += 1;
-                currentToken = tokens.get(index);
-            } 
-            else {
-                throw new RuntimeException("Expected literal for initial value, found: " + tokens.get(index).getToken());
-            }
-            
-            // Expect ')' for the initial value
-            if (tokens.get(index).getToken() == TokenType.PUNCTUATION_RIGHT_PARENTHESIS) {
-                index += 1; // Move past ')'
-            } else {
-                throw new RuntimeException("Expected ')', found: " + tokens.get(index).getToken());
-            }
-        }
-        else if (currentToken.getToken() == TokenType.KEYWORD_BOOLEAN) {
-            keywordToken = currentToken;
-            index += 1;
-            
-            // Expect '(' for the initial value
-            if (tokens.get(index).getToken() == TokenType.PUNCTUATION_LEFT_PARENTHESIS) {
-                index += 1; // Move past '('
-            } else {
-                throw new RuntimeException("Expected '(', found: " + tokens.get(index).getToken());
-            }
-            
-            // Store value in exprToken. And check types 
-            if ((tokens.get(index).getToken() == TokenType.KEYWORD_TRUE) || 
-                (tokens.get(index).getToken() == TokenType.KEYWORD_FALSE)) {
-                literalToken = tokens.get(index);
-                
-                checkKeywordLiteral(keywordToken, literalToken);
-                this.exprToken = literalToken;
-                
-                index += 1;
-                currentToken = tokens.get(index);
             } 
             else {
                 throw new RuntimeException("Expected literal for initial value, found: " + tokens.get(index).getToken());
@@ -112,6 +79,10 @@ public class Expression extends Declaration {
         //         throw new RuntimeException("Expected '.', found: " + tokens.get(index).getToken());
         //     }
 
+        //     // Method call
+        //     if (tokens.get(index).getToken().name().startsWith("METHOD_")) {
+                
+        //     }
         // }
         else {
             throw new RuntimeException("Unexpected token while parsing expression");
@@ -130,7 +101,7 @@ public class Expression extends Declaration {
             (keywordToken.getToken() == TokenType.KEYWORD_STRING) &&
             (literalToken.getToken() == TokenType.LITERAL_STRING)) || (
             (keywordToken.getToken() == TokenType.KEYWORD_BOOLEAN) &&
-            (literalToken.getToken() == TokenType.KEYWORD_TRUE || literalToken.getToken() == TokenType.KEYWORD_FALSE)
+            (literalToken.getToken() == TokenType.LITERAL_BOOLEAN)
             ))) {
                 throw new RuntimeException("Different Keyword " + keywordToken.getToken() + " and Value " + literalToken.getToken() + " types");
            }

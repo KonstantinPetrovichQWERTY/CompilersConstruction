@@ -1,6 +1,7 @@
 class Figure is
     var b : Integer(100)
     var c : Integer(100)
+    var k : Boolean(true)
+    var m : Boolean(false)
 
-    c.add(b)
 end

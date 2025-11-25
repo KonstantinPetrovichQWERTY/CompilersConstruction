@@ -1,7 +1,7 @@
 package syntaxAnalyzer.declarations;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
+import java.util.Map;
 import java.util.Hashtable;
 import java.util.List;
 import lexicalAnalyzer.Token;
@@ -14,7 +14,7 @@ public class ClsBody extends Declaration {
     List<Method> methods = new ArrayList<>();
     List<Variable> variables = new ArrayList<>();
 
-    Dictionary<String, Token> variablesPairs = new Hashtable<>();
+    Map<String, Token> variablesPairs = new Hashtable<>();
 
     public ClsBody(Cls cls) {
         this.cls = cls;
@@ -28,7 +28,7 @@ public class ClsBody extends Declaration {
         return variables;
     }
 
-    public Dictionary<String, Token> getVariablesPairs() {
+    public Map<String, Token> getVariablesPairs() {
         return variablesPairs;
     }
     

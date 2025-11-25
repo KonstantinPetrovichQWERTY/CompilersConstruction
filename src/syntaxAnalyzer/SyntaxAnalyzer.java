@@ -1,6 +1,9 @@
 package syntaxAnalyzer;
 
+import java.util.Dictionary;
 import java.util.List;
+import java.util.Map;
+
 import lexicalAnalyzer.LexicalAnalyzer;
 import lexicalAnalyzer.Token;
 import lexicalAnalyzer.TokenType;
@@ -39,6 +42,10 @@ public class SyntaxAnalyzer {
 
             for (Variable var : cls.getBody().getVariables()) {
                 System.out.println("VARIABLE " + var.getName() + " " + var.getExpression().getExprValue());
+            }
+
+            for (Map.Entry<String, Token> var : cls.getBody().getVariablesPairs().entrySet()) {
+                System.out.println("VARIABLE pair " + var.getKey() + " " + var.getValue().getValue());
             }
 
             for (Method method : cls.getBody().getMethods()) {

@@ -60,10 +60,13 @@ public class Method extends Declaration {
             throw new RuntimeException("Expected '(', found: " + tokens.get(index).getToken());
         }
         
-        // Expect ':' and return type (OPTIONAL)
+        // Expect ':' and return type. (OPTIONAL)
         if (tokens.get(index).getToken() == TokenType.PUNCTUATION_SEMICOLON) {
             index += 1; // Move past ':'
-            if (tokens.get(index).getToken() == TokenType.IDENTIFIER) {
+            if ((tokens.get(index).getToken().name().startsWith("LITERAL_")) || 
+                (tokens.get(index).getToken() == TokenType.KEYWORD_TRUE) || 
+                (tokens.get(index).getToken() == TokenType.KEYWORD_FALSE)
+            ) {
                 returnType = tokens.get(index).getValue();
                 index += 1;
             } else {

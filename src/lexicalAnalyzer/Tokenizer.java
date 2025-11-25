@@ -52,6 +52,16 @@ public class Tokenizer {
                 }
             }
             
+            // Boolean literals handling
+            if(partsAndTokens.get(i).getToken() == TokenType.KEYWORD_TRUE) {
+                result.add(new BooleanLiteralToken(true));
+                continue;
+            }
+            if(partsAndTokens.get(i).getToken() == TokenType.KEYWORD_FALSE) {
+                result.add(new BooleanLiteralToken(false));
+                continue;
+            }
+            
             // Real number literals handling
             if((i+2 < partsAndTokens.size()) && (partsAndTokens.get(i).getToken() == TokenType.LITERAL_INTEGER))
             {

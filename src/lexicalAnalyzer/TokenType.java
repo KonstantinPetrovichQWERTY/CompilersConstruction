@@ -45,6 +45,7 @@ public enum TokenType {
     LITERAL_INTEGER("literal integer"),
     LITERAL_REAL("literal real"),
     LITERAL_STRING("literal string"),
+    LITERAL_BOOLEAN("literal boolean"),
 
     // Identifiers
     IDENTIFIER("identifier"),
