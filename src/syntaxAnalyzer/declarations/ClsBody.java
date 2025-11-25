@@ -1,6 +1,8 @@
 package syntaxAnalyzer.declarations;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
 import lexicalAnalyzer.Token;
 import lexicalAnalyzer.TokenType;
@@ -11,6 +13,8 @@ public class ClsBody extends Declaration {
     List<Constructor> constructors = new ArrayList<>();
     List<Method> methods = new ArrayList<>();
     List<Variable> variables = new ArrayList<>();
+
+    Dictionary<String, Token> variablesPairs = new Hashtable<>();
 
     public ClsBody(Cls cls) {
         this.cls = cls;
@@ -23,9 +27,22 @@ public class ClsBody extends Declaration {
     public List<Variable> getVariables() {
         return variables;
     }
+
+    public Dictionary<String, Token> getVariablesPairs() {
+        return variablesPairs;
+    }
     
-    public List<Variable> addVariables(Variable var) {
+    public Token getVariableTokenByName(String name) {
+        return variablesPairs.get(name);
+    }
+    
+    public List<Variable> addVariable(Variable var) {
         variables.add(var);
+
+        String name = var.getName();
+        Token tkn = var.getExpression().getExprToken();
+        variablesPairs.put(name, tkn);
+
         return variables;
     }
 
@@ -45,7 +62,7 @@ public class ClsBody extends Declaration {
             if (currentToken.getToken() == TokenType.KEYWORD_VAR) {
                 Variable variable = new Variable(cls);
                 index = variable.parse(tokens, index);
-                variables.add(variable);
+                addVariable(variable);
             }
             else if (currentToken.getToken() == TokenType.KEYWORD_THIS) {
                 Constructor constructor = new Constructor(cls);
@@ -63,8 +80,6 @@ public class ClsBody extends Declaration {
             else {
                 throw new RuntimeException("Unexpected token in class body: " + currentToken.getToken() + " : " + currentToken.getValue() + " on the " + index);
             }
-
-            // index += 1;
         }
         throw new RuntimeException("Unexpected end of tokens while parsing class body");
     }

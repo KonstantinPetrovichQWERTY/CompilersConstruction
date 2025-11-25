@@ -17,8 +17,8 @@ public class Expression extends Declaration {
         return cls;
     }
 
-    public TokenType getExprToken() {
-        return exprToken.getToken();
+    public Token getExprToken() {
+        return exprToken;
     }
 
     public Object getExprValue() {
