@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+APP_BIN="$ROOT_DIR/build/install/CompilersConstruction/bin/CompilersConstruction"
+
+if [ ! -x "$APP_BIN" ]; then
+    "${ROOT_DIR}/gradlew" installDist
+fi
+
+"$APP_BIN" "$@"

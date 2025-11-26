@@ -17,8 +17,38 @@ sourceSets {
             srcDirs = ['src']
         }
     }
+    test {
+        java {
+            srcDirs = ['test/java']
+        }
+    }
 }
 
+repositories {
+    mavenCentral()
+}
+
+
+
 application {
-    mainClass = 'syntaxanalyzer.SyntaxAnalyzer'
+    mainClass = 'syntaxanalyzer.OCompiler'
+}
+
+dependencies {
+    testImplementation(platform("org.junit:junit-bom:5.11.0"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.0")
+}
+
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events "failed"          // only show failed tests loudly
+        exceptionFormat "short"  // or "full" if you want full stacktrace
+        showCauses true
+        showExceptions true
+        showStackTraces false    // set true if you want full stack trace
+    }
+
 }

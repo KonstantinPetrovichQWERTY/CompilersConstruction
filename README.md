@@ -61,8 +61,17 @@ After this setup, files with `.o` and `.io` extensions will use Vala syntax high
 
 ## Build And Run
 
+To run tests use
+```bash
+./gradlew build test --info
+```
+
+
 To run Project use
 ```bash
-gradle build
-gradle run
+./gradlew build
+./gradlew run
 ```
+
+## Make executable 
+
