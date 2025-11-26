@@ -133,7 +133,22 @@ The return statement implements the completion of the method and the return of c
 
 ```
 Expression
-    : Primary { '.' Identifier [ Arguments ] }
+    : __PrimaryOrConstruct__ { '.' Identifier [ Arguments ] }
+
+PrimaryOrConstruct
+    : Primary
+    | __PrimaryNoLiteral__ Arguments
+
+PrimaryNoLiteral
+    : Identifier
+    | this
+    | ClassName
+
+Primary
+    : PrimaryNoLiteral
+    | IntegerLiteral
+    | RealLiteral
+    | BooleanLiteral
 
 Arguments
     : '(' Expression { ',' Expression } ')'
@@ -142,15 +157,6 @@ Arguments
 Expressions are intended to specify how values are calculated. The structure of expressions in the O language is much simpler than in many other languages and contains essentially two basic constructions - access to a class member and method invocation.
 
 Access to a class member (variable or method) is represented using dotted notation of the form object-name.member-name. A method call is formed in the traditional way: the name of the method (which, in turn, can be specified as a dotted notation), after which a comma-separated list of method arguments can follow in parentheses. Since a method call can return some object (variable), the call construct can serve as the left part of the member access construct. Thus, compound structures formed by a superposition of calls and / or accesses to members are allowed.
-
-```
-Primary
-    : IntegerLiteral
-    | RealLiteral
-    | BooleanLiteral
-    | this
-    | ClassName
-```
 
 The basic components of expressions are primary. These are either literals of library types (their lexical syntax is up to implementers; it should be very simple and easy-to-read), or the keyword this, which in the body of the method denotes the object (variable) for which the method is called.
 
@@ -414,15 +420,23 @@ ReturnStatement
     : **return** [ Expression ]
 
 Expression
-    : Primary { '.' Identifier [ Arguments ] }
+    : __PrimaryOrConstruct__ { '.' Identifier [ Arguments ] }
+
+PrimaryOrConstruct
+    : Primary
+    | __PrimaryNoLiteral__ Arguments
+
+PrimaryNoLiteral
+    : Identifier
+    | **this**
+    | ClassName
+
+Primary
+    : PrimaryNoLiteral
+    | IntegerLiteral
+    | RealLiteral
+    | BooleanLiteral
 
 Arguments
     : '(' Expression { ',' Expression } ')'
-
-Primary
-    : IntegerLiteral
-    | RealLiteral
-    | BooleanLiteral
-    | **this**
-    | ClassName
 ```
