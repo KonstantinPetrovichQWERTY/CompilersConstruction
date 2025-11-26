@@ -71,6 +71,13 @@ Install the CLI script
 ```bash
 ./gradlew installDist 
 ```
+Tokenize source to inspect raw lexer output:
+```bash
+./o tokenize test/smoke/helloWorld.o
+# 1. KEYWORD_CLASS class
+# 2. IDENTIFIER HelloWorld
+# ...
+```
 Run it via the bundled `o` script:
 ```bash
  ./o parse test/smoke/helloWorld.o
@@ -79,8 +86,10 @@ Run it via the bundled `o` script:
 # CONSTRUCTOR []
 ```
 
+
 Available commands:
 
+- `./o tokenize <file>` – run only the lexer and print numbered tokens.
 - `./o parse <file>` – lexical + syntax analysis, then prints the AST.
 - `./o build <file>` – compile file and provide `.class` file.
 - `./o run <file>` – compile and run.
