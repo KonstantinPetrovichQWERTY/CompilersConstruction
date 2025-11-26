@@ -166,7 +166,7 @@ Implementation details of library classes in a language are not defined. An info
 
 The complete hierarchy of library classes is as follows:
 
-```
+```vala
 class Class is ... end
 class AnyValue extends Class is ... end
 class Integer extends AnyValue is ... end
@@ -181,7 +181,7 @@ Library classes Integer, Real and Boolean implement conventional objects of inte
 
 For these library classes, methods are defined that implement the operations traditional for these types of operations — arithmetic, logical, and relational operations, as well as type conversion operations. All these operations are presented in the form of appropriate methods. Thus, the traditional infix notation of expressions is not supported in the language. (Perhaps in future versions of the language, the familiar form of writing expressions will be also implemented.)
 
-```
+```vala
 class Integer extends AnyValue is
     // Constructors
     this(p: Integer)
@@ -223,7 +223,7 @@ class Integer extends AnyValue is
 end
 ```
 
-```
+```vala
 class Real extends AnyValue is
     // Constructors
     this(p: Real)
@@ -265,7 +265,7 @@ class Real extends AnyValue is
 end
 ```
 
-```
+```vala
 class Boolean extends AnyValue is
     // Constructor
     this(Boolean)
@@ -281,7 +281,7 @@ class Boolean extends AnyValue is
 end
 ```
 
-```
+```vala
 class Array[T] extends AnyRef is
     // Constructor
     this(l: Integer)
@@ -298,7 +298,7 @@ class Array[T] extends AnyRef is
 end
 ```
 
-```
+```vala
 class List[T] extends AnyRef is
     // Constructors
     this()
@@ -313,7 +313,7 @@ class List[T] extends AnyRef is
 end
 ```
 
-```
+```vala
 method MaxInt(a: Array[Integer]) : Integer is
     var max : Integer.Min
     var i : Integer(1)
@@ -329,7 +329,7 @@ end
 
 ## 3. Examples of O language constructs
 
-```
+```vala
 var a : Array 
 a.set(i) := 55
 x := a.get(i.Plus(1))

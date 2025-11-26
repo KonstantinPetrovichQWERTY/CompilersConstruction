@@ -123,13 +123,8 @@ public class Tokenizer {
             case "return" -> new Token(TokenCode.KEYWORD_RETURN, span);
             case "method" -> new Token(TokenCode.KEYWORD_METHOD, span);
             case "this" -> new Token(TokenCode.KEYWORD_THIS, span);
-            case "Integer" -> new Token(TokenCode.KEYWORD_INTEGER, span);
-            case "Real" -> new Token(TokenCode.KEYWORD_REAL, span);
-            case "String" -> new Token(TokenCode.KEYWORD_STRING, span);
-            case "Boolean" -> new Token(TokenCode.KEYWORD_BOOLEAN, span);
             case "true" -> new Token(TokenCode.KEYWORD_TRUE, span);
             case "false" -> new Token(TokenCode.KEYWORD_FALSE, span);
-            case "Array" -> new Token(TokenCode.KEYWORD_ARRAY, span);
             case "List" -> new Token(TokenCode.KEYWORD_LIST, span);
             case " " -> new Token(TokenCode.PUNCTUATION_SPACE, span);
             case "\n" -> new Token(TokenCode.PUNCTUATION_LINE_BREAK, span);

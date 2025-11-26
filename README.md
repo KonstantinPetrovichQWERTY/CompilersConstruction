@@ -61,6 +61,11 @@ After this setup, files with `.o` and `.io` extensions will use Vala syntax high
 
 ## Usage
 
+Build the Project
+```bash
+./gradlew build
+```
+
 Install the CLI script
 
 ```bash

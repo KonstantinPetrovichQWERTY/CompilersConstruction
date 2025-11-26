@@ -1,5 +1,7 @@
 package lexicalanalyzer;
 
+import jakarta.annotation.Nullable;
+
 public enum TokenCode {
     // Keywords
     KEYWORD_CLASS("class"),
@@ -15,13 +17,8 @@ public enum TokenCode {
     KEYWORD_RETURN("return"),
     KEYWORD_METHOD("method"),
     KEYWORD_THIS("this"),
-    KEYWORD_INTEGER("Integer"),
-    KEYWORD_REAL("Real"),
-    KEYWORD_STRING("String"),
-    KEYWORD_BOOLEAN("Boolean"),
     KEYWORD_TRUE("true"),
     KEYWORD_FALSE("false"),
-    KEYWORD_ARRAY("Array"),
     KEYWORD_LIST("List"),
     KEYWORD_NULL("null"),
 
@@ -41,17 +38,18 @@ public enum TokenCode {
     PUNCTUATION_SEMICOLON_EQUAL(":="),
 
     // Literals
-    LITERAL_INTEGER("literal integer"),
-    LITERAL_REAL("literal real"),
-    LITERAL_STRING("literal string"),
+    LITERAL_INTEGER(null),
+    LITERAL_REAL(null),
+    LITERAL_STRING(null),
 
     // Identifiers
-    IDENTIFIER("identifier"),
+    IDENTIFIER(null),
 
     // Special tokens
-    EOF("eof"), // End of file
-    ERROR("error"); // Error token (e.g., unrecognized character)
+    EOF(null), // End of file
+    ERROR(null); // Error token (e.g., unrecognized character)
 
+    @Nullable
     private final String lexeme;
 
     TokenCode(String lexeme) {
