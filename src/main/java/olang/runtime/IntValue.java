@@ -1,4 +1,4 @@
-package olang.runtime;
+package main.java.olang.runtime;
 
 public final class IntValue implements Value {
     private final int value;

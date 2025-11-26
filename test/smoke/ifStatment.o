@@ -3,7 +3,7 @@ class Main is
         var trueCondition : Boolean(true)
 
         if (trueCondition) then
-            String("test if true right").print()
+            1.Plus(5).Plus(10).print()
         else
             String("test if true wrong").print()
         end

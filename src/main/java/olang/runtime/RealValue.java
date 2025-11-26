@@ -1,4 +1,4 @@
-package olang.runtime;
+package main.java.olang.runtime;
 
 public final class RealValue implements Value {
     private final double value;

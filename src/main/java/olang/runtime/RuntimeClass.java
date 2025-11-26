@@ -1,4 +1,4 @@
-package olang.runtime;
+package main.java.olang.runtime;
 
 import syntaxanalyzer.declarations.Cls;
 import syntaxanalyzer.declarations.Constructor;

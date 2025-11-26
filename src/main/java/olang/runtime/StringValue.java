@@ -1,4 +1,4 @@
-package olang.runtime;
+package main.java.olang.runtime;
 
 public final class StringValue implements Value {
     private final String value;

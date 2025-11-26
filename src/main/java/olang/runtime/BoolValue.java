@@ -1,4 +1,4 @@
-package olang.runtime;
+package main.java.olang.runtime;
 
 public final class BoolValue implements Value {
     private final boolean value;

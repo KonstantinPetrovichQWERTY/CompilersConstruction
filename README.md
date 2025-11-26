@@ -96,7 +96,7 @@ Available commands:
 - `./o build <file>` – compile file and provide `.class` file.
 - `./o run <file>` – compile and run.
 
-## Runtime architecture (how the code works)
+## Runtime architecture
 
 1. **Entry point – `syntaxanalyzer.OCompiler.main`**  
    The `o` CLI calls this class with the command (`run`, `build`, etc.) and the target `.o` file.

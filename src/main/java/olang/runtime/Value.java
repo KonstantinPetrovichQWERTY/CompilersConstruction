@@ -1,4 +1,4 @@
-package olang.runtime;
+package main.java.olang.runtime;
 
 /**
  * Marker interface for all runtime values produced by the O interpreter.

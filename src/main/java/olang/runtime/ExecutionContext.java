@@ -1,4 +1,4 @@
-package olang.runtime;
+package main.java.olang.runtime;
 
 import java.util.HashMap;
 import java.util.Map;

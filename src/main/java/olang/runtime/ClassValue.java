@@ -1,4 +1,4 @@
-package olang.runtime;
+package main.java.olang.runtime;
 
 import java.util.List;
 import java.util.Objects;
