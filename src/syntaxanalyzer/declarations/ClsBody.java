@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lexicalanalyzer.Token;
 import lexicalanalyzer.TokenCode;
+import syntaxanalyzer.SyntaxException;
 
 /** ClsBody starts with `is` and ends with `end`
  * This should be passed as first index and index for `end` is returns
@@ -52,11 +53,12 @@ public class ClsBody extends Declaration {
                 return index;
             }
             else {
-                throw new RuntimeException("Unexpected token in class body: " + currentToken.getToken() + " on the " + index);
+                throw SyntaxException.at("Unexpected token in class body: " + currentToken.getToken(), currentToken);
             }
 
             index += 1;
         }
-        throw new RuntimeException("Unexpected end of tokens while parsing class body");
+        Token last = index > 0 ? tokens.get(index - 1) : null;
+        throw SyntaxException.at("Unexpected end of tokens while parsing class body", last);
     }
 }

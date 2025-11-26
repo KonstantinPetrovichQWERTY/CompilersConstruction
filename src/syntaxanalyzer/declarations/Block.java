@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lexicalanalyzer.Token;
 import lexicalanalyzer.TokenCode;
+import syntaxanalyzer.SyntaxException;
 
 public class Block extends Declaration{
 
@@ -56,7 +57,7 @@ public class Block extends Declaration{
                     index = expression.parse(tokens, index);
                     parts.add(expression);
                 } else {
-                    throw new RuntimeException("Unexpected token in assignment or method call: " + currentToken.getToken() + " on the " + index);
+                    throw SyntaxException.at("Unexpected token in assignment or method call: " + currentToken.getToken(), currentToken);
                 }
             } 
             else if (currentToken.getToken() == TokenCode.KEYWORD_END) {
@@ -71,7 +72,8 @@ public class Block extends Declaration{
 
             index += 1;
         }
-        throw new RuntimeException("Unexpected end of tokens while parsing class body");
+        Token last = index > 0 ? tokens.get(index - 1) : null;
+        throw SyntaxException.at("Unexpected end of tokens while parsing class body", last);
     }
     
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import lexicalanalyzer.Token;
 import lexicalanalyzer.TokenCode;
+import syntaxanalyzer.SyntaxException;
 
 abstract public class Declaration {
     
@@ -30,14 +31,13 @@ abstract public class Declaration {
      * return TOKEN;
      */
     public Token ensureToken(List<Token> tokens, Integer index, TokenCode tokenType) {
-        if (tokens.get(index).getToken() == tokenType) {
+        Token current = tokens.get(index);
+        if (current.getToken() == tokenType) {
             index += 1;
         } else {
-            throw new RuntimeException(
-                    "Expected " +
-                    tokenType.toString() +
-                    " but found " +
-                    tokens.get(index).getToken()
+            throw SyntaxException.at(
+                    "Expected " + tokenType + " but found " + current.getToken(),
+                    current
             );
         }
         return tokens.get(index-1);

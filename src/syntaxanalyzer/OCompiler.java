@@ -30,6 +30,7 @@ public class OCompiler {
     }
 
     private static void parseCommand(String filePath) {
+        SyntaxException.setCurrentSource(filePath);
         List<Token> tokens = LexicalAnalyzer.getTokens(filePath);
         List<Cls> classes = SyntaxAnalyzer.analyzeTokens(tokens);
         AstPrinter.print(classes);

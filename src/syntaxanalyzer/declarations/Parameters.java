@@ -3,6 +3,7 @@ package syntaxanalyzer.declarations;
 import lexicalanalyzer.Token;
 import lexicalanalyzer.TokenCode;
 import syntaxanalyzer.utils.ParameterDeclaration;
+import syntaxanalyzer.SyntaxException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +34,13 @@ public class Parameters extends Declaration
             } else if (currentTokenType == TokenCode.PUNCTUATION_RIGHT_PARENTHESIS) {
                 return index;
             } else {
-                throw new RuntimeException("Unexpected token: " + currentTokenType);
+                Token current = tokens.get(index);
+                throw SyntaxException.at("Unexpected token: " + currentTokenType, current);
             }
         }
-        throw new RuntimeException("Parameters declaration is not finished");
+        Token last = index > 0 ? tokens.get(index - 1) : null;
+        throw SyntaxException.at("Parameters declaration is not finished", last);
     }
 
 
 }
-
-

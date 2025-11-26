@@ -3,6 +3,7 @@ package syntaxanalyzer.declarations;
 import java.util.List;
 import lexicalanalyzer.Token;
 import lexicalanalyzer.TokenCode;
+import syntaxanalyzer.SyntaxException;
 
 public class WhileStatement extends Declaration {
 
@@ -27,14 +28,16 @@ public class WhileStatement extends Declaration {
 
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
-        if (tokens.get(index).getToken() == TokenCode.KEYWORD_WHILE) {
+        Token current = tokens.get(index);
+        if (current.getToken() == TokenCode.KEYWORD_WHILE) {
             index += 1; // Move past the 'while' keyword
         } else {
-            throw new RuntimeException("Expected 'while' keyword, found: " + tokens.get(index).getToken());
+            throw SyntaxException.at("Expected 'while' keyword, found: " + current.getToken(), current);
         }
 
         // Expect '(' for condition
-        if (tokens.get(index).getToken() == TokenCode.PUNCTUATION_LEFT_PARENTHESIS) {
+        current = tokens.get(index);
+        if (current.getToken() == TokenCode.PUNCTUATION_LEFT_PARENTHESIS) {
 
             index += 1; // Move past '('
 
@@ -43,14 +46,15 @@ public class WhileStatement extends Declaration {
 
             index += 1; // Move past ')'
         } else {
-            throw new RuntimeException("Expected '(', found: " + tokens.get(index).getToken());
+            throw SyntaxException.at("Expected '(', found: " + current.getToken(), current);
         }
 
         // Expect 'loop' for true block start
-        if (tokens.get(index).getToken() == TokenCode.KEYWORD_LOOP) {
+        current = tokens.get(index);
+        if (current.getToken() == TokenCode.KEYWORD_LOOP) {
             index += 1; // Move past 'loop'
         } else {
-            throw new RuntimeException("Expected 'loop', found: " + tokens.get(index).getToken());
+            throw SyntaxException.at("Expected 'loop', found: " + current.getToken(), current);
         }
 
         // Parse body (redirect to Block)
@@ -58,10 +62,11 @@ public class WhileStatement extends Declaration {
         index = body.parse(tokens, index) + 1; // TODO: Нужен ли +1?
         
         // Expect 'end' to finish if statement declaration
-        if (tokens.get(index).getToken() == TokenCode.KEYWORD_END) {
+        current = tokens.get(index);
+        if (current.getToken() == TokenCode.KEYWORD_END) {
             return index;
         } else {
-            throw new RuntimeException("Expected 'end', found: " + tokens.get(index).getToken());
+            throw SyntaxException.at("Expected 'end', found: " + current.getToken(), current);
         }
     }
 }

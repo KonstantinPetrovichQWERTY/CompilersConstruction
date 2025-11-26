@@ -3,6 +3,7 @@ package syntaxanalyzer.declarations;
 import java.util.List;
 import lexicalanalyzer.Token;
 import lexicalanalyzer.TokenCode;
+import syntaxanalyzer.SyntaxException;
 
 public class IfStatement extends Declaration {
 
@@ -31,14 +32,16 @@ public class IfStatement extends Declaration {
 
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
-        if (tokens.get(index).getToken() == TokenCode.KEYWORD_IF) {
+        Token current = tokens.get(index);
+        if (current.getToken() == TokenCode.KEYWORD_IF) {
             index += 1; // Move past the 'if' keyword
         } else {
-            throw new RuntimeException("Expected 'if' keyword, found: " + tokens.get(index).getToken());
+            throw SyntaxException.at("Expected 'if' keyword, found: " + current.getToken(), current);
         }
 
         // Expect '(' for condition
-        if (tokens.get(index).getToken() == TokenCode.PUNCTUATION_LEFT_PARENTHESIS) {
+        current = tokens.get(index);
+        if (current.getToken() == TokenCode.PUNCTUATION_LEFT_PARENTHESIS) {
             index += 1; // Move past '('
 
             condition = new Expression();
@@ -46,15 +49,16 @@ public class IfStatement extends Declaration {
 
             index += 1; // Move past ')'
         } else {
-            throw new RuntimeException("Expected '(', found: " + tokens.get(index).getToken());
+            throw SyntaxException.at("Expected '(', found: " + current.getToken(), current);
         }
 
         index++;
         // Expect 'then' for true block start
-        if (tokens.get(index).getToken() == TokenCode.KEYWORD_THEN) {
+        current = tokens.get(index);
+        if (current.getToken() == TokenCode.KEYWORD_THEN) {
             index += 1; // Move past 'then'
         } else {
-            throw new RuntimeException("Expected 'then', found: " + tokens.get(index).getToken());
+            throw SyntaxException.at("Expected 'then', found: " + current.getToken(), current);
         }
 
         // Parse trueBlock (redirect to Block)
@@ -62,7 +66,8 @@ public class IfStatement extends Declaration {
         index = trueBlock.parse(tokens, index) + 1; // TODO: Нужен ли тут +1?
 
         // Expect 'else' for else block start (OPTIONAL)
-        if (tokens.get(index).getToken() == TokenCode.KEYWORD_ELSE) {
+        current = tokens.get(index);
+        if (current.getToken() == TokenCode.KEYWORD_ELSE) {
             index += 1; // Move past 'else'
 
             // Parse falseBlock (redirect to Block)
@@ -72,10 +77,11 @@ public class IfStatement extends Declaration {
         }
 
         // Expect 'end' to finish if statement declaration
-        if (tokens.get(index).getToken() == TokenCode.KEYWORD_END) {
+        current = tokens.get(index);
+        if (current.getToken() == TokenCode.KEYWORD_END) {
             return index;
         } else {
-            throw new RuntimeException("Expected 'end', found: " + tokens.get(index).getToken());
+            throw SyntaxException.at("Expected 'end', found: " + current.getToken(), current);
         }
     }
 }
