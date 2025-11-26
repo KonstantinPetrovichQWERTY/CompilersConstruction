@@ -182,6 +182,12 @@ public class AstPrinter {
 
         System.out.printf("%sEXPRESSION%n", indent);
         printPrimary(expression.getPrimary(), indent + INDENT);
+        expression.getPrimaryArguments().ifPresent(args -> {
+            System.out.printf("%sARGUMENTS%n", indent + INDENT);
+            for (Expression argument : args) {
+                printExpression(argument, indent + INDENT + INDENT);
+            }
+        });
         if (!expression.getSuffixes().isEmpty()) {
             System.out.printf("%sSUFFIXES%n", indent + INDENT);
             for (ExpressionSuffix suffix : expression.getSuffixes()) {

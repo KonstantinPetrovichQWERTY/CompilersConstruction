@@ -6,6 +6,6 @@ public enum PrimaryType {
     BooleanLiteral,
     StringLiteral,
     This,
-    ClassName;
+    ClassName,
+    Identifier;
 }
-

@@ -53,10 +53,10 @@ public class Method extends Declaration {
         }
 
         ensureToken(tokens, index, TokenCode.KEYWORD_IS);
-        index +=1;
+        index += 1;
 
         body = new Block();
-        index = body.parse(tokens, index);
+        index = body.parse(tokens, index) + 1;
 
         ensureToken(tokens, index, TokenCode.KEYWORD_END);
         return index;
