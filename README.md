@@ -102,16 +102,18 @@ Available commands:
    The `o` CLI calls this class with the command (`run`, `build`, etc.) and the target `.o` file.
 
 2. **Lexing and parsing**  
-   `LexicalAnalyzer` converts the source into tokens, the recursive-descent parser (`SyntaxAnalyzer`) produces an AST (`syntaxanalyzer.declarations.*`), and `SemanticAnalyzer` currently only ensures the file is not empty (it returns `UnknownType` placeholders; we do not yet have a full static type system).
+   `LexicalAnalyzer` converts the source into tokens, the recursive-descent parser (`SyntaxAnalyzer`) produces an AST (`syntaxanalyzer.declarations.*`), and `SemanticAnalyzer` performs minimal checks (undeclared-variable detection and constant-condition folding). It still returns `UnknownType` placeholders; a full type system is left for future work.
 
-3. **Bytecode generation (ASM bootstrap)**  
+3. **Semantic Analyzer**
+   Early semantic pass: we track class/field/variable scopes to report undeclared usages and evaluate constant boolean expressions to skip unreachable branches, reducing noise before interpretation.
+4. **Bytecode generation (ASM bootstrap)**  
    `src/syntaxanalyzer/CodeGenerator.java` uses ASM to emit a minimal JVM class that embeds the original source code as a string literal. Its `main` method invokes `olang.runtime.Interpreter.runSource(source, entryClass)`—ASM is now used only to create this wrapper class, not to lower every AST node.
 
-4. **Runtime/interpreter**  
+5. **Runtime/interpreter**  
    `olang.runtime.Interpreter` re-parses the embedded source (reusing the lexer/parser), builds runtime class metadata, and interprets the AST. It implements value objects for Integer/Real/Boolean/String literals plus user-defined instances, handles assignments, loops, method dispatch, and prints. When expressions call `.print()`, the interpreter calls `System.out.println` on the underlying value.
 
 ### Type system status
-- No static type checker yet: `SemanticAnalyzer` returns `UnknownType`. All actual behavior is resolved dynamically in the interpreter. Adding a real type system is left for future work.
+- No static type checker yet: despite the checks above, `SemanticAnalyzer` still returns `UnknownType` placeholders. All actual behavior/type compatibility is resolved dynamically in the interpreter. A full type system remains future work.
 
 ### Error reporting flow
 - Before lexing/parsing, `SyntaxException.setCurrentSource(filePath)` is called. Every token carries a `Token.Span` (line number + column). When the parser encounters an unexpected token, it calls `SyntaxException.at(message, token)`, which uses the stored span to produce the nicely formatted `path:line:column` message seen in the CLI output.  

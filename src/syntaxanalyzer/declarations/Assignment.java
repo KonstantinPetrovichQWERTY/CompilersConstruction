@@ -8,12 +8,17 @@ import syntaxanalyzer.SyntaxException;
 public class Assignment extends Declaration {
 
     private String name;
+    private Token nameToken;
     private Expression expression;
     
     // Assignment : Identifier ':=' Expression
 
     public String getName() {
         return name;
+    }
+
+    public Token getNameToken() {
+        return nameToken;
     }
 
     public Expression getExpression() {
@@ -24,6 +29,7 @@ public class Assignment extends Declaration {
     public Integer parse(List<Token> tokens, Integer index) {
         Token current = tokens.get(index);
         if (current.getToken() == TokenCode.IDENTIFIER) {
+            nameToken = current;
             name = current.getLexeme();
             index += 1; // Move forward
         } else {
