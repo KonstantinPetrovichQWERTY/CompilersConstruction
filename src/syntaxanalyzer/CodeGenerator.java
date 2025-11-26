@@ -10,6 +10,28 @@ import java.util.List;
 
 /**
  * Emits a tiny bootstrap class that forwards execution to the interpreter with the program source embedded.
+ *
+ * Think of {@code main.o}:
+ * <pre>
+ * class Main is
+ *     this() is
+ *         var i : Integer(0)
+ *         while (i.Less(10)) loop
+ *             i.print()
+ *             i := i.Plus(1)
+ *         end
+ *     end
+ * end
+ * </pre>
+ *
+ * Instead of translating the whole loop into JVM bytecode, we store the exact text above inside the generated
+ * {@code main_o.class}. The generated {@code public static void main(String[] args)} simply calls
+ * {@code Interpreter.runSource("<source>", "Main")}. The interpreter reuses the parser to rebuild the AST at runtime
+ * and performs the {@code while} loop by walking the AST. These bootstrap classes are intentionally tiny—two methods:
+ * <ul>
+ *     <li>a no-op default constructor (required by the JVM),</li>
+ *     <li>{@code main}, which pushes the source and entry class name onto the stack and invokes the interpreter.</li>
+ * </ul>
  */
 public final class CodeGenerator {
 
@@ -42,8 +64,11 @@ public final class CodeGenerator {
     private static void emitMainMethod(ClassWriter writer, String sourceCode, String entryClass) {
         MethodVisitor main = writer.visitMethod(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, ENTRY_METHOD, ENTRY_SIGNATURE, null, null);
         main.visitCode();
+        // Stack: [] -> ["<program text>"]
         main.visitLdcInsn(sourceCode);
+        // Stack: ["<program text>"] -> ["<program text>", "Main"]
         main.visitLdcInsn(entryClass);
+        // Call the interpreter: Interpreter.runSource(source, entryClass)
         main.visitMethodInsn(Opcodes.INVOKESTATIC, "olang/runtime/Interpreter", "runSource",
                 "(Ljava/lang/String;Ljava/lang/String;)V", false);
         main.visitInsn(Opcodes.RETURN);
