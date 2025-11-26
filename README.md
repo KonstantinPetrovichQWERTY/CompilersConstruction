@@ -77,6 +77,8 @@ Tokenize source to inspect raw lexer output:
 # 1. KEYWORD_CLASS class
 # 2. IDENTIFIER HelloWorld
 # ...
+# filter out whitespace-like tokens
+./o tokenize test/smoke/helloWorld.o --filter
 ```
 Run it via the bundled `o` script:
 ```bash
@@ -89,7 +91,7 @@ Run it via the bundled `o` script:
 
 Available commands:
 
-- `./o tokenize <file>` – run only the lexer and print numbered tokens.
+- `./o tokenize <file> [--filter]` – run only the lexer and print numbered tokens (optionally skipping whitespace).
 - `./o parse <file>` – lexical + syntax analysis, then prints the AST.
 - `./o build <file>` – compile file and provide `.class` file.
 - `./o run <file>` – compile and run.

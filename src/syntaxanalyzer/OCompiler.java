@@ -15,9 +15,17 @@ public class OCompiler {
 
         String command = args[0];
         String filePath = args[1];
+        boolean filterTokens = false;
+
+        if (args.length > 2) {
+            if (!"tokenize".equals(command) || args.length != 3 || !"--filter".equals(args[2])) {
+                printUsageAndExit();
+            }
+            filterTokens = true;
+        }
 
         switch (command) {
-            case "tokenize" -> tokenizeCommand(filePath);
+            case "tokenize" -> tokenizeCommand(filePath, filterTokens);
             case "parse" -> parseCommand(filePath);
             case "build" -> {
                 System.err.println("build: not implemented yet");
@@ -38,14 +46,17 @@ public class OCompiler {
         AstPrinter.print(classes);
     }
 
-    private static void tokenizeCommand(String filePath) {
+    private static void tokenizeCommand(String filePath, boolean filterTokens) {
         SyntaxException.setCurrentSource(filePath);
         List<Token> tokens = LexicalAnalyzer.getTokens(filePath);
+        if (filterTokens) {
+            tokens = TokenFilter.filterTokens(tokens);
+        }
 
         for (int index = 0; index < tokens.size(); index++) {
             Token token = tokens.get(index);
             String lexeme = formatLexeme(token);
-            System.out.printf("%d. %s %s%n", index + 1, token.getToken().name(), lexeme);
+            System.out.printf("%d. %s %s%n", index, token.getToken().name(), lexeme);
         }
     }
 
@@ -64,12 +75,12 @@ public class OCompiler {
     }
 
     private static void printUsageAndExit() {
-        System.err.println("Usage: o <command> <file>");
+        System.err.println("Usage: o <command> <file> [options]");
         System.err.println("Commands:");
-        System.err.println("  tokenize <file> - tokenize file and print tokens");
-        System.err.println("  parse <file>    - parse file and print AST");
-        System.err.println("  build <file>    - compile file (not implemented yet)");
-        System.err.println("  run <file>      - compile and run file (not implemented yet)");
+        System.err.println("  tokenize <file> [--filter] - tokenize file and print tokens");
+        System.err.println("  parse <file>               - parse file and print AST");
+        System.err.println("  build <file>               - compile file (not implemented yet)");
+        System.err.println("  run <file>                 - compile and run file (not implemented yet)");
         System.exit(1);
     }
 }
