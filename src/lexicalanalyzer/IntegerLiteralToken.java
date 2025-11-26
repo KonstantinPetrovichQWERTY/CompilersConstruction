@@ -4,8 +4,8 @@ public class IntegerLiteralToken extends Token{
 
     private final int value;
     
-    public IntegerLiteralToken(int value) {
-        super(TokenType.LITERAL_INTEGER);
+    public IntegerLiteralToken(int value, Span span) {
+        super(TokenCode.LITERAL_INTEGER, String.valueOf(value), span);
         this.value = value;
     }
 

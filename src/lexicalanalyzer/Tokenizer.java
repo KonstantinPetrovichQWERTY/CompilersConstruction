@@ -1,159 +1,151 @@
 package lexicalanalyzer;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Tokenizer {
-    public static List<Token> partsToTokens(List<String> parts){
-        List<Token> result = new ArrayList<>();
 
-        for (String part : parts){
-            Token correlatedToken = getTokenByString(part);
-            result.add(correlatedToken);
+    public static List<Token> partsToTokens(List<LexicalFragment> fragments, Token.Span eofSpan) {
+        List<Token> tokens = new ArrayList<>();
+        for (LexicalFragment fragment : fragments) {
+            tokens.add(getTokenByFragment(fragment));
         }
-        result.add(new Token(TokenType.EOF));
-
-        result = combineComplexTokens(result);
-
-        return result;
+        tokens.add(new Token(TokenCode.EOF, eofSpan));
+        return combineComplexTokens(tokens);
     }
-    
-    private static List<Token> combineComplexTokens(List<Token> partsAndTokens){
+
+    private static List<Token> combineComplexTokens(List<Token> tokens) {
         List<Token> result = new ArrayList<>();
+        int index = 0;
 
-        for(int i=0; i < partsAndTokens.size(); i++){
-            
-            // tabulation case handling
-            if((i+3 < partsAndTokens.size()) && (partsAndTokens.get(i).getToken() == TokenType.PUNCTUATION_SPACE))
-            {
-                Token tokenClass1 = partsAndTokens.get(i+1);
-                Token tokenClass2 = partsAndTokens.get(i+2);
-                Token tokenClass3 = partsAndTokens.get(i+3);
+        while (index < tokens.size()) {
+            Token current = tokens.get(index);
 
-                if((tokenClass1.getToken() == TokenType.PUNCTUATION_SPACE) &&
-                (tokenClass2.getToken() == TokenType.PUNCTUATION_SPACE) &&
-                (tokenClass3.getToken() == TokenType.PUNCTUATION_SPACE))
-                {
-                    result.add(new Token(TokenType.PUNCTUATION_TABULATION));
-                    i += 3;
-                    continue;
-                }
+            if (isTabSequence(tokens, index)) {
+                result.add(new Token(TokenCode.PUNCTUATION_TABULATION, current.getSpan()));
+                index += 4;
+                continue;
             }
 
-            // ":=" case handling
-            if((i+1 < partsAndTokens.size()) && (partsAndTokens.get(i).getToken() == TokenType.PUNCTUATION_SEMICOLON))
-            {
-                Token tokenClass1 = partsAndTokens.get(i+1);
-
-                if(tokenClass1.getToken() == TokenType.PUNCTUATION_EQUAL)
-                {
-                    result.add(new Token(TokenType.PUNCTUATION_SEMICOLON_EQUAL));
-                    i += 1;
-                    continue;
-                }
-            }
-            
-            // Real number literals handling
-            if((i+2 < partsAndTokens.size()) && (partsAndTokens.get(i).getToken() == TokenType.LITERAL_INTEGER))
-            {
-                
-                Token tokenClass = partsAndTokens.get(i);
-                Token tokenClass1 = partsAndTokens.get(i+1);
-                Token tokenClass2 = partsAndTokens.get(i+2);
-                
-                String value = tokenClass.getValue();
-                String value1 = tokenClass1.getValue();
-                String value2 = tokenClass2.getValue();
-
-                if ((tokenClass1.getToken() == TokenType.PUNCTUATION_DOT) &&
-                (tokenClass2.getToken() == TokenType.LITERAL_INTEGER))
-                {
-                    String concatenatedString = value + value1 + value2;
-                    result.add(new RealLiteralToken(Double.parseDouble(concatenatedString)));
-                    i += 2;
-                    continue;
-                }
+            if (isAssignmentSequence(tokens, index)) {
+                result.add(new Token(TokenCode.PUNCTUATION_SEMICOLON_EQUAL, current.getSpan()));
+                index += 2;
+                continue;
             }
 
-            // String literals handling
-            if(partsAndTokens.get(i).getToken() == TokenType.PUNCTUATION_DOUBLE_QUOTE)
-            {
-                int j = i + 1;
+            if (isRealLiteralSequence(tokens, index)) {
+                Token integerToken = tokens.get(index);
+                Token dotToken = tokens.get(index + 1);
+                Token fractionalToken = tokens.get(index + 2);
+                String literal = integerToken.getLexeme() + dotToken.getLexeme() + fractionalToken.getLexeme();
+                result.add(new RealLiteralToken(Double.parseDouble(literal), integerToken.getSpan()));
+                index += 3;
+                continue;
+            }
 
-                String resValue = "";
+            if (current.getToken() == TokenCode.PUNCTUATION_DOUBLE_QUOTE) {
+                Token.Span literalSpan = current.getSpan();
+                int j = index + 1;
+                StringBuilder literal = new StringBuilder();
 
-                while (j < partsAndTokens.size())
-                {
-                    Token tempTokenClass = partsAndTokens.get(j);
-                    String tempValue = tempTokenClass.getValue();
-
-                    j += 1;
-
-                    if (tempTokenClass.getToken() == TokenType.EOF)
-                    {
-                        result.add(new ErrorToken("String does not end"));
+                while (j < tokens.size()) {
+                    Token candidate = tokens.get(j);
+                    if (candidate.getToken() == TokenCode.EOF) {
+                        result.add(new ErrorToken("String does not end", literalSpan));
                         return result;
                     }
-                    else if(tempTokenClass.getToken() == TokenType.PUNCTUATION_DOUBLE_QUOTE){
+                    if (candidate.getToken() == TokenCode.PUNCTUATION_DOUBLE_QUOTE) {
+                        result.add(new StringLiteralToken(literal.toString(), literalSpan));
+                        index = j + 1;
                         break;
                     }
-                    else {
-                        resValue += tempValue;
-                    }
+                    literal.append(candidate.getLexeme());
+                    j++;
                 }
-                result.add(new StringLiteralToken(resValue));
-                i = j;
+
+                if (index != j + 1) {
+                    result.add(new ErrorToken("String does not end", literalSpan));
+                    return result;
+                }
+
+                continue;
             }
-            
-            result.add(partsAndTokens.get(i));
+
+            result.add(current);
+            index++;
         }
 
         return result;
     }
 
-    private static Token getTokenByString(String part) {
-        // Integer literal handler
-        if (part.matches("\\d+"))
-        {
-            return new IntegerLiteralToken(Integer.parseInt(part));
+    private static boolean isTabSequence(List<Token> tokens, int index) {
+        if (index + 3 >= tokens.size()) {
+            return false;
+        }
+        return tokens.get(index).getToken() == TokenCode.PUNCTUATION_SPACE
+                && tokens.get(index + 1).getToken() == TokenCode.PUNCTUATION_SPACE
+                && tokens.get(index + 2).getToken() == TokenCode.PUNCTUATION_SPACE
+                && tokens.get(index + 3).getToken() == TokenCode.PUNCTUATION_SPACE;
+    }
+
+    private static boolean isAssignmentSequence(List<Token> tokens, int index) {
+        return index + 1 < tokens.size()
+                && tokens.get(index).getToken() == TokenCode.PUNCTUATION_SEMICOLON
+                && tokens.get(index + 1).getToken() == TokenCode.PUNCTUATION_EQUAL;
+    }
+
+    private static boolean isRealLiteralSequence(List<Token> tokens, int index) {
+        return index + 2 < tokens.size()
+                && tokens.get(index).getToken() == TokenCode.LITERAL_INTEGER
+                && tokens.get(index + 1).getToken() == TokenCode.PUNCTUATION_DOT
+                && tokens.get(index + 2).getToken() == TokenCode.LITERAL_INTEGER;
+    }
+
+    private static Token getTokenByFragment(LexicalFragment fragment) {
+        String word = fragment.getContent();
+        Token.Span span = fragment.getSpan();
+
+        if (word.matches("\\d+")) {
+            return new IntegerLiteralToken(Integer.parseInt(word), span);
         }
 
-        return switch (part) {
-            case "class" -> new Token(TokenType.KEYWORD_CLASS);
-            case "extends" -> new Token(TokenType.KEYWORD_EXTENDS);
-            case "is" -> new Token(TokenType.KEYWORD_IS);
-            case "end" -> new Token(TokenType.KEYWORD_END);
-            case "var" -> new Token(TokenType.KEYWORD_VAR);
-            case "if" -> new Token(TokenType.KEYWORD_IF);
-            case "then" -> new Token(TokenType.KEYWORD_THEN);
-            case "else" -> new Token(TokenType.KEYWORD_ELSE);
-            case "while" -> new Token(TokenType.KEYWORD_WHILE);
-            case "loop" -> new Token(TokenType.KEYWORD_LOOP);
-            case "return" -> new Token(TokenType.KEYWORD_RETURN);
-            case "method" -> new Token(TokenType.KEYWORD_METHOD);
-            case "this" -> new Token(TokenType.KEYWORD_THIS);
-            case "Integer" -> new Token(TokenType.KEYWORD_INTEGER);
-            case "Real" -> new Token(TokenType.KEYWORD_REAL);
-            case "String" -> new Token(TokenType.KEYWORD_STRING);
-            case "Boolean" -> new Token(TokenType.KEYWORD_BOOLEAN);
-            case "true" -> new Token(TokenType.KEYWORD_TRUE);
-            case "false" -> new Token(TokenType.KEYWORD_FALSE);
-            case "Array" -> new Token(TokenType.KEYWORD_ARRAY);
-            case "List" -> new Token(TokenType.KEYWORD_LIST);
-            case " " -> new Token(TokenType.PUNCTUATION_SPACE);
-            case "\n" -> new Token(TokenType.PUNCTUATION_LINE_BREAK);
-            case "\t" -> new Token(TokenType.PUNCTUATION_TABULATION);
-            case "\"" -> new Token(TokenType.PUNCTUATION_DOUBLE_QUOTE);
-            case ":=" -> new Token(TokenType.PUNCTUATION_SEMICOLON_EQUAL);
-            case ":" -> new Token(TokenType.PUNCTUATION_SEMICOLON);
-            case "," -> new Token(TokenType.PUNCTUATION_COMMA);
-            case "=" -> new Token(TokenType.PUNCTUATION_EQUAL);
-            case "(" -> new Token(TokenType.PUNCTUATION_LEFT_PARENTHESIS);
-            case ")" -> new Token(TokenType.PUNCTUATION_RIGHT_PARENTHESIS);
-            case "[" -> new Token(TokenType.PUNCTUATION_LEFT_BRACKET);
-            case "]" -> new Token(TokenType.PUNCTUATION_RIGHT_BRACKET);
-            case "." -> new Token(TokenType.PUNCTUATION_DOT);
-            case "null" -> new Token(TokenType.KEYWORD_NULL);
-            default -> new IdentifierToken(part);
+        return switch (word) {
+            case "class" -> new Token(TokenCode.KEYWORD_CLASS, span);
+            case "extends" -> new Token(TokenCode.KEYWORD_EXTENDS, span);
+            case "is" -> new Token(TokenCode.KEYWORD_IS, span);
+            case "end" -> new Token(TokenCode.KEYWORD_END, span);
+            case "var" -> new Token(TokenCode.KEYWORD_VAR, span);
+            case "if" -> new Token(TokenCode.KEYWORD_IF, span);
+            case "then" -> new Token(TokenCode.KEYWORD_THEN, span);
+            case "else" -> new Token(TokenCode.KEYWORD_ELSE, span);
+            case "while" -> new Token(TokenCode.KEYWORD_WHILE, span);
+            case "loop" -> new Token(TokenCode.KEYWORD_LOOP, span);
+            case "return" -> new Token(TokenCode.KEYWORD_RETURN, span);
+            case "method" -> new Token(TokenCode.KEYWORD_METHOD, span);
+            case "this" -> new Token(TokenCode.KEYWORD_THIS, span);
+            case "Integer" -> new Token(TokenCode.KEYWORD_INTEGER, span);
+            case "Real" -> new Token(TokenCode.KEYWORD_REAL, span);
+            case "String" -> new Token(TokenCode.KEYWORD_STRING, span);
+            case "Boolean" -> new Token(TokenCode.KEYWORD_BOOLEAN, span);
+            case "true" -> new Token(TokenCode.KEYWORD_TRUE, span);
+            case "false" -> new Token(TokenCode.KEYWORD_FALSE, span);
+            case "Array" -> new Token(TokenCode.KEYWORD_ARRAY, span);
+            case "List" -> new Token(TokenCode.KEYWORD_LIST, span);
+            case " " -> new Token(TokenCode.PUNCTUATION_SPACE, span);
+            case "\n" -> new Token(TokenCode.PUNCTUATION_LINE_BREAK, span);
+            case "\t" -> new Token(TokenCode.PUNCTUATION_TABULATION, span);
+            case "\"" -> new Token(TokenCode.PUNCTUATION_DOUBLE_QUOTE, span);
+            case ":=" -> new Token(TokenCode.PUNCTUATION_SEMICOLON_EQUAL, span);
+            case ":" -> new Token(TokenCode.PUNCTUATION_SEMICOLON, span);
+            case "," -> new Token(TokenCode.PUNCTUATION_COMMA, span);
+            case "=" -> new Token(TokenCode.PUNCTUATION_EQUAL, span);
+            case "(" -> new Token(TokenCode.PUNCTUATION_LEFT_PARENTHESIS, span);
+            case ")" -> new Token(TokenCode.PUNCTUATION_RIGHT_PARENTHESIS, span);
+            case "[" -> new Token(TokenCode.PUNCTUATION_LEFT_BRACKET, span);
+            case "]" -> new Token(TokenCode.PUNCTUATION_RIGHT_BRACKET, span);
+            case "." -> new Token(TokenCode.PUNCTUATION_DOT, span);
+            case "null" -> new Token(TokenCode.KEYWORD_NULL, span);
+            default -> new IdentifierToken(word, span);
         };
     }
 }

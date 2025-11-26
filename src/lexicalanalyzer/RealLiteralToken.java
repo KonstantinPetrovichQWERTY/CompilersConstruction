@@ -4,8 +4,8 @@ public class RealLiteralToken extends Token{
 
     private final double value;
     
-    public RealLiteralToken(double value) {
-        super(TokenType.LITERAL_REAL);
+    public RealLiteralToken(double value, Span span) {
+        super(TokenCode.LITERAL_REAL, Double.toString(value), span);
         this.value = value;
     }
 

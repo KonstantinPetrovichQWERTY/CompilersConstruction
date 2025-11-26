@@ -4,8 +4,8 @@ public class StringLiteralToken extends Token{
 
     private final String value;
     
-    public StringLiteralToken(String value) {
-        super(TokenType.LITERAL_STRING);
+    public StringLiteralToken(String value, Span span) {
+        super(TokenCode.LITERAL_STRING, value, span);
         this.value = value;
     }
 

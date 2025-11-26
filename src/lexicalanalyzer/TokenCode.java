@@ -1,7 +1,6 @@
 package lexicalanalyzer;
 
-public enum TokenType {
-
+public enum TokenCode {
     // Keywords
     KEYWORD_CLASS("class"),
     KEYWORD_EXTENDS("extends"), 
@@ -53,13 +52,13 @@ public enum TokenType {
     EOF("eof"), // End of file
     ERROR("error"); // Error token (e.g., unrecognized character)
 
-    private final String value;
+    private final String lexeme;
 
-    TokenType(String value) {
-        this.value = value;
+    TokenCode(String lexeme) {
+        this.lexeme = lexeme;
     }
 
-    public String getValue() {
-        return this.value;
-    }
+    public String getLexeme() {
+        return this.lexeme;
+    }// unrecognized character or malformed token
 }
