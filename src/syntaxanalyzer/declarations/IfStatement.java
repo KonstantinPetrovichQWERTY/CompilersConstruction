@@ -2,7 +2,7 @@ package syntaxanalyzer.declarations;
 
 import java.util.List;
 import lexicalanalyzer.Token;
-import lexicalanalyzer.TokenType;
+import lexicalanalyzer.TokenCode;
 
 public class IfStatement extends Declaration {
 
@@ -31,14 +31,14 @@ public class IfStatement extends Declaration {
 
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
-        if (tokens.get(index).getToken() == TokenType.KEYWORD_IF) {
+        if (tokens.get(index).getToken() == TokenCode.KEYWORD_IF) {
             index += 1; // Move past the 'if' keyword
         } else {
             throw new RuntimeException("Expected 'if' keyword, found: " + tokens.get(index).getToken());
         }
 
         // Expect '(' for condition
-        if (tokens.get(index).getToken() == TokenType.PUNCTUATION_LEFT_PARENTHESIS) {
+        if (tokens.get(index).getToken() == TokenCode.PUNCTUATION_LEFT_PARENTHESIS) {
             index += 1; // Move past '('
 
             condition = new Expression();
@@ -51,7 +51,7 @@ public class IfStatement extends Declaration {
 
         index++;
         // Expect 'then' for true block start
-        if (tokens.get(index).getToken() == TokenType.KEYWORD_THEN) {
+        if (tokens.get(index).getToken() == TokenCode.KEYWORD_THEN) {
             index += 1; // Move past 'then'
         } else {
             throw new RuntimeException("Expected 'then', found: " + tokens.get(index).getToken());
@@ -62,7 +62,7 @@ public class IfStatement extends Declaration {
         index = trueBlock.parse(tokens, index) + 1; // TODO: Нужен ли тут +1?
 
         // Expect 'else' for else block start (OPTIONAL)
-        if (tokens.get(index).getToken() == TokenType.KEYWORD_ELSE) {
+        if (tokens.get(index).getToken() == TokenCode.KEYWORD_ELSE) {
             index += 1; // Move past 'else'
 
             // Parse falseBlock (redirect to Block)
@@ -72,7 +72,7 @@ public class IfStatement extends Declaration {
         }
 
         // Expect 'end' to finish if statement declaration
-        if (tokens.get(index).getToken() == TokenType.KEYWORD_END) {
+        if (tokens.get(index).getToken() == TokenCode.KEYWORD_END) {
             return index;
         } else {
             throw new RuntimeException("Expected 'end', found: " + tokens.get(index).getToken());

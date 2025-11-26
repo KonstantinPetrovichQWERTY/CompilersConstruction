@@ -2,7 +2,7 @@ package syntaxanalyzer.declarations;
 
 import java.util.List;
 import lexicalanalyzer.Token;
-import lexicalanalyzer.TokenType;
+import lexicalanalyzer.TokenCode;
 
 public class ReturnStatement extends Declaration {
     private String type;
@@ -20,8 +20,8 @@ public class ReturnStatement extends Declaration {
 
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
-        ensureToken(tokens, index++, TokenType.KEYWORD_RETURN);
-        if (tokens.get(index).getToken() == TokenType.IDENTIFIER) {
+        ensureToken(tokens, index++, TokenCode.KEYWORD_RETURN);
+        if (tokens.get(index).getToken() == TokenCode.IDENTIFIER) {
             value = new Expression();
             index = value.parse(tokens, index);
         }

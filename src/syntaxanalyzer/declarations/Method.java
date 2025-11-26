@@ -3,7 +3,7 @@ package syntaxanalyzer.declarations;
 import java.util.ArrayList;
 import java.util.List;
 import lexicalanalyzer.Token;
-import lexicalanalyzer.TokenType;
+import lexicalanalyzer.TokenCode;
 import syntaxanalyzer.utils.ParameterDeclaration;
 
 public class Method extends Declaration {
@@ -31,34 +31,34 @@ public class Method extends Declaration {
 
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
-        ensureToken(tokens, index, TokenType.KEYWORD_METHOD);
+        ensureToken(tokens, index, TokenCode.KEYWORD_METHOD);
         index += 1;
 
-        name = ensureToken(tokens, index, TokenType.IDENTIFIER).getValue();
+        name = ensureToken(tokens, index, TokenCode.IDENTIFIER).getLexeme();
         index += 1;
 
-        ensureToken(tokens, index, TokenType.PUNCTUATION_LEFT_PARENTHESIS);
+        ensureToken(tokens, index, TokenCode.PUNCTUATION_LEFT_PARENTHESIS);
         index = parameters.parse(tokens, index);
 
-        ensureToken(tokens, index, TokenType.PUNCTUATION_RIGHT_PARENTHESIS);
+        ensureToken(tokens, index, TokenCode.PUNCTUATION_RIGHT_PARENTHESIS);
         index += 1;
 
         // Expect ':' and return type (OPTIONAL)
-        if (tokens.get(index).getToken() == TokenType.PUNCTUATION_SEMICOLON) {
-            ensureToken(tokens, index, TokenType.PUNCTUATION_SEMICOLON);
+        if (tokens.get(index).getToken() == TokenCode.PUNCTUATION_SEMICOLON) {
+            ensureToken(tokens, index, TokenCode.PUNCTUATION_SEMICOLON);
             index += 1; // Move past ':'
 
-            returnType = ensureToken(tokens, index, TokenType.IDENTIFIER).getValue();
+            returnType = ensureToken(tokens, index, TokenCode.IDENTIFIER).getLexeme();
             index += 1;
         }
 
-        ensureToken(tokens, index, TokenType.KEYWORD_IS);
+        ensureToken(tokens, index, TokenCode.KEYWORD_IS);
         index +=1;
 
         body = new Block();
         index = body.parse(tokens, index);
 
-        ensureToken(tokens, index, TokenType.KEYWORD_END);
+        ensureToken(tokens, index, TokenCode.KEYWORD_END);
         return index;
     }
 }

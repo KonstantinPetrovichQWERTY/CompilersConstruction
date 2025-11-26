@@ -3,7 +3,7 @@ package syntaxanalyzer.declarations;
 import java.util.ArrayList;
 import java.util.List;
 import lexicalanalyzer.Token;
-import lexicalanalyzer.TokenType;
+import lexicalanalyzer.TokenCode;
 import syntaxanalyzer.utils.ParameterDeclaration;
 
 public class Constructor extends Declaration {
@@ -20,16 +20,16 @@ public class Constructor extends Declaration {
 
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
-        ensureToken(tokens, index, TokenType.KEYWORD_THIS);
+        ensureToken(tokens, index, TokenCode.KEYWORD_THIS);
         index+=1;
-        ensureToken(tokens, index, TokenType.PUNCTUATION_LEFT_PARENTHESIS);
+        ensureToken(tokens, index, TokenCode.PUNCTUATION_LEFT_PARENTHESIS);
         index = parameters.parse(tokens, index);
-        ensureToken(tokens, index, TokenType.PUNCTUATION_RIGHT_PARENTHESIS);
+        ensureToken(tokens, index, TokenCode.PUNCTUATION_RIGHT_PARENTHESIS);
         index += 1;
-        ensureToken(tokens, index, TokenType.KEYWORD_IS);
+        ensureToken(tokens, index, TokenCode.KEYWORD_IS);
         index += 1;
         index = body.parse(tokens, index);
-        ensureToken(tokens, index, TokenType.KEYWORD_END);
+        ensureToken(tokens, index, TokenCode.KEYWORD_END);
         return index;
     }
 

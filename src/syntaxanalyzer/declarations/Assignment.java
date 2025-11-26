@@ -2,7 +2,7 @@ package syntaxanalyzer.declarations;
 
 import java.util.List;
 import lexicalanalyzer.Token;
-import lexicalanalyzer.TokenType;
+import lexicalanalyzer.TokenCode;
 
 public class Assignment extends Declaration {
 
@@ -21,15 +21,15 @@ public class Assignment extends Declaration {
 
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
-        if (tokens.get(index).getToken() == TokenType.IDENTIFIER) {
-            name = tokens.get(index).getValue();
+        if (tokens.get(index).getToken() == TokenCode.IDENTIFIER) {
+            name = tokens.get(index).getLexeme();
             index += 1; // Move forward
         } else {
             throw new RuntimeException("Expected assignment variable name (identifier), found: " + tokens.get(index).getToken());
         }
 
         // Expect ':=' for condition
-        if (tokens.get(index).getToken() == TokenType.PUNCTUATION_SEMICOLON_EQUAL) {
+        if (tokens.get(index).getToken() == TokenCode.PUNCTUATION_SEMICOLON_EQUAL) {
             index += 1; // Move past ':='
         } else {
             throw new RuntimeException("Expected ':=', found: " + tokens.get(index).getToken());

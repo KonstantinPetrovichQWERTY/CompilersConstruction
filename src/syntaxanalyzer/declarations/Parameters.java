@@ -1,7 +1,7 @@
 package syntaxanalyzer.declarations;
 
 import lexicalanalyzer.Token;
-import lexicalanalyzer.TokenType;
+import lexicalanalyzer.TokenCode;
 import syntaxanalyzer.utils.ParameterDeclaration;
 
 import java.util.ArrayList;
@@ -18,19 +18,19 @@ public class Parameters extends Declaration
 
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
-        ensureToken(tokens, index++, TokenType.PUNCTUATION_LEFT_PARENTHESIS);
+        ensureToken(tokens, index++, TokenCode.PUNCTUATION_LEFT_PARENTHESIS);
         while (index < tokens.size()) {
-            TokenType currentTokenType = tokens.get(index).getToken();
-            if (currentTokenType == TokenType.IDENTIFIER) {
-                String name = ensureToken(tokens, index++, TokenType.IDENTIFIER).getValue();
-                ensureToken(tokens, index++, TokenType.PUNCTUATION_SEMICOLON);
-                String type = ensureToken(tokens, index++, TokenType.IDENTIFIER).getValue();
+            TokenCode currentTokenType = tokens.get(index).getToken();
+            if (currentTokenType == TokenCode.IDENTIFIER) {
+                String name = ensureToken(tokens, index++, TokenCode.IDENTIFIER).getLexeme();
+                ensureToken(tokens, index++, TokenCode.PUNCTUATION_SEMICOLON);
+                String type = ensureToken(tokens, index++, TokenCode.IDENTIFIER).getLexeme();
                 parameters.add(new ParameterDeclaration(name, type));
-                if (tokens.get(index).getToken() == TokenType.PUNCTUATION_RIGHT_PARENTHESIS) {
+                if (tokens.get(index).getToken() == TokenCode.PUNCTUATION_RIGHT_PARENTHESIS) {
                     return index;
                 }
-                ensureToken(tokens, index++, TokenType.PUNCTUATION_COMMA);
-            } else if (currentTokenType == TokenType.PUNCTUATION_RIGHT_PARENTHESIS) {
+                ensureToken(tokens, index++, TokenCode.PUNCTUATION_COMMA);
+            } else if (currentTokenType == TokenCode.PUNCTUATION_RIGHT_PARENTHESIS) {
                 return index;
             } else {
                 throw new RuntimeException("Unexpected token: " + currentTokenType);

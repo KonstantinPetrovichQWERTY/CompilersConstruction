@@ -1,6 +1,6 @@
 package syntaxanalyzer.declarations;
 
-import lexicalanalyzer.TokenType;
+import lexicalanalyzer.TokenCode;
 import lexicalanalyzer.Token;
 import syntaxanalyzer.utils.PrimaryType;
 
@@ -20,27 +20,27 @@ public class Primary extends Declaration {
     public Integer parse(List<Token> tokens, Integer index) {
         Token currentToken = tokens.get(index);
 
-        if (currentToken.getToken() == TokenType.LITERAL_INTEGER) {
+        if (currentToken.getToken() == TokenCode.LITERAL_INTEGER) {
             primaryType = PrimaryType.IntegerLiteral;
             valueToken = currentToken;
         }
 
-        else if (currentToken.getToken() == TokenType.LITERAL_STRING) {
+        else if (currentToken.getToken() == TokenCode.LITERAL_STRING) {
             primaryType = PrimaryType.StringLiteral;
             valueToken = currentToken;
         }
 
-        else if (currentToken.getToken() == TokenType.LITERAL_REAL) {
+        else if (currentToken.getToken() == TokenCode.LITERAL_REAL) {
             primaryType = PrimaryType.RealLiteral;
             valueToken = currentToken;
         }
 
-        else if (currentToken.getToken() == TokenType.IDENTIFIER) {
+        else if (currentToken.getToken() == TokenCode.IDENTIFIER) {
             primaryType = PrimaryType.ClassName;
             valueToken = currentToken;
         }
 
-        else if (currentToken.getToken() == TokenType.KEYWORD_THIS)
+        else if (currentToken.getToken() == TokenCode.KEYWORD_THIS)
         {
             primaryType = PrimaryType.This;
             valueToken = currentToken;

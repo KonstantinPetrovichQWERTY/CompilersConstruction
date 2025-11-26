@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import lexicalanalyzer.Token;
-import lexicalanalyzer.TokenType;
+import lexicalanalyzer.TokenCode;
 import syntaxanalyzer.declarations.Cls;
 
 
@@ -18,11 +18,11 @@ public class AST {
 
         while (i < filteredTokens.size()) {
             Token currentToken = filteredTokens.get(i);
-            if (currentToken.getToken() == TokenType.KEYWORD_CLASS) {
+            if (currentToken.getToken() == TokenCode.KEYWORD_CLASS) {
                 Cls cls = new Cls();
                 i = cls.parse(filteredTokens, i);
                 classes.add(cls);
-            } else if (currentToken.getToken() == TokenType.EOF) {
+            } else if (currentToken.getToken() == TokenCode.EOF) {
                 break;
             }
             i = i + 1;

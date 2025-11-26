@@ -2,7 +2,7 @@ package syntaxanalyzer.declarations;
 
 import java.util.List;
 import lexicalanalyzer.Token;
-import lexicalanalyzer.TokenType;
+import lexicalanalyzer.TokenCode;
 
 public class Variable extends Declaration {
     private String name;
@@ -20,15 +20,15 @@ public class Variable extends Declaration {
 
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
-        ensureToken(tokens, index, TokenType.KEYWORD_VAR);
+        ensureToken(tokens, index, TokenCode.KEYWORD_VAR);
         index++;
 
 
-        Token identifier = ensureToken(tokens, index, TokenType.IDENTIFIER);
-        name = identifier.getValue();
+        Token identifier = ensureToken(tokens, index, TokenCode.IDENTIFIER);
+        name = identifier.getLexeme();
         index++;
 
-        ensureToken(tokens, index, TokenType.PUNCTUATION_SEMICOLON);
+        ensureToken(tokens, index, TokenCode.PUNCTUATION_SEMICOLON);
         index++;
 
         expression = new Expression();

@@ -2,7 +2,7 @@ package syntaxanalyzer.declarations;
 
 import java.util.List;
 import lexicalanalyzer.Token;
-import lexicalanalyzer.TokenType;
+import lexicalanalyzer.TokenCode;
 import syntaxanalyzer.utils.ExpressionSuffix;
 
 import java.util.ArrayList;
@@ -15,19 +15,19 @@ public class Expression extends Declaration {
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
         index = primary.parse(tokens, index) + 1;
-        while (tokens.get(index).getToken() == TokenType.PUNCTUATION_DOT) {
+        while (tokens.get(index).getToken() == TokenCode.PUNCTUATION_DOT) {
             index++;
-            Token name = ensureToken(tokens, index++, TokenType.IDENTIFIER);
+            Token name = ensureToken(tokens, index++, TokenCode.IDENTIFIER);
             Optional<List<Expression>> expressions = Optional.empty();
-            if (tokens.get(index).getToken() == TokenType.PUNCTUATION_LEFT_PARENTHESIS) {
+            if (tokens.get(index).getToken() == TokenCode.PUNCTUATION_LEFT_PARENTHESIS) {
                 index++;
                 expressions = Optional.of(new ArrayList<>());
-                while (tokens.get(index).getToken() != TokenType.PUNCTUATION_RIGHT_PARENTHESIS) {
+                while (tokens.get(index).getToken() != TokenCode.PUNCTUATION_RIGHT_PARENTHESIS) {
                     Expression expression = new Expression();
                     index = expression.parse(tokens, index);
                     expressions.get().add(expression);
                     index++;
-                    if (tokens.get(index).getToken() == TokenType.PUNCTUATION_COMMA) {
+                    if (tokens.get(index).getToken() == TokenCode.PUNCTUATION_COMMA) {
                         index++;
                     }
                 }

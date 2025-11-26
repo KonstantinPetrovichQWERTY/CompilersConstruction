@@ -3,7 +3,7 @@ package syntaxanalyzer.declarations;
 import java.util.List;
 import java.util.Objects;
 import lexicalanalyzer.Token;
-import lexicalanalyzer.TokenType;
+import lexicalanalyzer.TokenCode;
 
 public class Cls extends Declaration {
     String name;
@@ -25,16 +25,16 @@ public class Cls extends Declaration {
 
     @Override
     public Integer parse(List<Token> tokens, Integer index) {
-        ensureToken(tokens, index++, TokenType.KEYWORD_CLASS);
-        name = ensureToken(tokens, index++, TokenType.IDENTIFIER).getValue();
-        if (Objects.requireNonNull(tokens.get(index).getToken()) == TokenType.KEYWORD_EXTENDS) {
+        ensureToken(tokens, index++, TokenCode.KEYWORD_CLASS);
+        name = ensureToken(tokens, index++, TokenCode.IDENTIFIER).getLexeme();
+        if (Objects.requireNonNull(tokens.get(index).getToken()) == TokenCode.KEYWORD_EXTENDS) {
             index += 1;
-            baseClass = ensureToken(tokens, index++, TokenType.IDENTIFIER).getValue();
+            baseClass = ensureToken(tokens, index++, TokenCode.IDENTIFIER).getLexeme();
         }
-        ensureToken(tokens, index, TokenType.KEYWORD_IS);
+        ensureToken(tokens, index, TokenCode.KEYWORD_IS);
         body = new ClsBody();
         index = body.parse(tokens, index);
-        ensureToken(tokens, index, TokenType.KEYWORD_END);
+        ensureToken(tokens, index, TokenCode.KEYWORD_END);
         return index;
     }
 }

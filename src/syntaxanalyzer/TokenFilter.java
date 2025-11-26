@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lexicalanalyzer.Token;
-import lexicalanalyzer.TokenType;
+import lexicalanalyzer.TokenCode;
 
 public class TokenFilter {
 
@@ -13,9 +13,9 @@ public class TokenFilter {
 
         for (Token tk : tokens) {
             switch (tk.getToken()) {
-                case TokenType.PUNCTUATION_SPACE, 
-                     TokenType.PUNCTUATION_TABULATION, 
-                     TokenType.PUNCTUATION_LINE_BREAK -> {
+                case TokenCode.PUNCTUATION_SPACE, 
+                     TokenCode.PUNCTUATION_TABULATION, 
+                     TokenCode.PUNCTUATION_LINE_BREAK -> {
                     continue;  // Skip these tokens
                 }
                 default -> filteredTokens.add(tk);  // Add all other tokens

@@ -3,7 +3,7 @@ package syntaxanalyzer.declarations;
 import java.util.List;
 
 import lexicalanalyzer.Token;
-import lexicalanalyzer.TokenType;
+import lexicalanalyzer.TokenCode;
 
 abstract public class Declaration {
     
@@ -29,7 +29,7 @@ abstract public class Declaration {
      * otherwise throw exception.
      * return TOKEN;
      */
-    public Token ensureToken(List<Token> tokens, Integer index, TokenType tokenType) {
+    public Token ensureToken(List<Token> tokens, Integer index, TokenCode tokenType) {
         if (tokens.get(index).getToken() == tokenType) {
             index += 1;
         } else {

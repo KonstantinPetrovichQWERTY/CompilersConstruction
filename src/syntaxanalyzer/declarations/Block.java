@@ -4,7 +4,7 @@ package syntaxanalyzer.declarations;
 import java.util.ArrayList;
 import java.util.List;
 import lexicalanalyzer.Token;
-import lexicalanalyzer.TokenType;
+import lexicalanalyzer.TokenCode;
 
 public class Block extends Declaration{
 
@@ -20,25 +20,25 @@ public class Block extends Declaration{
             Token currentToken = tokens.get(index);
 
             // Variable declaration
-            if (currentToken.getToken() == TokenType.KEYWORD_VAR) {
+            if (currentToken.getToken() == TokenCode.KEYWORD_VAR) {
                 Variable variable = new Variable();
                 index = variable.parse(tokens, index);
                 parts.add(variable);
             }
             // While statement
-            else if (currentToken.getToken() == TokenType.KEYWORD_WHILE) {
+            else if (currentToken.getToken() == TokenCode.KEYWORD_WHILE) {
                 WhileStatement stmt = new WhileStatement();
                 index = stmt.parse(tokens, index);
                 parts.add(stmt);
             }
             // If statement
-            else if (currentToken.getToken() == TokenType.KEYWORD_IF) {
+            else if (currentToken.getToken() == TokenCode.KEYWORD_IF) {
                 IfStatement stmt = new IfStatement();
                 index = stmt.parse(tokens, index);
                 parts.add(stmt);
             }
             // Return statement
-            else if (currentToken.getToken() == TokenType.KEYWORD_RETURN) {
+            else if (currentToken.getToken() == TokenCode.KEYWORD_RETURN) {
                 ReturnStatement stmt = new ReturnStatement();
                 index = stmt.parse(tokens, index);
                 parts.add(stmt);
@@ -46,12 +46,12 @@ public class Block extends Declaration{
             // Assignment : Identifier ':=' Expression
             // OR
             // MethodCall : Expression     (Primary here is only ClassName)
-            else if (currentToken.getToken() == TokenType.IDENTIFIER) {
-                if (tokens.get(index + 1).getToken() == TokenType.PUNCTUATION_SEMICOLON_EQUAL) {
+            else if (currentToken.getToken() == TokenCode.IDENTIFIER) {
+                if (tokens.get(index + 1).getToken() == TokenCode.PUNCTUATION_SEMICOLON_EQUAL) {
                     Assignment assignment = new Assignment();
                     index = assignment.parse(tokens, index);
                     parts.add(assignment);
-                } else if (tokens.get(index + 1).getToken() == TokenType.PUNCTUATION_DOT) {
+                } else if (tokens.get(index + 1).getToken() == TokenCode.PUNCTUATION_DOT) {
                     Expression expression = new Expression();
                     index = expression.parse(tokens, index);
                     parts.add(expression);
@@ -59,9 +59,9 @@ public class Block extends Declaration{
                     throw new RuntimeException("Unexpected token in assignment or method call: " + currentToken.getToken() + " on the " + index);
                 }
             } 
-            else if (currentToken.getToken() == TokenType.KEYWORD_END) {
+            else if (currentToken.getToken() == TokenCode.KEYWORD_END) {
                 return index;
-            } else if (currentToken.getToken() == TokenType.KEYWORD_ELSE) {
+            } else if (currentToken.getToken() == TokenCode.KEYWORD_ELSE) {
                 return index;
             } else {
                 Expression expression = new Expression();
