@@ -28,7 +28,7 @@ public class Constructor extends Declaration {
         index += 1;
         ensureToken(tokens, index, TokenCode.KEYWORD_IS);
         index += 1;
-        index = body.parse(tokens, index);
+        index = body.parse(tokens, index) + 1;
         ensureToken(tokens, index, TokenCode.KEYWORD_END);
         return index;
     }
