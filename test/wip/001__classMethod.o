@@ -1,0 +1,13 @@
+class Point is
+    var x : Integer
+    var y : Integer
+
+    this() is
+    end
+
+    method getX() : Integer is
+    end
+
+    method getY() : Integer is
+    end
+end

@@ -1,0 +1,20 @@
+class Circle is
+    var radius : Real
+
+    this(r : Real) is
+        radius := r
+    end
+
+    method getR() : Integer is
+        return r
+    end
+end
+
+class Main is
+    this() is
+        var c : Circle(5.0)
+        var res : Integer(0)
+        res := c.getR()
+        res.print()
+    end
+end

@@ -1,0 +1,9 @@
+class Main is
+    this() is
+        var a : 5.Plus(10).Plus(15)
+        var b : 3
+        var c : 0
+        c := a.Plus(b).Mult(2).Minus(1)
+        c.print()
+    end
+end
