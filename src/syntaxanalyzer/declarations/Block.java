@@ -47,8 +47,10 @@ public class Block extends Declaration{
             // Assignment : Identifier ':=' Expression
             // OR
             // Expression
-            else if (currentToken.getToken() == TokenCode.IDENTIFIER) {
-                if (tokens.get(index + 1).getToken() == TokenCode.PUNCTUATION_SEMICOLON_EQUAL) {
+            else if (isExpressionStart(currentToken.getToken())) {
+                if (currentToken.getToken() == TokenCode.IDENTIFIER
+                        && index + 1 < tokens.size()
+                        && tokens.get(index + 1).getToken() == TokenCode.PUNCTUATION_SEMICOLON_EQUAL) {
                     Assignment assignment = new Assignment();
                     index = assignment.parse(tokens, index);
                     parts.add(assignment);
@@ -57,7 +59,7 @@ public class Block extends Declaration{
                     index = expression.parse(tokens, index);
                     parts.add(expression);
                 }
-            } 
+            }
             else if (currentToken.getToken() == TokenCode.KEYWORD_END) {
                 return index - 1; // Last KEYWORAD_END is not a part of current BLOCK
             } else if (currentToken.getToken() == TokenCode.KEYWORD_ELSE) {
@@ -70,5 +72,20 @@ public class Block extends Declaration{
         throw SyntaxException.at("Unexpected end of tokens while parsing class body", last);
     }
     
+    private static boolean isExpressionStart(TokenCode tokenCode) {
+        return switch (tokenCode) {
+            case IDENTIFIER,
+                 KEYWORD_THIS,
+                 KEYWORD_LIST,
+                 LITERAL_INTEGER,
+                 LITERAL_REAL,
+                 LITERAL_STRING,
+                 KEYWORD_TRUE,
+                 KEYWORD_FALSE,
+                 KEYWORD_NULL -> true;
+            default -> false;
+        };
+    }
+
 }
  
