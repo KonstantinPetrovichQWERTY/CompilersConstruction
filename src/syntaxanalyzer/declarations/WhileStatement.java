@@ -49,7 +49,12 @@ public class WhileStatement extends Declaration {
             throw SyntaxException.at("Expected '(', found: " + current.getToken(), current);
         }
 
-        // Expect 'loop' for true block start
+        // Consume trailing ')' and expect 'loop'
+        current = tokens.get(index);
+        if (current.getToken() == TokenCode.PUNCTUATION_RIGHT_PARENTHESIS) {
+            index += 1;
+        }
+
         current = tokens.get(index);
         if (current.getToken() == TokenCode.KEYWORD_LOOP) {
             index += 1; // Move past 'loop'

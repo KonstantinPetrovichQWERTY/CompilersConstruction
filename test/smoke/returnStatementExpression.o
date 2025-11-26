@@ -1,0 +1,17 @@
+class MathUtils is
+    this() is end
+    
+    method square(x : Integer) : Integer is
+        return x.Mult(x)
+    end
+end
+
+
+class Main is
+    this() is
+        var utils : MathUtils()
+        var squared : Integer(0)
+        squared := utils.square(5)
+        squared.print()
+    end
+end

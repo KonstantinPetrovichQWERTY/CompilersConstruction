@@ -1,0 +1,51 @@
+class Main is
+    this() is
+        var a : Integer(100).addOne
+        var b : Integer(2.2)
+
+        var min : Integer(0)
+        var max : Integer(0)
+        min.getMin().print()
+        max.getMax().print()
+
+        var resultReal : Real(0.0)
+        var resultBool : Boolean(false)
+        resultReal := a.toReal()
+        resultBool := a.toBoolean()
+        resultReal.print()
+        resultBool.print()
+
+        b.UnatyMinus().print()
+
+        var resultPlus : Integer(0)
+        resultPlus := a.Plus(b)
+        resultPlus.print()
+
+        var resultMinus : Integer(0)
+        resultMinus := a.Minus(b)
+        resultMinus.print()
+
+        var resultMult : Integer(0)
+        resultMult := a.Mult(b)
+        resultMult.print()
+
+        var resultDiv : Integer(0)
+        resultDiv := a.Div(b)
+        resultDiv.print()
+
+        var resultDiv : Integer(0)
+        resultDiv := a.Div(b)
+        resultDiv.print()
+
+        // остаток от деления
+        var resultRem : Integer(0)
+        resultRem := a.Rem(b)
+        resultRem.print()
+
+        a.Less(b).print()
+        a.LessEqual(b).print()
+        a.Greater(b).print()
+        a.GreaterEqual(b).print()
+        a.Equal(b).print()
+    end
+end
