@@ -46,28 +46,22 @@ public class Block extends Declaration{
             }
             // Assignment : Identifier ':=' Expression
             // OR
-            // MethodCall : Expression     (Primary here is only ClassName)
+            // Expression
             else if (currentToken.getToken() == TokenCode.IDENTIFIER) {
                 if (tokens.get(index + 1).getToken() == TokenCode.PUNCTUATION_SEMICOLON_EQUAL) {
                     Assignment assignment = new Assignment();
                     index = assignment.parse(tokens, index);
                     parts.add(assignment);
-                } else if (tokens.get(index + 1).getToken() == TokenCode.PUNCTUATION_DOT) {
+                } else {
                     Expression expression = new Expression();
                     index = expression.parse(tokens, index);
                     parts.add(expression);
-                } else {
-                    throw SyntaxException.at("Unexpected token in assignment or method call: " + currentToken.getToken(), currentToken);
                 }
             } 
             else if (currentToken.getToken() == TokenCode.KEYWORD_END) {
-                return index;
+                return index - 1; // Last KEYWORAD_END is not a part of current BLOCK
             } else if (currentToken.getToken() == TokenCode.KEYWORD_ELSE) {
-                return index;
-            } else {
-                Expression expression = new Expression();
-                index = expression.parse(tokens, index);
-                parts.add(expression);
+                return index - 1; // Last KEYWORAD_ELSE is not a part of current BLOCK
             }
 
             index += 1;

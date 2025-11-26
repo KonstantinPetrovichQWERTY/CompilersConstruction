@@ -63,7 +63,7 @@ public class IfStatement extends Declaration {
 
         // Parse trueBlock (redirect to Block)
         trueBlock = new Block();
-        index = trueBlock.parse(tokens, index) + 1; // TODO: Нужен ли тут +1?
+        index = trueBlock.parse(tokens, index) + 1;
 
         // Expect 'else' for else block start (OPTIONAL)
         current = tokens.get(index);
@@ -72,10 +72,9 @@ public class IfStatement extends Declaration {
 
             // Parse falseBlock (redirect to Block)
             falseBlock = new Block();
-            index = falseBlock.parse(tokens, index);
+            index = falseBlock.parse(tokens, index) + 1;
 
         }
-
         // Expect 'end' to finish if statement declaration
         current = tokens.get(index);
         if (current.getToken() == TokenCode.KEYWORD_END) {
