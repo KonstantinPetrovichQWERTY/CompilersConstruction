@@ -10,7 +10,7 @@ Our assigment is:
 > **Bytecode generation:** ASM  
 > **Target platform:** JVM  
 
-## Development Setup
+## Setup
 
 1. Ensure you have Ubuntu **or** use **Windows Subsystem for Linux** from Windows:
 
@@ -59,19 +59,31 @@ To enable syntax highlighting for Vala in Visual Studio Code:
 
 After this setup, files with `.o` and `.io` extensions will use Vala syntax highlighting in the editor.
 
-## Build And Run
+## Usage
 
-To run tests use
+Install the CLI script
+
+```bash
+./gradlew installDist 
+```
+Run it via the bundled `o` script:
+```bash
+ ./o parse test/smoke/helloWorld.o
+# CLASS HelloWorld
+# BASECLASS null
+# CONSTRUCTOR []
+```
+
+Available commands:
+
+- `./o parse <file>` – lexical + syntax analysis, then prints the AST.
+- `./o build <file>` – compile file and provide `.class` file.
+- `./o run <file>` – compile and run.
+
+
+## Testing
+To run the full Gradle build and unit tests:
+
 ```bash
 ./gradlew build test --info
 ```
-
-
-To run Project use
-```bash
-./gradlew build
-./gradlew run
-```
-
-## Make executable 
-

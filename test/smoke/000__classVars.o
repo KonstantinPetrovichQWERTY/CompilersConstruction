@@ -1,0 +1,7 @@
+class Point is
+    var x : Integer
+    var y : Integer
+
+    this() is
+    end
+end
