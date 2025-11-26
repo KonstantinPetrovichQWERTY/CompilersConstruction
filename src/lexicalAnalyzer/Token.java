@@ -16,7 +16,7 @@ public class Token {
     } 
 
     public Object getTypedValue() {
-        return 0;
+        throw new UnsupportedOperationException("Unimplemented method 'getTypedValue'");
     }
 
     public Token performOperation(TokenType method, Object obj) {
