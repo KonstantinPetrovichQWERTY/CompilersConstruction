@@ -14,4 +14,12 @@ public class Token {
     public String getValue() {
         return this.token.getValue();
     } 
+
+    public Object getTypedValue() {
+        return 0;
+    }
+
+    public Token performOperation(TokenType method, Object obj) {
+        throw new UnsupportedOperationException("Unimplemented method 'performOperation'");
+    }
 }

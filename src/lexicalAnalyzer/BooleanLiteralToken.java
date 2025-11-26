@@ -14,7 +14,8 @@ public class BooleanLiteralToken extends Token {
         return String.valueOf(value);
     }
 
-    public Boolean getTypedValue() {
+    @Override
+    public Object getTypedValue() {
         return value;
     }
 }

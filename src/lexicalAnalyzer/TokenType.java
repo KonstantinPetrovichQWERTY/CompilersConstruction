@@ -47,6 +47,24 @@ public enum TokenType {
     LITERAL_STRING("literal string"),
     LITERAL_BOOLEAN("literal boolean"),
 
+    // Methods
+    METHOD_MIN("Min"),
+    METHOD_MAX("Max"),
+    METHOD_TO_REAL("toReal"),
+    METHOD_TO_BOOLEAN("toBoolean"),
+    METHOD_TO_INTEGER("toInteger"),
+    METHOD_UNARY_MINUS("UnaryMinus"),
+    METHOD_PLUS("Plus"),
+    METHOD_MINUS("Minus"),
+    METHOD_MULT("Mult"),
+    METHOD_DIV("Div"),
+    METHOD_REM("Rem"),
+    METHOD_LESS("Less"),
+    METHOD_LESS_EQUAL("LessEqual"),
+    METHOD_GREATER("Greater"),
+    METHOD_GREATER_EQUAL("GreaterEqual"),
+    METHOD_EQUAL("Equal"),
+
     // Identifiers
     IDENTIFIER("identifier"),
 

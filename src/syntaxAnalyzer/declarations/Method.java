@@ -63,10 +63,7 @@ public class Method extends Declaration {
         // Expect ':' and return type. (OPTIONAL)
         if (tokens.get(index).getToken() == TokenType.PUNCTUATION_SEMICOLON) {
             index += 1; // Move past ':'
-            if ((tokens.get(index).getToken().name().startsWith("LITERAL_")) || 
-                (tokens.get(index).getToken() == TokenType.KEYWORD_TRUE) || 
-                (tokens.get(index).getToken() == TokenType.KEYWORD_FALSE)
-            ) {
+            if ((tokens.get(index).getToken().name().startsWith("LITERAL_"))) {
                 returnType = tokens.get(index).getValue();
                 index += 1;
             } else {

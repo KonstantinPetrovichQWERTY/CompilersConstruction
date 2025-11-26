@@ -69,6 +69,10 @@ public class ClsBody extends Declaration {
                 index = constructor.parse(tokens, index);
                 constructors.add(constructor);
             }
+            else if (currentToken.getToken() == TokenType.IDENTIFIER) {
+                Expression expr = new Expression(cls);
+                index = expr.parse(tokens, index);
+            }
             else if (currentToken.getToken() == TokenType.KEYWORD_METHOD) {
                 Method method = new Method(cls);
                 index = method.parse(tokens, index);

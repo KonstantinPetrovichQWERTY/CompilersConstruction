@@ -4,4 +4,5 @@ class Figure is
     var k : Boolean(true)
     var m : Boolean(false)
 
+    c.Plus(b)
 end

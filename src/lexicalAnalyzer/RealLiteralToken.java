@@ -14,7 +14,8 @@ public class RealLiteralToken extends Token{
         return Double.toString(value);
     }
 
-    public double getTypedValue() {
+    @Override
+    public Object getTypedValue() {
         return this.value;
     }
 }

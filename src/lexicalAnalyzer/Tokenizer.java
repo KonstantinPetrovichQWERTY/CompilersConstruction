@@ -163,6 +163,22 @@ public class Tokenizer {
             case "]" -> new Token(TokenType.PUNCTUATION_RIGHT_BRACKET);
             case "." -> new Token(TokenType.PUNCTUATION_DOT);
             case "null" -> new Token(TokenType.KEYWORD_NULL);
+            case "Min" -> new Token(TokenType.METHOD_MIN);
+            case "Max" -> new Token(TokenType.METHOD_MAX);
+            case "toReal" -> new Token(TokenType.METHOD_TO_REAL);
+            case "toBoolean" -> new Token(TokenType.METHOD_TO_BOOLEAN);
+            case "toInteger" -> new Token(TokenType.METHOD_TO_INTEGER);
+            case "UnaryMinus" -> new Token(TokenType.METHOD_UNARY_MINUS);
+            case "Plus" -> new Token(TokenType.METHOD_PLUS);
+            case "Minus" -> new Token(TokenType.METHOD_MINUS);
+            case "Mult" -> new Token(TokenType.METHOD_MULT);
+            case "Div" -> new Token(TokenType.METHOD_DIV);
+            case "Rem" -> new Token(TokenType.METHOD_REM);
+            case "Less" -> new Token(TokenType.METHOD_LESS);
+            case "LessEqual" -> new Token(TokenType.METHOD_LESS_EQUAL);
+            case "Greater" -> new Token(TokenType.METHOD_GREATER);
+            case "GreaterEqual" -> new Token(TokenType.METHOD_GREATER_EQUAL);
+            case "Equal" -> new Token(TokenType.METHOD_EQUAL);
             default -> new IdentifierToken(part);
         };
     }

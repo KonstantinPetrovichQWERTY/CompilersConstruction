@@ -13,6 +13,11 @@ public class Expression extends Declaration {
         this.cls = cls;
     }
 
+    public Expression(Cls cls, Token exToken) {
+        this.cls = cls;
+        this.exprToken = exToken;
+    }
+
     public Cls getCls() {
         return cls;
     }
@@ -59,7 +64,7 @@ public class Expression extends Declaration {
             else {
                 throw new RuntimeException("Expected literal for initial value, found: " + tokens.get(index).getToken());
             }
-
+            
             // Expect ')' for the initial value
             if (tokens.get(index).getToken() == TokenType.PUNCTUATION_RIGHT_PARENTHESIS) {
                 index += 1; // Move past ')'
@@ -67,23 +72,47 @@ public class Expression extends Declaration {
                 throw new RuntimeException("Expected ')', found: " + tokens.get(index).getToken());
             }
         }
-        // else if (currentToken.getToken() == TokenType.IDENTIFIER) {
-        //     String val = currentToken.getValue();
-        //     Token varTkn = getCls().getBody().getVariableTokenByName(val);
-        //     index += 1;
+        else if (currentToken.getToken() == TokenType.IDENTIFIER) {
+            String val = currentToken.getValue();
+            Token varTkn = getCls().getBody().getVariableTokenByName(val);
+            index += 1;
             
-        //     // Move past '.' - Whitespace for method call
-        //     if (tokens.get(index).getToken() == TokenType.PUNCTUATION_DOT) {
-        //         index += 1;
-        //     } else {
-        //         throw new RuntimeException("Expected '.', found: " + tokens.get(index).getToken());
-        //     }
+            // Move past '.' - Whitespace for method call
+            if (tokens.get(index).getToken() == TokenType.PUNCTUATION_DOT) {
+                index += 1;
+            } else {
+                throw new RuntimeException("Expected '.', found: " + tokens.get(index).getToken());
+            }
+            
+            
+            // Method call
+            if (tokens.get(index).getToken().name().startsWith("METHOD_")) {
+                TokenType methodToken = tokens.get(index).getToken(); 
+                index += 1; 
 
-        //     // Method call
-        //     if (tokens.get(index).getToken().name().startsWith("METHOD_")) {
+                // Expect '(' for the initial value
+                if (tokens.get(index).getToken() == TokenType.PUNCTUATION_LEFT_PARENTHESIS) {
+                    index += 1; // Move past '('
+                } else {
+                    throw new RuntimeException("Expected '(', found: " + tokens.get(index).getToken());
+                }
                 
-        //     }
-        // }
+                String paramName = tokens.get(index).getValue();
+                Token param = getCls().getBody().getVariableTokenByName(paramName);
+                index += 1;
+
+                // Expect ')' for the initial value
+                if (tokens.get(index).getToken() == TokenType.PUNCTUATION_RIGHT_PARENTHESIS) {
+                    index += 1; // Move past ')'
+                } else {
+                    throw new RuntimeException("Expected ')', found: " + tokens.get(index).getToken());
+                }
+                
+                Token result = varTkn.performOperation(methodToken, param.getTypedValue());
+                Variable vr = new Variable(cls, new Expression(cls, result), val);
+                getCls().getBody().addVariable(vr);
+            }
+        }
         else {
             throw new RuntimeException("Unexpected token while parsing expression");
         }

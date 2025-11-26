@@ -32,20 +32,16 @@ public class Parameter extends Declaration {
             throw new RuntimeException("Expected parameter name (identifier), found: " + tokens.get(index).getToken());
         }
 
-        // Expect ':' for type declaration
+        // Expect ':' for type declaration (Optional)
         if (tokens.get(index).getToken() == TokenType.PUNCTUATION_SEMICOLON) {
             index += 1; // Move past ':'
-        } else {
-            throw new RuntimeException("Expected ':', found: " + tokens.get(index).getToken());
         }
 
-        // Expect type (e.g., Integer, String, etc.)
+        // Expect type (e.g., Integer, String, etc.) (Optional)
         // TODO: Not identifier, int_keyword, str_keyword ...
-        if (tokens.get(index).getToken() == TokenType.IDENTIFIER) {
+        if (tokens.get(index).getToken().name().startsWith("LITERAL_")) {
             type = tokens.get(index).getValue();
             index += 1;
-        } else {
-            throw new RuntimeException("Expected parameter type (IDENTIFIER), found: " + tokens.get(index).getToken());
         }
 
         return index; // Return updated index

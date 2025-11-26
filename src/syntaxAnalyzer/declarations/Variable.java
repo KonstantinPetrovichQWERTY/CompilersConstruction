@@ -12,6 +12,12 @@ public class Variable extends Declaration {
     public Variable(Cls cls) {
         this.cls = cls;
     }
+    
+    public Variable(Cls cls, Expression expr, String name) {
+        this.cls = cls;
+        this.name = name;
+        this.expression = expr;
+    }
 
     public Cls getCls() {
         return cls;
